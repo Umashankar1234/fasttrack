@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Booking</title>
+    <meta  name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <link rel="shortcut icon" type="image/x-icon" href="public/images/favicon-16x16.png" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet"href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel="stylesheet"href="public/css/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="public/css/menu.css">
+    <link rel="stylesheet"  href="public/css/animate.min.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="public/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="public/css/view-videos.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.8/slick.min.css"> -->
+    <link rel="stylesheet" href="public/css/megamenu.css" />
+    <link rel="stylesheet" href="public/css/owl.carousel.css" />
+    <script type="text/javascript" src="data.json"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <!-- autocomplete textbox -->
+           <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+           
+           <style>
+            .form-group  ul li
+            {
+                /* position: absolute; */
+                background-color:white;
+                padding: 5px;
+            }
+           </style>  
+
+ <script>
+$(document).ready(function () {
+
+  var data
+  $.ajax({
+    dataType: 'json',
+    url: 'data.json',
+    data: data,
+    success: function (data) {
+      // begin accessing JSON data here
+      console.log(data);
+      const target_JSON = (obj, target) =>
+      target in obj
+      console.log(target_JSON(data, 'airlines'));
+    },
+  })
+})
+</script>
+
+  </head>
+
+  <body> 
+    <header class="header-sticky">     
+        <div class="bottom-menu">
+            <div class="container">
+                <div class="menu-item">
+                    <div class="menu-left">
+                        <button class="button"><i class="fas fa-plane"></i> Book A Trip</button>
+                    </div>
+                    <div class="menu-middle">
+                        <nav id="cssmenu" class="mid-menu-navbar">
+                            <ul>
+                                <li><a href="index.php"><i class="fas fa-home"></i> Home</a></li>
+                                <li><a  href="flight-list.php">Book Flight</a></li>
+                                <li><a href="hotel-list.php">Book Hotel</a></li>
+                                <li class="logo"><a href="index.php"><img src="public/images/fasttrack-small2.png" alt=""></a></li>
+                                <li><a href="car-details.php">Book Car</a></li>
+                                <li><a href="blog-inner.php">Blog</a></li>
+                                <li><a href="contact.php">Contact Us</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="menu-right">
+                        <div class="login">
+                            <a href="login.php"><i class="fas fa-sign-in-alt"></i> Login</a>
+                        </div>
+                        <li class="login-profile head-kar-item-inner">
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" fdprocessedid="opm7xe">
+                                    <img src="public/images/profile.jpeg" alt="">
+                                </button>
+                                <ul class="dropdown-menu">
+                                  <li><a class="dropdown-item" href="profile.php"><i class="fas fa-user"></i> My Profile</a></li>
+                                  <li><a class="dropdown-item" href="#"><i class="fas fa-concierge-bell"></i> Booking</a></li>
+                                  <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Logout </a></li>
+                                </ul>
+                              </div>
+                        </li>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="car" style="display: none;">
+        <div class="container">
+            <div class="car">
+                <div class="car-txt">
+                    <h4>Booking Car & Boats</h4>
+                </div>
+                <div class="car-inner">
+                    <div class="adm-form">
+                        <form method="post">
+                            <div class="row">
+                                <div class="col-lg-6 col-sm-12 mt-2">
+                                    <label for="">Pick up Date</label>
+                                    <input type="date" class="form-control">
+                                </div>
+                                <div class="col-lg-6 col-sm-12 mt-2">
+                                    <label for="">Pick up Time</label>
+                                    <input type="time" class="form-control">
+                                </div>
+                                <div class="col-12 col-sm-12 mt-3">
+                                    <label for="">Details Of Tour</label>
+                                    <textarea type="text" id="message" class="form-control full-length" cols="10"
+                                        rows="3"></textarea>
+                                </div>
+                                <div class="col-12 mt-4">
+                                    <button class="hero_btn w-100">Processes to Book</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="hig"></div>
+                <button class="coss" onclick="close_popup();">
+                    <div class="coss-inner">
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="carlist" style="display:none">
+        <div class="container">
+            <div class="carlist">
+                <div class="car-list-txt">
+                    <h3>Car & Book Details :</h3>
+                </div>
+                <div class="carlist-inner">
+                    <div class="bookingdetails2-right">
+                        <div class="details2-left-inner">
+                            <div class="accordion accordion-flush" id="accordionFlushExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingcarOne">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#flush-collapsecarOne" aria-expanded="false"
+                                            aria-controls="flush-collapsecarOne">
+                                            What's included
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapsecarOne" class="accordion-collapse collapse"
+                                        aria-labelledby="flush-headingcarOne" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">Placeholder content for this accordion, which is
+                                            intended to demonstrate the <code>.accordion-flush</code> class. This is the
+                                            first item's accordion body.</div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingcarTwo">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#flush-collapsecarTwo" aria-expanded="false"
+                                            aria-controls="flush-collapsecarTwo">
+                                            What to expect
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapsecarTwo" class="accordion-collapse collapse"
+                                        aria-labelledby="flush-headingcarTwo" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">Placeholder content for this accordion, which is
+                                            intended to demonstrate the <code>.accordion-flush</code> class. This is the
+                                            second item's accordion body. Let's imagine this being filled with some actual
+                                            content.</div>
+                                    </div>
+                                </div>
+    
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingcarThree">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#flush-collapsecarThree" aria-expanded="false"
+                                            aria-controls="flush-collapsecarThree">
+                                            Departure and return
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapsecarThree" class="accordion-collapse collapse"
+                                        aria-labelledby="flush-headingcarThree" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">Placeholder content for this accordion, which is
+                                            intended to demonstrate the <code>.accordion-flush</code> class. This is the
+                                            third item's accordion body. Nothing more exciting happening here in terms of
+                                            content, but just filling up the space to make it look, at least at first
+                                            glance, a bit more representative of how this would look in a real-world
+                                            application.</div>
+                                    </div>
+                                </div>
+    
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingcarfour">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#flush-collapsecarfour" aria-expanded="false"
+                                            aria-controls="flush-collapsecarfour">
+                                            Accessibility
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapsecarfour" class="accordion-collapse collapse"
+                                        aria-labelledby="flush-headingcarfour" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">Placeholder content for this accordion, which is
+                                            intended to demonstrate the <code>.accordion-flush</code> class. This is the
+                                            third item's accordion body. Nothing more exciting happening here in terms of
+                                            content, but just filling up the space to make it look, at least at first
+                                            glance, a bit more representative of how this would look in a real-world
+                                            application.</div>
+                                    </div>
+                                </div>
+    
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingcarfive">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#flush-collapsecarfive" aria-expanded="false"
+                                            aria-controls="flush-collapsecarfive">
+                                            Accessibility
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapsecarfive" class="accordion-collapse collapse"
+                                        aria-labelledby="flush-headingcarfive" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">Placeholder content for this accordion, which is
+                                            intended to demonstrate the <code>.accordion-flush</code> class. This is the
+                                            third item's accordion body. Nothing more exciting happening here in terms of
+                                            content, but just filling up the space to make it look, at least at first
+                                            glance, a bit more representative of how this would look in a real-world
+                                            application.</div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingcarsix">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#flush-collapsecarsix" aria-expanded="false"
+                                            aria-controls="flush-collapsecarsix">
+                                            Accessibility
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapsecarsix" class="accordion-collapse collapse"
+                                        aria-labelledby="flush-headingcarsix" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">Placeholder content for this accordion, which is
+                                            intended to demonstrate the <code>.accordion-flush</code> class. This is the
+                                            third item's accordion body. Nothing more exciting happening here in terms of
+                                            content, but just filling up the space to make it look, at least at first
+                                            glance, a bit more representative of how this would look in a real-world
+                                            application.</div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingcarseven">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#flush-collapsecarseven" aria-expanded="false"
+                                            aria-controls="flush-collapsecarseven">
+                                            Accessibility
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapsecarseven" class="accordion-collapse collapse"
+                                        aria-labelledby="flush-headingcarseven" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">Placeholder content for this accordion, which is
+                                            intended to demonstrate the <code>.accordion-flush</code> class. This is the
+                                            third item's accordion body. Nothing more exciting happening here in terms of
+                                            content, but just filling up the space to make it look, at least at first
+                                            glance, a bit more representative of how this would look in a real-world
+                                            application.</div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingcareight">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#flush-collapsecareight" aria-expanded="false"
+                                            aria-controls="flush-collapsecareight">
+                                            Accessibility
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapsecareight" class="accordion-collapse collapse"
+                                        aria-labelledby="flush-headingcareight" data-bs-parent="#accordionFlushExample">
+                                        <div class="accordion-body">Placeholder content for this accordion, which is
+                                            intended to demonstrate the <code>.accordion-flush</code> class. This is the
+                                            third item's accordion body. Nothing more exciting happening here in terms of
+                                            content, but just filling up the space to make it look, at least at first
+                                            glance, a bit more representative of how this would look in a real-world
+                                            application.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="cosss" onclick="close_popup();">
+                    <div class="cosss-inner">
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </section>
+    <section id="travels-details" style="display: none;">
+        <div class="travels-details">
+            <div class="container">
+                <div class="trv-dtl-inner">
+                    <div class="heading">
+                        <h3>Avalable for your tips</h3>
+                    </div>
+                    <div class="trv-dtl-item">
+                        <h6>New Delhi <i class="fal fa-long-arrow-right"></i> Bengaluru / <span> Tue, 13 Aug 24 </span> / <span>Departure at 05:45 - Arrival at 08:30</span></h6>
+                        <div class="pric">
+                            <h4>₹ 7000 <sub>Per adult</sub></h4>
+                            <span>SALE</span>
+                        </div>
+                        <div class="rest mt-4">
+                            <ul>
+                                <li>
+                                    <div class="rest-inner">
+                                        <p>Baggage</p>
+                                        <ul>
+                                            <li>
+                                                <span><i class="far fa-check-circle"></i> 7 Kgs Cabin Baggage</span>
+                                            </li>
+                                            <li>
+                                                <span><i class="far fa-check-circle"></i> 15 Kgs Check-in Baggage</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="rest-inner">
+                                        <p>Flexibility</p>
+                                        <ul>
+                                            <li>
+                                                <span><i class="fas fa-do-not-enter"></i> Cancellation fee starts at ₹ 3,999 (up to 4 hours before departure)</span>
+                                            </li>
+                                            <li>
+                                                <span> <i class="fas fa-do-not-enter"></i> Date Change fee starts at ₹ 2,999 up to 4 hrs before departure</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="rest-inner">
+                                        <p>Seats, Meals & More</p>
+                                        <ul>
+                                            <li>
+                                                <span><i class="fas fa-ban"></i> Chargeable Seats</span>
+                                            </li>
+                                            <li>
+                                                <span><i class="far fa-times-circle"></i> Meals information not available</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="book-now">
+                            <button class="button" onclick="location.href='book-flight.php'" fdprocessedid="y0zju"><i class="fas fa-plane"></i> Book Flight</button>
+                        </div>
+                    </div>
+                </div>
+                <button class="cross" onclick="close_popup();">
+                    <div class="cross-inner">
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </section>

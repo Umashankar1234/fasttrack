@@ -1,0 +1,529 @@
+<?php
+$currentdate = '';
+$checkdate = '';
+$checkindate = ''; 
+$getautocity = '';
+$adult = 0;
+
+if($_POST)
+{
+     $checkdate =   $_POST['checkdate'];
+     $checkindate = $_POST['checkindate'];
+     $getautocity = $_POST['place'];
+     $adult = $_POST['numOfAdults'];
+     if (isset($_POST['numOfKids'])) {
+        $repeat = intval($_POST['numOfKids']);  // Get the number of repetitions from the form input
+        $number = 17;  // The number to be repeated
+        $result = implode(',', array_fill(0, $repeat, $number));  // Fill the array with $number, repeat it $repeat times, then implode into a string
+        $noOfKids =  urlencode($result);     
+    }
+}
+else{
+
+    $currentdate = date('Y-m-d');
+    $checkdate = date('Y-m-d', strtotime($currentdate. ' + 10 days'));
+    $checkindate = date('Y-m-d', strtotime($currentdate. ' + 15 days')); 
+    $getautocity = 'Mumbai,Maharashtra,India';
+    $adult = 1;
+    $numOfKids;
+}
+
+
+$curl4 = curl_init();
+
+curl_setopt_array($curl4, [
+	CURLOPT_URL => "https://booking-com15.p.rapidapi.com/api/v1/hotels/searchDestination?query=$getautocity",
+	CURLOPT_RETURNTRANSFER => true,
+	CURLOPT_ENCODING => "",
+	CURLOPT_MAXREDIRS => 10,
+	CURLOPT_TIMEOUT => 30,
+	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+	CURLOPT_CUSTOMREQUEST => "GET",
+	CURLOPT_HTTPHEADER => [
+		"x-rapidapi-host: booking-com15.p.rapidapi.com",
+		"x-rapidapi-key: 88fd5b4aecmsh134935a8622c85bp1a6054jsn0ac77dc37163"
+	],
+]);
+
+$resdestin = curl_exec($curl4);
+$err = curl_error($curl4);
+
+curl_close($curl4);
+
+$json4 = $resdestin; 
+$json_data4 = json_decode($json4, true); 
+
+
+
+?>
+<section id="hotel_listingSection" class="hotle-list-book">
+    <div class="container-fluid px-sm-0 px-3">
+        <div class="hotel_listingSection">
+            <br>
+            <div class="flight-searchheader">
+                <article class="formSection">
+                    <div class="book-fotm-header">
+                        <h4>Find Hotels</h4>
+                    </div>
+                    <form action="hotel-list" class="flightBook" method="post">
+
+                        <div id="placeDate">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label" for="place">Place Name</label>
+                                        <input class="form-control" id="place" name="place" type="text"
+                                            value="<?php echo $getautocity ?>" autocomplete="off"
+                                            placeholder="e.g. New Delhi,India">
+                                        <div id="getcity"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label" for="departing">Checkin date</label>
+                                        <input class="form-control" id="departing" name="checkdate" type="date"
+                                            value="<?php echo $checkdate ?>" required>
+                                        <i class="fas fa-calendar-alt"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label" for="returning">Checkout date</label>
+                                        <input class="form-control" id="returning" type="date" name="checkindate"
+                                            value="<?php echo $checkindate; ?>" required>
+                                        <i class="fas fa-calendar-alt"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="book-fotm-header">
+                            <h5>Guest</h5>
+                        </div>
+                        <div class="details ">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group selectNum">
+                                        <label class="stepper-label" for="numOfAdults">Adults (18+)</label>
+                                        <div class="stepper">
+                                            <button class="minus"><i class="fas fa-minus"></i></button>
+                                            <input class="stepper-control" id="numOfAdults" name="numOfAdults"
+                                                type="number" value="1">
+                                            <button class="plus"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group selectNum">
+                                        <label class="stepper-label" for="numOfKids">Children (0-17)</label>
+                                        <div class="stepper">
+                                            <button class="minus" id="minus"><i class="fas fa-minus"></i></button>
+                                            <input class="stepper-control" id="numOfKids" type="number" name="numOfKids" value="0"
+                                                max="10">
+                                            <button class="plus"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-btn">
+                            <button class="submit-btn">Show flights</button>
+                        </div>
+                    </form>
+                </article>
+            </div>
+            <br>
+            <div class="row g-0">
+                <div class="col-lg-2">
+                    <p id="show-filter"
+                        class="bottom-0 d-block d-md-none end-0 form-select mb-0 position-fixed px-3 start-0 min-col-red"
+                        style="z-index: 11;
+                    height: 55px;
+                    line-height: 45px;">Apply Filter</p>
+                    <div id="select-filter" class="hotel_listingSectionFilter d-none d-md-block">
+                        <div
+                            class="hotel_listingSectionFilterHeading heading py-3 d-flex align-items-center justify-content-between px-2">
+                            <h3 style="--font-h4: 20px;">Filter</h3>
+                            <a href="" class="text-danger small fw-semibold">Clear All</a>
+                        </div>
+                        <div class="d-md-none d-block position-fixed bottom-0 start-0 end-0 bg-white">
+                            <div class="px-3 py-2 border-top d-flex gap-3 applyFilter">
+                                <button class="hero_btn btn_invrs w-100">Cancel</button>
+                                <button class="hero_btn w-100">Apply</button>
+                            </div>
+                        </div>
+                        <div class="filter_ListWrapper">
+                            <div class="filterWrapper px-2">
+
+                                <h6 class="mb-3">Collections</h6>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="bookHotels">
+                                    <label class="form-check-label" for="bookHotels">
+                                        Family Hotels
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="bookCars" checked>
+                                    <label class="form-check-label" for="bookCars">
+                                        For Group Travel
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="bookGuides">
+                                    <label class="form-check-label" for="bookGuides">
+                                        Local IDs accepted
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="bookPackages">
+                                    <label class="form-check-label" for="bookPackages">
+                                        Couple Hotel
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="filterWrapper px-2">
+
+                                <h6 class="mb-3">PRICE</h6>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="pri1" checked>
+                                    <label class="form-check-label" for="pri1">
+                                        Rs. 1000-2999
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="pri2">
+                                    <label class="form-check-label" for="pri2">
+                                        Rs. 3000-4999
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="pri3">
+                                    <label class="form-check-label" for="pri3">
+                                        Rs. 5000-9999
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="pri4">
+                                    <label class="form-check-label" for="pri4">
+                                        Rs. 10000-20000
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="filterWrapper px-2">
+
+                                <h6 class="mb-3">Duration</h6>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="dn1" checked>
+                                    <label class="form-check-label" for="dn1">
+                                        2D-3N
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="dn2">
+                                    <label class="form-check-label" for="dn2">
+                                        3D-4N
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="dn3">
+                                    <label class="form-check-label" for="dn3">
+                                        4D-5N
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="dn4">
+                                    <label class="form-check-label" for="dn4">
+                                        6D-7N
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-10 car-back">
+                    <div class="hotel_listingRight">
+
+                        <div class="hotel_listingRightHeading py-2 d-flex justify-content-between align-items-center">
+                            <div class="heading">
+                                <h3>Popular Hotels</h3>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="d-flex align-items-center">
+                                    <label for="" class="col-3" style="white-space: pre;">Sort by</label>
+                                    <div class="col-8 ">
+                                        <p class="d-block w-100 form-control form-select my-0" data-bs-toggle="collapse"
+                                            data-bs-target="#collapseExample" aria-expanded="false"
+                                            aria-controls="collapseExample"
+                                            style="cursor: pointer;user-select: none; padding: 10px;">Popularity</p>
+                                        <div class="collapse position-absolute" style="z-index: 1111;"
+                                            id="collapseExample">
+                                            <ul class="list-unstyled bg-white" style="min-width: 170px;">
+                                                <li class="py-2 px-2 small" style="cursor: pointer;">Related</li>
+                                                <li class="py-2 px-2 small" style="cursor: pointer;">Popularity</li>
+                                                <li class="py-2 px-2 small" style="cursor: pointer;">Price Low to High
+                                                </li>
+                                                <li class="py-2 px-2 small" style="cursor: pointer;">Price High to Low
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <section id="bookHotel" class="bookHotel-list">
+                            <div class="bookHotel">
+                                <div class="row g-3">
+
+                                    <?php
+                                         foreach($json_data4 as $keydes => $valuedes)
+                                         {
+                                         if(is_array($valuedes))
+                                         {
+                                         if($keydes =='data')
+                                         {
+                                         foreach($valuedes as $keydes2 => $valuedes2)
+                                         {
+                                             $getdest_id = $valuedes2['dest_id'];
+                                         
+                                            $curl = curl_init();
+
+                                            curl_setopt_array($curl, [
+                                            CURLOPT_URL => "https://booking-com15.p.rapidapi.com/api/v1/hotels/searchHotels?dest_id=$getdest_id&search_type=CITY&arrival_date=$checkdate&departure_date=$checkindate&adults=$adult&children_age=$noOfKids&room_qty=1&page_number=1&units=metric&temperature_unit=c&languagecode=en-us&currency_code=INR",
+                                            CURLOPT_RETURNTRANSFER => true,
+                                            CURLOPT_ENCODING => "",
+                                            CURLOPT_MAXREDIRS => 10,
+                                            CURLOPT_TIMEOUT => 30,
+                                            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                            CURLOPT_CUSTOMREQUEST => "GET",
+                                            CURLOPT_HTTPHEADER => [
+                                            "x-rapidapi-host: booking-com15.p.rapidapi.com",
+                                            "x-rapidapi-key: 88fd5b4aecmsh134935a8622c85bp1a6054jsn0ac77dc37163"
+                                            ],
+                                            ]);
+
+                                            $response = curl_exec($curl);
+                                            $err = curl_error($curl);
+                                            curl_close($curl);
+
+                                            $json = $response; 
+                                            $json_data = json_decode($json, true); 
+
+                                            foreach($json_data as $key => $value)
+                                            {
+                                            if(is_array($value))
+                                            {
+                                            if($key =='data')
+                                            {
+                                            foreach($value as $key2 => $value2)
+                                            {
+
+                                                if($key2 =='hotels')
+                                                {
+                                                    foreach($value2 as $key3 => $value3)
+                                                    {
+                                                        $gethotelid = $value3['hotel_id'];
+                                                        $gethotename = $value3['hotel_name'];
+
+                                                        foreach($value3 as $key4 => $value4)
+                                                        {                 
+                                                            if($key4=='property')
+                                                            {
+                                                               foreach($value4 as $key5 => $value5)
+                                                                 {
+                                                                    if($key5=='priceBreakdown')
+                                                                    {
+                                                                        foreach($value5 as $key6 => $value6)
+                                                                        {
+                                                                            if($key6=='grossPrice')
+                                                                            {
+                                                                                $getprice = $value6['value'];
+
+
+                                                                                $curl2 = curl_init();
+
+                                                                                curl_setopt_array($curl2, [
+                                                                                    CURLOPT_URL => "https://booking-com15.p.rapidapi.com/api/v1/hotels/getHotelDetails?hotel_id=$gethotelid&arrival_date=$checkdate&departure_date=$checkindate&adults=1&children_age=0%2C17&room_qty=1&units=metric&temperature_unit=c&languagecode=en-us&currency_code=INR",
+                                                                                    CURLOPT_RETURNTRANSFER => true,
+                                                                                    CURLOPT_ENCODING => "",
+                                                                                    CURLOPT_MAXREDIRS => 10,
+                                                                                    CURLOPT_TIMEOUT => 30,
+                                                                                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                                                                    CURLOPT_CUSTOMREQUEST => "GET",
+                                                                                    CURLOPT_HTTPHEADER => [
+                                                                                        "x-rapidapi-host: booking-com15.p.rapidapi.com",
+                                                                                        "x-rapidapi-key: 88fd5b4aecmsh134935a8622c85bp1a6054jsn0ac77dc37163"
+                                                                                    ],
+                                                                                ]);
+                                                                                
+                                                                                $response = curl_exec($curl2);
+                                                                                $err = curl_error($curl2);
+                                                                                curl_close($curl2);
+
+                                                                                $json2 = $response; 
+                                                                                $json_data2 = json_decode($json2, true); 
+                                    
+                                                                                
+                                                                                                
+                                                                                                                  
+                                                                                                               
+                                                   
+                                                    ?>
+                                    <div class="col-lg-4  col-md-6 col-sm-12">
+                                        <div class="bookHotelWrapper">
+                                            <div class="bookHotelImg">
+                                                <div class="swiper packageImg">
+                                                    <div class="swiper-wrapper">
+
+                                                        <?php
+                                                                                    foreach($json_data2 as $dkey1 => $dvalue)
+                                                                                    {
+                                                                                    if(is_array($dvalue))
+                                                                                        {
+                                                                                        if($dkey1 =='data')
+                                                                                         {
+                                                                                            foreach($dvalue as $dkey2 => $dvalue2)
+                                                                                            {
+                                                                                    if($dkey2=='rooms')
+                                                                                    {
+                                                                                        foreach($dvalue2 as $dkey3 => $dvalue3)
+                                                                                        {
+                                                                                            foreach($dvalue3 as $dkey4 => $dvalue4)
+                                                                                            {
+                                                                                                if($dkey4=='photos')
+                                                                                                {
+                                                                                                foreach($dvalue4 as $dkey5 => $dvalue5)
+                                                                                                { 
+                                                                                                    $getoriginalphoto = $dvalue5['url_original'];
+                                                                                                ?>
+                                                        <div class="swiper-slide">
+                                                            <img src="<?php echo $getoriginalphoto; ?>"
+                                                                alt="hotel image" style="height:250px; width: 500px;" />
+                                                        </div>
+                                                        <?php        } 
+                                                                                                            } 
+                                                                                                        } 
+                                                                                                    } 
+                                                                                                } 
+                                                                                            } 
+                                                                                        } 
+                                                                                    } 
+                                                                                } 
+                                                                                ?>
+
+
+
+                                                    </div>
+                                                    <div class="swiper-pagination"></div>
+                                                </div>
+                                            </div>
+                                            <div class="bookHotelText">
+                                                <h3 class="packages_title">
+                                                    <?php
+                                                                            foreach($json_data2 as $dkey1 => $dvalue)
+                                                                                    {
+                                                                                    if(is_array($dvalue))
+                                                                                        {
+                                                                                        if($dkey1 =='data')
+                                                                                         {
+                                                                                            echo $dvalue['hotel_name'];
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            ?>
+                                                </h3>
+                                                <ul class="d-flex list-unstyled flex-wrap hotelFeatures">
+                                                    <?php
+                                                                                    foreach($json_data2 as $dkey1 => $dvalue)
+                                                                                    {
+                                                                                        if(is_array($dvalue))
+                                                                                        {
+                                                                                            if($dkey1 =='data')
+                                                                                            {
+                                                                                                foreach($dvalue as $dkey2 => $dvalue2)
+                                                                                                {
+                                                                                                    if($dkey2=='property_highlight_strip')
+                                                                                                    {
+                                                                                                        foreach($dvalue2 as $dkey3 => $dvalue3)
+                                                                                                        {
+                                                                                                             ?>
+                                                    <li>
+                                                        <?php echo $dvalue3['name']; ?>
+                                                    </li>
+                                                    <?php 
+                                                                                                    }
+                                                                                                    }
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                             ?>
+                                                </ul>
+                                                <div
+                                                    class="priceSection d-flex justify-content-between align-items-center">
+                                                    <div>
+                                                        <small>Starting From</small>
+                                                        <h6 class="packagesPrice mb-0">
+                                                            <?php 
+                                                                                    foreach($json_data2 as $pkey1 => $pvalue)
+                                                                                    {
+                                                                                    if(is_array($pvalue))
+                                                                                        {
+                                                                                    if($pkey1 =='data')
+                                                                                        {
+                                                                                        foreach($pvalue as $pkey2 => $pvalue2)
+                                                                                        {
+                                                                                            if($pkey2=='product_price_breakdown')
+                                                                                            {
+                                                                                                foreach($pvalue2 as $pkey3 => $pvalue2)
+                                                                                                {
+                                                                                                     
+                                                                                                    if($pkey3=='gross_amount')
+                                                                                                    {
+                                                                                                        echo $getgrossamount = $pvalue2['amount_rounded'] ;
+                                                                                                    }
+                                                                                                }  
+                                                                                            } 
+                                                                                        } 
+                                                                                    } 
+                                                                                    } 
+                                                                                    }
+                                                                                    
+                                                                               ?>
+                                                        </h6>
+
+                                                    </div>
+                                                    <a href="hotel-booking.php?hotelid=<?php echo $gethotelid ?>"
+                                                        class="hero_btn ">Book Now</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    }
+    }                      
+?>
+                                </div>
+                            </div>
+
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

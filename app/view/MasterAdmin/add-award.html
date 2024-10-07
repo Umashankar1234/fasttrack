@@ -1,0 +1,200 @@
+<!--RIGHT CONTENT AREA START-->
+<section class="mypouter_area proecom">
+  <div class="mypinner_area">
+    <div class="topflx">
+      <div class="protitle">
+        <h3>Add award </h3>
+      </div>
+    </div>
+    <div class="pmenuarea_outer">
+		<form method="POST" enctype="multipart/form-data">
+		  <div class="eveditx">
+			<div class="varirowx"> 
+			  <div class="uniga">
+				<ul>
+				  <li>
+					<label class="label_info">Award Name</label>
+					<select class="field_style" name="award_id" required>
+						<option value="">Select...</option>
+						<option value="1" <?php if($result_award_edit->award_id==1){ echo "SELECTED";}?>>Atibadi jagannath das award</option>
+						<option value="2" <?php if($result_award_edit->award_id==2){ echo "SELECTED";}?>>Odia sahitya academy award</option>
+						<option value="3" <?php if($result_award_edit->award_id==3){ echo "SELECTED";}?>>Yuva prativa award</option>
+					</select>
+				  </li>
+				  <li>
+					<label class="label_info">Awardee Name English</label>
+					<input type="text" class="field_style" name="awardee_name_eng" required value="<?php echo $result_award_edit->awardee_name_eng;?>"/>
+				  </li>
+				  <li>
+					<label class="label_info">Awardee Name Odia</label>
+					<input type="text" class="field_style" name="awardee_name_odia" required value="<?php echo $result_award_edit->awardee_name_odia;?>"/>
+				  </li>
+				  <li>
+					<label class="label_info">DOB</label>
+					<input type="date" class="field_style" name="dob" required value="<?php echo $result_award_edit->dob;?>"/>
+				  </li>
+				  <li>
+					<label class="label_info">Award Year</label>
+					<select class="field_style" name="award_year" required>
+						<option value="">Select...</option>
+						<?php for($i=1990;$i <= date('Y');$i++){?>
+							<option value="<?php echo $i;?>" <?php if($result_award_edit->award_year==$i){ echo "SELECTED";}?>><?php echo $i;?></option>
+						<?php } ?>
+					</select>
+				  </li>
+				  <li>
+					<label class="label_info">Image</label>
+					<div class="eventmph">
+					  <div class="multipleiupl">
+						<div class="addfilbx">
+						  <?php if($result_award_edit->image !=''){?>
+							<div class="piprpx">
+								<div class="phoxyd"><img class="imageThumb" src="../public/images/award-profile/<?php echo $result_award_edit->image;?>" title=""><a href="add-award?delimg=<?php echo $result_award_edit->image;?>&edited=<?php echo $_GET['edited'];?>"><span class="remocve">Remove image</span></a></div>
+							</div>
+							<input type="hidden" name="hideimg" value="<?php echo $result_award_edit->image;?>">
+						  <?php } else { ?>
+								<input class="nodis" type="file" id="files" name="image" accept="image/*" required 	/>
+							  <label for="files" class="lbladmp">
+								  <div class="iconz"> <img src="../public/images/das_icons/gallery.png" /></div>
+								  <p>Add Photo</p>
+							  </label>
+						  <?php } ?>
+						</div>
+					  </div>
+					</div>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+			<div class="submit_box">
+			<?php if($_GET['edited'] !=''){?>
+			  <input type="submit" value="Update" class="upbtn" name="updt_award">
+			<?php } else { ?>
+			  <input type="submit" value="Submit" class="upbtn" name="add_award">
+			<?php } ?>
+			</div>
+		  </div>
+	  </form>
+    </div>
+  </div>
+</section>
+<!--RIGHT CONTENT AREA END-->
+</section>
+<section class="loader_outer" id="lodr">
+  <div class="lader_layer" id="lodr_layr">
+    <div class="loaderbox">
+      <div class="ldio-k08to6a49h">
+        <div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--CONTENT AREA END-->
+
+<script src="<?php echo $projectPath;?>public/js/admin_js/jquery.min.js" type="text/javascript"></script>
+<script src="<?php echo $projectPath;?>public/js/admin_js/jquery-ui.js" type="text/javascript"></script>
+
+<script>  
+  $(document).ready(function() {
+  if (window.File && window.FileList && window.FileReader) {
+    $("#files").on("change", function(e) {
+      var files = e.target.files,
+        filesLength = files.length;
+      for (var i = 0; i < filesLength; i++) {
+        var f = files[i]
+        var fileReader = new FileReader();
+        fileReader.onload = (function(e) {
+          var file = e.target;
+          $("<div class=\"piprpx\"><div class=\"phoxyd\">" +
+            "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+            "<span class=\"remocve\">Remove image</span>" +
+            "</div></div>").insertAfter("#files");
+          $(".remocve").click(function(){
+            $(this).parent(".phoxyd").remove();
+          });
+          
+          // Old code here
+          /*$("<img></img>", {
+            class: "imageThumb",
+            src: e.target.result,
+            title: file.name + " | Click to remove"
+          }).insertAfter("#files").click(function(){$(this).remove();});*/
+          
+        });
+        fileReader.readAsDataURL(f);
+      }
+      console.log(files);
+    });
+  } else {
+    alert("Your browser doesn't support to File API")
+  }
+});  
+  </script> 
+<script>   
+    $(document).ready(function(){		
+	$('.ccxyszy').click (function() {	
+      $('.xyssssx').toggleClass("closebcatx");
+  	  $('body').toggleClass("vwbodx");
+    });
+  });
+  </script> 
+
+<!--drop submenu--> 
+
+<script>
+$(document).ready(function()
+{
+	$('.menu_toggle_icon').click (function() {	
+      $('.hmslt_area').toggleClass("dasmenu_close");	  
+	  $('.hmso_area').toggleClass("menuoff");
+  	  $('.menu_toggle_icon').toggleClass("active");
+    });
+  
+	//drop menu sidebar
+    $("ul.hmsmenu_area li:has(ul)").addClass('hassub');	  	
+	$("ul.hmsmenu_area li:has(ul)").append( '<span class="drop_icon"></span>'); 	 	
+	$("ul.hmsmenu_area .drop_icon" ).click(function(){       
+        $(this).toggleClass("act").prev().slideToggle("fast");
+        return false;   }); 	
+			
+	//category drop menu	   
+   $(".cat_list_area ul > li:has(.sub_child_area)").append( '<span class="drop_icon"></span>');   
+    $(".cat_list_area .drop_icon" ).click(function(){       
+        $(this).toggleClass("act").prev().slideToggle("fast");
+       return false;   }); 
+		
+	//multiple file upload
+
+//mobile menu
+	$(".main_menu_outer").hide(); 
+	$(".menu_toggle_mob").click(function(){$(".main_menu_outer").slideToggle().toggleClass("activi");$(".menu_toggle_mob").toggleClass("active"); return false; });
+
+}); 
+</script> 
+<script>  
+  $('.multi-field-wrapper').each(function() {
+    var $wrapper = $('.multi-fields', this);
+    $(".add-field", $(this)).click(function(e) {
+        $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper);
+    });
+    $('.multi-field .remove-field', $wrapper).click(function() {
+        if ($('.multi-field', $wrapper).length > 1)
+            $(this).parent('.multi-field').remove();
+    });
+});
+</script> 
+
+<script>
+  $(function() {
+    $( ".accordion" ).accordion({heightStyle: "content", collapsible: true, active: false, animate: {
+        duration: 500
+    }});
+  });
+  
+$('#rprt_frm_date').datepicker({ dateFormat: 'yy-mm-dd',changeYear: true,changeMonth: true,yearRange: "2000:2025" })
+$('#rprt_to_date').datepicker({ dateFormat: 'yy-mm-dd',changeMonth: true})
+$('#rprt_frmby_date').datepicker({ dateFormat: 'yy-mm-dd',changeYear: true,changeMonth: true,yearRange: "2000:2025" })
+$('#rprt_toby_date').datepicker({ dateFormat: 'yy-mm-dd',changeMonth: true})
+</script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<title>Sahitya Academy Master Admin</title>
+	<link rel="icon" type="/image/png" href="<?php echo $projectPath;?>public/images/fav/favicon-32x32.png" sizes="32x32" />
+	<link rel="icon" type="/image/png" href="<?php echo $projectPath;?>public/images/fav/favicon-16x16.png" sizes="16x16" />  
+	<link href="<?php echo $projectPath;?>public/css/adminstyle.css" rel="stylesheet" type="text/css" /> 
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+</head>
+<body>
+	<div class="iklogin_area">
+		<div class="iklogin_inner">
+			<div class="hmltlo">
+				<div class="imglogo">
+					<figure>
+						<img src="<?php echo $projectPath;?>public/images/mmjjmlogo.png" alt="logo">
+					</figure>
+				</div>
+			</div>
+			<div class="iklogin">
+				<h3 class="ikltitle">Master Admin Login </h3>
+                <form name="frm_login" method="POST" onsubmit="return validateLogin();">
+                    <ul class="form_list_signup">
+                        <li>
+                            <label class="fiellabel">Username <span>*</span></label>
+                            <div class="uid_box mail">
+                                <input type="text" name="uname" id="username" class="field_signup" autocomplete="off"/>
+                            </div>
+                        </li>
+                        <li>
+                            <label class="fiellabel">Password <span>*</span></label>
+                            <div class="uid_box">
+                                <input type="password" name="upwd" id="userpassword" class="field_signup" />
+                            </div>
+                        </li>
+                        <li class="subntx"> 
+                            <input type="submit" name="btn_login" value="Login" class="sign_sub_btn" />
+							<?php if(isset($_GET['err'])){ ?>
+								<div class="alert-danger alert">
+									<?php echo $error_msg; ?>
+								</div>
+							<?php } ?>
+                        </li>
+                    </ul>
+                </form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="<?php echo $projectPath;?>public/js/admin_js/jquery.min.js" ></script> 
+<script>
+function validateLogin()
+{
+	var error = 0;
+	if(document.frm_login.username.value=="")
+	{
+		error += 1;
+		$("#username").css("border", "1px solid red");
+		$('#username').val('');
+	}
+	else
+	{
+		$("#username").css("border", "1px solid #dce0eb");
+	}
+	if(document.frm_login.userpassword.value=="")
+	{
+		error += 1;
+		$("#userpassword").css("border", "1px solid red");
+		$('#userpassword').val('');
+	}
+	else
+	{	
+	    $("#userpassword").css("border", "1px solid #dce0eb");
+	}
+	if(error >0)
+	{
+		return false;
+	}
+}
+</script>
+<script>
+$(document).keypress(function(event){
+   var keycode = (event.keyCode ? event.keyCode : event.which);
+   if(keycode == '13'){
+       $('input[name = btn_login]').click();
+       return false;  
+   }
+});
+</script>

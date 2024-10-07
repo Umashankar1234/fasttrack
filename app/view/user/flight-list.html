@@ -1,0 +1,576 @@
+<?php
+
+
+$getfltype = $_POST['flight-type'];
+$locationname = '';
+$locationname2 = '';
+
+if($_POST)
+{
+    $fromflight = $_POST['flyingFrom'];
+    $toflight = $_POST['flyingTo'];
+
+    $querycode = "SELECT * FROM tb_airport WHERE airport_name LIKE '%".$fromflight."%'";  
+    $resultcode = mysqli_query($con, $querycode);  
+    $rowcode = mysqli_fetch_array($resultcode);
+    
+    $getfrmflightcode = $rowcode["code"];
+    $locationname = $rowcode["airport_name"];
+
+    $querycode2 = "SELECT * FROM tb_airport WHERE airport_name LIKE '%".$toflight."%'";  
+    $resultcode2 = mysqli_query($con, $querycode2);  
+    $rowcode2 = mysqli_fetch_array($resultcode2);
+
+    $gettoflightcode = $rowcode2["code"];
+    $locationname2 = $rowcode2["airport_name"];
+
+    $departdate = $_POST['departing'];
+    $returningdate = $_POST['returning'];
+
+}
+else
+{
+    $getfrmflightcode = 'BOM';
+    $gettoflightcode = 'DEL';
+
+    $querycode1 = "SELECT * FROM tb_airport WHERE code LIKE '%".$getfrmflightcode."%'";  
+    $resultcode1 = mysqli_query($con, $querycode1);  
+    $rowcode1 = mysqli_fetch_array($resultcode1);
+    
+     $locationname = $rowcode1["airport_name"];
+
+    $querycode3 = "SELECT * FROM tb_airport WHERE code LIKE '%".$gettoflightcode."%'";  
+    $resultcode3 = mysqli_query($con, $querycode3);  
+    $rowcode3 = mysqli_fetch_array($resultcode3);
+    
+     $locationname2 = $rowcode3["airport_name"];
+
+    
+    $checkdate = date('Y-m-d');
+    $departdate = date('Y-m-d', strtotime($checkdate. ' + 10 days'));
+    $returningdate = date('Y-m-d', strtotime($checkdate. ' + 15 days'));
+}
+
+
+$curl = curl_init();
+
+curl_setopt_array($curl, [
+	CURLOPT_URL => "https://booking-com15.p.rapidapi.com/api/v1/flights/searchFlights?fromId=$getfrmflightcode.AIRPORT&toId=$gettoflightcode.AIRPORT&departDate=$departdate&returnDate=$returningdate&pageNo=1&adults=1&children=0%2C17&sort=BEST&cabinClass=ECONOMY&currency_code=INR",
+	CURLOPT_RETURNTRANSFER => true,
+	CURLOPT_ENCODING => "",
+	CURLOPT_MAXREDIRS => 10,
+	CURLOPT_TIMEOUT => 30,
+	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+	CURLOPT_CUSTOMREQUEST => "GET",
+	CURLOPT_HTTPHEADER => [
+		"x-rapidapi-host: booking-com15.p.rapidapi.com",
+		"x-rapidapi-key: 88fd5b4aecmsh134935a8622c85bp1a6054jsn0ac77dc37163"
+	],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+curl_close($curl);
+ 
+$json4 = $response; 
+$json_data4 = json_decode($json4, true); 
+
+
+
+
+?>
+
+<section id="hotel_listingSection" class="flight-list mt-130">
+    <div class="container-fluid px-sm-0 px-3">
+        <div class="hotel_listingSection">
+            <div class="flight-searchheader">
+                <article class="formSection">
+                    <div class="book-fotm-header">
+                        <h4>Find Destination</h4>
+                    </div>
+                    <form action="#" class="flightBook" method="post">
+                        <div class="form-group tripType">
+                            <label for="roundTrip">
+                                <input type="radio" id="roundTrip" name="flight-type">
+                                <span></span>Roundtrip
+                            </label>
+                            <label for="oneWay">
+                                <input type="radio" id="oneWay" name="flight-type">
+                                <span></span>One way
+                            </label>
+                            <label for="multiCity">
+                                <input type="radio" id="multiCity" name="flight-type">
+                                <span></span>Multi-City
+                            </label>
+                        </div>
+                        <div id="placeDate">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label" for="flyingFrom">From</label>
+                                        <input class="form-control" id="flyingFrom" name="flyingFrom" type="text" placeholder="City or airport">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label" for="flyingTo">To</label>
+                                        <input class="form-control" id="flyingTo" name="flyingTo" type="text" placeholder="City or airport">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label" for="departing">Departing date</label>
+                                        <input class="form-control" id="departing" name="departing" type="date" required>
+                                        <i class="fas fa-calendar-alt"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="form-label" for="returning">Returning date</label>
+                                        <input class="form-control" id="returning" name="returning" type="date" required>
+                                        <i class="fas fa-calendar-alt"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="book-fotm-header">
+                            <h5>Passenger</h5>
+                        </div>
+                        <div class="details ">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group selectNum">
+                                        <label class="stepper-label" for="numOfAdults">Adults (18+)</label>
+                                        <div class="stepper">
+                                            <button class="minus"><i class="fas fa-minus"></i></button>
+                                            <input class="stepper-control" id="numOfAdults" type="number" value="0">
+                                            <button class="plus"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group selectNum">
+                                        <label class="stepper-label" for="numOfKids">Children (0-17)</label>
+                                        <div class="stepper">
+                                            <button class="minus" id="minus"><i class="fas fa-minus"></i></button>
+                                            <input class="stepper-control" id="numOfKids" type="number" value="0" max="10">
+                                            <button class="plus"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group travelClass w-100">
+                                        <label class="form-label" for="travClass">Travel class</label>
+                                        <select class="form-control" id="travClass">
+                                            <option>Economy class</option>
+                                            <option>Business class</option>
+                                            <option>First class</option>
+                                        </select>
+                                        <i class="fa fa-arrow-down select-arrow" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-btn">
+                            <button class="submit-btn">Show flights</button>
+                        </div>
+                    </form>
+                </article>
+            </div>
+            <div class="row g-0 mt-4">
+                <div class="col-lg-3">
+                    <p id="show-filter"
+                        class="bottom-0 d-block d-md-none end-0 form-select mb-0 position-fixed px-3 start-0 min-col-red"
+                        style="z-index: 11;
+                    height: 55px;
+                    line-height: 45px;">Apply Filter</p>
+                    <div id="select-filter" class="hotel_listingSectionFilter d-none d-md-block">
+                        <div
+                            class="hotel_listingSectionFilterHeading heading py-3 d-flex align-items-center justify-content-between px-2">
+                            <h3 style="--font-h4: 20px;">Filter</h3>
+                            <a href="" class="text-danger small fw-semibold">Clear All</a>
+                        </div>
+                        <div class="d-md-none d-block position-fixed bottom-0 start-0 end-0 bg-white">
+                            <div class="px-3 py-2 border-top d-flex gap-3 applyFilter">
+                                <button class="hero_btn btn_invrs w-100">Cancel</button>
+                                <button class="hero_btn w-100">Apply</button>
+                            </div>
+                        </div>
+                        <div class="filter_ListWrapper">
+                            <div class="filterWrapper px-2">
+
+                                <h6 class="mb-3">Popular Flight</h6>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="pop-1" checked>
+                                    <label class="form-check-label" for="pop-1">
+                                        <div class="airline">
+                                            <div class="line-1">
+                                                Indigo
+                                            </div>
+                                            <div class="line-2">
+                                                <small>₹ 7,999 </small>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="pop-2">
+                                    <label class="form-check-label" for="pop-2">
+                                        <div class="airline">
+                                            <div class="line-1">
+                                                Vistara
+                                            </div>
+                                            <div class="line-2">
+                                                <small> ₹ 8,999</small>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="pop-3">
+                                    <label class="form-check-label" for="pop-3">
+                                        
+                                        <div class="airline">
+                                            <div class="line-1">
+                                                Air India Express
+                                            </div>
+                                            <div class="line-2">
+                                                <small> ₹ 8599 </small>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="filterWrapper px-2">
+
+                                <h6 class="mb-3">Stop</h6>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="bookHotels">
+                                    <label class="form-check-label" for="bookHotels">
+                                        Non-stop
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="bookCars" checked>
+                                    <label class="form-check-label" for="bookCars">
+                                        1 Stop
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="bookGuides">
+                                    <label class="form-check-label" for="bookGuides">
+                                        2 Stop
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="filterWrapper px-2">
+
+                                <h6 class="mb-3">Departure time</h6>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="pri1" checked>
+                                    <label class="form-check-label" for="pri1">
+                                        <div class="airline">
+                                            <div class="line-1">
+                                                Early Morning
+                                            </div>
+                                            <div class="line-2">
+                                                <small>Midnight - 8 am</small>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="pri2">
+                                    <label class="form-check-label" for="pri2">
+                                        <div class="airline">
+                                            <div class="line-1">
+                                                Morning
+                                            </div>
+                                            <div class="line-2">
+                                                <small> 8 am - Noon</small>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="pri3">
+                                    <label class="form-check-label" for="pri3">
+                                        
+                                        <div class="airline">
+                                            <div class="line-1">
+                                                Afternoon
+                                            </div>
+                                            <div class="line-2">
+                                                <small> Noon - 4 pm</small>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="pri4">
+                                    <label class="form-check-label" for="pri4">
+                                        
+                                        <div class="airline">
+                                            <div class="line-1">
+                                                Evening
+                                            </div>
+                                            <div class="line-2">
+                                                <small>4 pm - 8 pm</small>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="pri5">
+                                    <label class="form-check-label" for="pri5">
+                                        
+                                        <div class="airline">
+                                            <div class="line-1">
+                                                Night
+                                            </div>
+                                            <div class="line-2">
+                                                <small>4 pm - Midnight</small>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="filterWrapper px-2">
+
+                                <h6 class="mb-3">Airlines</h6>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="dn1" checked>
+                                    <label class="form-check-label" for="dn1">
+                                        <div class="airline">
+                                            <div class="line-1">
+                                                Air India
+                                            </div>
+                                            <div class="line-2">
+                                                <small>₹13,000</small>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="dn2">
+                                    <label class="form-check-label" for="dn2">
+                                        <div class="airline">
+                                            <div class="line-1">
+                                                Air India Express
+                                            </div>
+                                            <div class="line-2">
+                                                <small>₹10,000</small>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="dn3">
+                                    <label class="form-check-label" for="dn3">
+                                        <div class="airline">
+                                            <div class="line-1">
+                                                IndiGo
+                                            </div>
+                                            <div class="line-2">
+                                                <small>₹9,000</small>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="dn4">
+                                    <label class="form-check-label" for="dn4">
+                                        <div class="airline">
+                                            <div class="line-1">
+                                                Vistara
+                                            </div>
+                                            <div class="line-2">
+                                                <small>9,000</small>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 car-back">
+                    <div class="hotel_listingRight">
+
+                        <div class="hotel_listingRightHeading py-2 d-flex justify-content-between align-items-center">
+                            <div class="heading">
+                                <h3>Flights from <?php echo $locationname."&nbsp;to&nbsp;". $locationname2; ?></h3>
+                            </div>
+                            <!-- <div class="col-lg-3">
+                                <div class="d-flex align-items-center">
+                                    <label for="" class="col-3" style="white-space: pre;">Sort by</label>
+                                    <div class="col-8 ">
+                                        <p class="d-block w-100 form-control form-select my-0" data-bs-toggle="collapse"
+                                            data-bs-target="#collapseExample" aria-expanded="false"
+                                            aria-controls="collapseExample"
+                                            style="cursor: pointer;user-select: none; padding: 10px;">Popularity</p>
+                                        <div class="collapse position-absolute" style="z-index: 1111;"
+                                            id="collapseExample">
+                                            <ul class="list-unstyled bg-white" style="min-width: 170px;">
+                                                <li class="py-2 px-2 small" style="cursor: pointer;">Related</li>
+                                                <li class="py-2 px-2 small" style="cursor: pointer;">Popularity</li>
+                                                <li class="py-2 px-2 small" style="cursor: pointer;">Price Low to High
+                                                </li>
+                                                <li class="py-2 px-2 small" style="cursor: pointer;">Price High to Low
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                        <section id="bookHotel" class="bookFlight-list">
+                            <div class="bookFlight-body">
+                                <?php
+                                $mycount = 0;
+                                foreach($json_data4 as $flightkey => $flightvalue)
+                                {
+                                if(is_array($flightvalue))
+                                {
+                                if($flightkey =='data')
+                                {
+                                foreach($flightvalue as $flightkey2 => $flightvalue2)
+                                {
+                                     
+                                    if($flightkey2=='aggregation')
+                                    {
+                                        foreach($flightvalue2 as $flightkey3 => $flightvalue3)
+                                        {
+                                            if($flightkey3 =='airlines') 
+                                            {
+                                                foreach($flightvalue3 as $flightkey4 => $flightvalue4)
+                                                {
+                                                    $flightname = $flightvalue4['name'];
+                                                    $flightlogo = $flightvalue4['logoUrl'];
+                                                     $flightcode = $flightvalue4['iataCode'];
+                                                     $count = $flightvalue4['count'];
+                                                                                          
+                                                                                                                    
+
+                                               ?>
+                                                            <div class="book-flight-item">
+                                                                        <div class="view-btn">
+                                                                            <a href="" class="hero_btn tdl">View Details</a>
+                                                                        </div>
+                                                                        <div class="row align-items-center">
+                                                                            <div class="col-md-3">
+                                                                                <div class="flight-dtl">
+                                                                                    <div class="fl-logo">
+                                                                                        <img src="<?php echo $flightlogo ?>" alt="flight logo">
+                                                                                    </div>
+                                                                                    <div class="fl-dtl">
+                                                                                        <h6><?php echo $flightname ?></h6>
+                                                                                        <small><?php echo $flightcode."&nbsp;".$count ?></small>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            
+                                                                                <div class="col-md-6">
+                                                                                    <div class="flight-time">
+                                                                                        <?php
+                                                                                        $curl2 = curl_init();
+                                                                                        curl_setopt_array($curl2, [
+                                                                                        CURLOPT_URL => "https://booking-com15.p.rapidapi.com/api/v1/flights/searchFlights?fromId=$getfrmflightcode.AIRPORT&toId=$gettoflightcode.AIRPORT&departDate=$departdate&returnDate=$returningdate&pageNo=1&adults=1&children=0%2C17&sort=BEST&cabinClass=ECONOMY&currency_code=INR",
+                                                                                            CURLOPT_RETURNTRANSFER => true,
+                                                                                            CURLOPT_ENCODING => "",
+                                                                                            CURLOPT_MAXREDIRS => 10,
+                                                                                            CURLOPT_TIMEOUT => 30,
+                                                                                            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                                                                            CURLOPT_CUSTOMREQUEST => "GET",
+                                                                                            CURLOPT_HTTPHEADER => [
+                                                                                                "x-rapidapi-host: booking-com15.p.rapidapi.com",
+                                                                                                "x-rapidapi-key: 88fd5b4aecmsh134935a8622c85bp1a6054jsn0ac77dc37163"
+                                                                                            ],
+                                                                                        ]);
+                                                                                        
+                                                                                         
+                                                                                        $resdetails = curl_exec($curl2);
+                                                                                        $err = curl_error($curl2);
+                                                                                        curl_close($curl2);
+                                                                                        
+                                                                                         $json5 = $resdetails; 
+                                                                                        $json_data5 = json_decode($json5, true); 
+                                   
+                                                                                        foreach($json_data5 as $detailskey => $detailsvalue)
+                                                                                        {
+                                                                                        if(is_array($detailsvalue))
+                                                                                        {
+                                                                                        if($detailskey =='data')
+                                                                                        {
+                                                                                        foreach($detailsvalue as $detailskey2 => $detailsvalue2)
+                                                                                        {
+                                                                                           
+                                                                                            if($detailskey2=='flightOffers')
+                                                                                            {
+                                                                                                foreach($detailsvalue2 as $detailstkey3 => $detailstvalue3)
+                                                                                                {
+                                                                                                       
+                                                                                                   foreach($detailstvalue3 as $detailstkey4 => $detailstvalue4)
+                                                                                                   {
+                                                                                                       
+                                                                                                          echo $gettoken = $detailstvalue3['token']."<hr>";
+                                                                                   
+
+                                                                                        ?>
+                                                                                        
+                                                                                        <ul>
+                                                                                            <li>
+                                                                                                <h4> </h4>
+                                                                                                <small><?php echo $locationname ?></small>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <p>02 h 50 m</p>
+                                                                                                <span></span>
+                                                                                                <small>Non Stop</small>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <h4> </h4>
+                                                                                                <small><?php echo $locationname2; ?></small>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                       
+                                                                                    </div>
+                                                                                </div>
+                                                                                                                    
+                                                                            <div class="col-md-3">
+                                                                                <div class="flight-pric">
+                                                                                    <h4>₹ 7,500 </h4>
+                                                                                    <small>per adult </small>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                            </div> 
+                                                        <?php
+                                                        
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                            
+                            ?>
+
+                              
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

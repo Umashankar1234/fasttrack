@@ -1,0 +1,971 @@
+<?php
+$currentdate = '';
+$checkdate = '';
+$checkindate = ''; 
+$getautocity = '';
+$adult = 0;
+if($_POST)
+{
+     $checkdate =   $_POST['checkdate'];
+     $checkindate = $_POST['checkindate'];
+     $getautocity = $_POST['place'];
+     $adult = $_POST['numOfAdults'];
+}
+else{
+
+    $currentdate = date('Y-m-d');
+    $checkdate = date('Y-m-d', strtotime($currentdate. ' + 10 days'));
+    $checkindate = date('Y-m-d', strtotime($currentdate. ' + 15 days')); 
+    $getautocity = 'Mumbai,India';
+    $adult = 1;
+}
+
+
+$curl4 = curl_init();
+
+curl_setopt_array($curl4, [
+	CURLOPT_URL => "https://booking-com15.p.rapidapi.com/api/v1/hotels/searchDestination?query=$getautocity",
+	CURLOPT_RETURNTRANSFER => true,
+	CURLOPT_ENCODING => "",
+	CURLOPT_MAXREDIRS => 10,
+	CURLOPT_TIMEOUT => 30,
+	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+	CURLOPT_CUSTOMREQUEST => "GET",
+	CURLOPT_HTTPHEADER => [
+		"x-rapidapi-host: booking-com15.p.rapidapi.com",
+		"x-rapidapi-key: 88fd5b4aecmsh134935a8622c85bp1a6054jsn0ac77dc37163"
+	],
+]);
+
+$resdestin = curl_exec($curl4);
+$err = curl_error($curl4);
+
+curl_close($curl4);
+
+$json4 = $resdestin; 
+$json_data4 = json_decode($json4, true); 
+
+
+
+?>
+<section class="banner-section">
+    <div class="booking">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <div class="bookiing-img">
+                    <img src="public/images/flightbook.jpg" alt="">
+                </div>
+            </div>
+            <div class="col-md-8" id="group1">
+                <article class="formSection">
+                    <div class="book-fotm-header">
+                        <h4>Find Destination</h4>
+                    </div>
+                    <form action="flight-list.php" method="post" class="flightBook">
+                        <div class="form-group tripType">
+                            <label for="oneWay">
+                                <input type="radio" id="oneWay" value="oneWay" name="flight-type" checked onclick="show2();">
+                                <span></span>One way
+                            </label>
+
+                            <label for="roundTrip">
+                                <input type="radio" id="roundTrip" value="roundTrip" name="flight-type" onclick="show1();">
+                                <span></span>Roundtrip
+                            </label>
+                           
+                            <!-- <label for="multiCity">
+                                <input type="radio" id="multiCity" name="flight-type">
+                                <span></span>Multi-City
+                            </label> -->
+                        </div>
+                        <div id="placeDate">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="flyingFrom">From</label>
+                                        <input class="form-control input-lg" name="flyingFrom" id="flyingFrom" type="text" autocomplete="off" placeholder="City or airport" />
+                                        <div id="fromairport"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="flyingTo">To</label>
+                                        <input class="form-control" id="flyingTo" name="flyingTo" type="text" autocomplete="off" placeholder="City or airport">
+                                        <div id="toairport"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group shown">
+                                        <label class="form-label" for="departing">Departing date</label>
+                                        <input class="form-control " id="departing" name="departing" type="date" required>
+                                        <i class="fas fa-calendar-alt"></i>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group hidden" id="hidden">
+                                        <label class="form-label" for="returning">Returning date</label>
+                                        <input class="form-control" id="returning" name="returning" type="date">
+                                        <i class="fas fa-calendar-alt"></i>
+                                    </div>
+                                </div>
+                            </div>
+                                                 
+                        </div> 
+                        <div class="book-fotm-header">
+                            <h5>Passenger</h5>
+                        </div>
+                        <div class="details ">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group selectNum">
+                                        <label class="stepper-label" for="numOfAdults">Adults (18+)</label>
+                                        <div class="stepper">
+                                            <button class="minus"><i class="fas fa-minus"></i></button>
+                                            <input class="stepper-control" id="numOfAdults" type="number" value="1">
+                                            <button class="plus"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group selectNum">
+                                        <label class="stepper-label" for="numOfKids">Children (0-17)</label>
+                                        <div class="stepper">
+                                            <button class="minus" id="minus"><i class="fas fa-minus"></i></button>
+                                            <input class="stepper-control" id="numOfKids" type="number" value="0" max="10">
+                                            <button class="plus"><i class="fas fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group travelClass w-100">
+                                        <label class="form-label" for="travClass">Travel class</label>
+                                        <select class="form-control" id="travClass">
+                                            <option>Economy class</option>
+                                            <option>Business class</option>
+                                            <option>First class</option>
+                                        </select>
+                                        <i class="fa fa-arrow-down select-arrow" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-btn">
+                            <button class="submit-btn">Show flights</button>
+                        </div>
+                    </form>
+                </article>
+            </div>
+        </div>
+    </div>
+    <div class="fc-banner owl-carousel">
+        <div class="fc-banner-item">
+            <img src="public/images/flight1.png" alt="">
+        </div>
+        <div class="fc-banner-item">
+            <img src="public/images/flight2.png" alt="">
+        </div>
+    </div>
+</section>
+
+<section id="placetoVisit">
+    <div class="shp-3"><img src="public/images/walk.png" alt=""></div>
+    <div class="shp-4"><img src="public/images/ab-plane1.webp" alt=""></div>
+    <div class="container">
+        <div class="heading mb-lg-4 mb-3">
+            <h2>Place to Visit</h2>
+            <p>You can reach the best Places in India</p>
+        </div>
+        <div class="placetoVisit">
+            <div class="placetoVisitWrapper">
+                <div class="placetoVisitInner">
+                    <img src="public/images/nndelhi.png" class="img-fluid w-100" alt="">
+                    <div class="heading">
+                        <h6>New Delhi</h6>
+                        <span>Taj Mahal</span>
+                    </div>
+                </div>
+                <div class="placetoVisitInner">
+                    <img src="public/images/maharashtra.jpg" class="img-fluid w-100" alt="">
+                    <div class="heading">
+                        <h6>Maharashtra</h6>
+                        <span>Temple and Malls</span>
+                    </div>
+                </div>
+                <div class="placetoVisitInner">
+                    <img src="public/images/chennai.jpg" class="img-fluid w-100" alt="">
+                    <div class="heading">
+                        <h6></h6>
+                        <span>Chennai</span>
+                    </div>
+                </div>
+                <div class="placetoVisitInner">
+                    <img src="public/images/belur_math.png" class="img-fluid w-100" alt="">
+                    <div class="heading">
+                        <h6>Kolkata</h6>
+                        <span>Temple and Malls</span>
+                    </div>
+                </div>
+                <div class="placetoVisitInner">
+                    <img src="public/images/puri.png" class="img-fluid w-100" alt="">
+                    <div class="heading">
+                        <h6>Jagannath Temple Puri</h6>
+                        <span>Temple and Malls</span>
+                    </div>
+                </div>
+                <div class="placetoVisitInner d-sm-block d-none">
+                    <img src="public/images/kerla.png" class="img-fluid w-100" alt="">
+                    <div class="heading">
+                        <h6>Kerla</h6>
+                        <span>Temple and Malls</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="travel-cate">
+    <div class="container">
+        <div class="travel-cate-inner">
+            <div class="row g-0">
+                <div class="col-md-3 col-sm-6 coll-12">
+                    <div class="travel-cate-item">
+                        <div class="tci-img">
+                            <img src="public/images/travel.png" alt="">
+                        </div>
+                        <div class="tci-txt">
+                            <h4>Explore India</h4>
+                            <p>Explore India with us</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 coll-12">
+                    <div class="travel-cate-item">
+                        <div class="tci-img">
+                            <img src="public/images/plane.png" alt="">
+                        </div>
+                        <div class="tci-txt">
+                            <h4>Flight Tickets</h4>
+                            <p>Book your flight ticket at an affordable price</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 coll-12">
+                    <div class="travel-cate-item">
+                        <div class="tci-img">
+                            <img src="public/images/departure.png" alt="">
+                        </div>
+                        <div class="tci-txt">
+                            <h4>Hotel Reservation</h4>
+                            <p>Explore the best luxury hotels with us</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 coll-12">
+                    <div class="travel-cate-item">
+                        <div class="tci-img">
+                            <img src="public/images/car-key.png" alt="">
+                        </div>
+                        <div class="tci-txt">
+                            <h4>Car Rental</h4>
+                            <p>Book any type of vehicles at a cheap rate</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="bookHotel">
+    <div class="shp-img2">
+        <img src="public/images/shape-3.webp" alt="">
+    </div>  
+    <div class="shp-5">
+        <img src="public/images/ws2.webp" alt="">
+    </div>
+    <div class="container">
+        <div class="heading mb-lg-4 mb-3">
+            <h2>Book Hotels</h2>
+            <p>Best value for money hotels for you.</p>
+        </div>
+        <div class="bookHotel-inner">
+            <div class="row">
+                <?php
+                                         foreach($json_data4 as $keydes => $valuedes)
+                                         {
+                                         if(is_array($valuedes))
+                                         {
+                                         if($keydes =='data')
+                                         {
+                                         foreach($valuedes as $keydes2 => $valuedes2)
+                                         {
+                                             $getdest_id = $valuedes2['dest_id'];
+                                         
+                                            $curl = curl_init();
+
+                                            curl_setopt_array($curl, [
+                                            CURLOPT_URL => "https://booking-com15.p.rapidapi.com/api/v1/hotels/searchHotels?dest_id=$getdest_id&search_type=CITY&arrival_date=$checkdate&departure_date=$checkindate&adults=$adult&children_age=0%2C17&room_qty=1&page_number=1&units=metric&temperature_unit=c&languagecode=en-us&currency_code=INR",
+                                            CURLOPT_RETURNTRANSFER => true,
+                                            CURLOPT_ENCODING => "",
+                                            CURLOPT_MAXREDIRS => 10,
+                                            CURLOPT_TIMEOUT => 30,
+                                            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                            CURLOPT_CUSTOMREQUEST => "GET",
+                                            CURLOPT_HTTPHEADER => [
+                                            "x-rapidapi-host: booking-com15.p.rapidapi.com",
+                                            "x-rapidapi-key: 88fd5b4aecmsh134935a8622c85bp1a6054jsn0ac77dc37163"
+                                            ],
+                                            ]);
+
+                                            $response = curl_exec($curl);
+                                            $err = curl_error($curl);
+                                            curl_close($curl);
+
+                                            $json = $response; 
+                                            $json_data = json_decode($json, true); 
+
+                                            foreach($json_data as $key => $value)
+                                            {
+                                            if(is_array($value))
+                                            {
+                                            if($key =='data')
+                                            {
+                                            foreach($value as $key2 => $value2)
+                                            {
+
+                                                if($key2 =='hotels')
+                                                {
+                                                    foreach($value2 as $key3 => $value3)
+                                                    {
+                                                        if($key3 === 6)
+                                                        {
+                                                            break;
+                                                        }
+                                                        $gethotelid = $value3['hotel_id'];
+                                                        $gethotename = $value3['hotel_name'];
+
+                                                        foreach($value3 as $key4 => $value4)
+                                                        {                 
+                                                            if($key4=='property')
+                                                            {
+                                                               foreach($value4 as $key5 => $value5)
+                                                                 {
+                                                                    if($key5=='priceBreakdown')
+                                                                    {
+                                                                        foreach($value5 as $key6 => $value6)
+                                                                        {
+                                                                            if($key6=='grossPrice')
+                                                                            {
+                                                                                $getprice = $value6['value'];
+
+
+                                                                                $curl2 = curl_init();
+
+                                                                                curl_setopt_array($curl2, [
+                                                                                    CURLOPT_URL => "https://booking-com15.p.rapidapi.com/api/v1/hotels/getHotelDetails?hotel_id=$gethotelid&arrival_date=$checkdate&departure_date=$checkindate&adults=1&children_age=0%2C17&room_qty=1&units=metric&temperature_unit=c&languagecode=en-us&currency_code=INR",
+                                                                                    CURLOPT_RETURNTRANSFER => true,
+                                                                                    CURLOPT_ENCODING => "",
+                                                                                    CURLOPT_MAXREDIRS => 10,
+                                                                                    CURLOPT_TIMEOUT => 30,
+                                                                                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                                                                    CURLOPT_CUSTOMREQUEST => "GET",
+                                                                                    CURLOPT_HTTPHEADER => [
+                                                                                        "x-rapidapi-host: booking-com15.p.rapidapi.com",
+                                                                                        "x-rapidapi-key: 88fd5b4aecmsh134935a8622c85bp1a6054jsn0ac77dc37163"
+                                                                                    ],
+                                                                                ]);
+                                                                                
+                                                                                $response = curl_exec($curl2);
+                                                                                $err = curl_error($curl2);
+                                                                                curl_close($curl2);
+
+                                                                                $json2 = $response; 
+                                                                                $json_data2 = json_decode($json2, true); 
+                                    
+                                                                                
+                                                                                                
+                                                                                                                  
+                                                                                                               
+                                                   
+                                                    ?>
+                                                    <div class="col-lg-4  col-md-6 col-sm-12">
+                                                        <div class="bookHotelWrapper">
+                                                            <div class="bookHotelImg">
+                                                                <div class="swiper packageImg">
+                                                                    <div class="swiper-wrapper">
+                                                                        
+                                                                            <?php
+                                                                            foreach($json_data2 as $dkey1 => $dvalue)
+                                                                            {
+                                                                            if(is_array($dvalue))
+                                                                                {
+                                                                                if($dkey1 =='data')
+                                                                                 {
+                                                                                    foreach($dvalue as $dkey2 => $dvalue2)
+                                                                                    {
+                                                                            if($dkey2=='rooms')
+                                                                            {
+                                                                                foreach($dvalue2 as $dkey3 => $dvalue3)
+                                                                                {
+                                                                                    foreach($dvalue3 as $dkey4 => $dvalue4)
+                                                                                    {
+                                                                                        if($dkey4=='photos')
+                                                                                        {
+                                                                                        foreach($dvalue4 as $dkey5 => $dvalue5)
+                                                                                        { 
+                                                                                            $getoriginalphoto = $dvalue5['url_original'];
+                                                                                        ?>
+                                                                                        <div class="swiper-slide">
+                                                                                            <img src="<?php echo $getoriginalphoto; ?>" alt="hotel image" style="height:250px; width: 500px;" />
+                                                                                        </div>
+                                                                           <?php        } 
+                                                                                                    } 
+                                                                                                } 
+                                                                                            } 
+                                                                                        } 
+                                                                                    } 
+                                                                                } 
+                                                                            } 
+                                                                        } 
+                                                                        ?>
+                                                                           
+                                                                        
+                                                                        
+                                                                    </div>
+                                                                    <div class="swiper-pagination"></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="bookHotelText">
+                                                                <h3 class="packages_title">
+                                                                    <?php
+                                                                    foreach($json_data2 as $dkey1 => $dvalue)
+                                                                            {
+                                                                            if(is_array($dvalue))
+                                                                                {
+                                                                                if($dkey1 =='data')
+                                                                                 {
+                                                                                    echo $dvalue['hotel_name'];
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    ?>
+                                                                    </h3>
+                                                                <ul class="d-flex list-unstyled flex-wrap hotelFeatures">
+                                                                    <?php
+                                                                            foreach($json_data2 as $dkey1 => $dvalue)
+                                                                            {
+                                                                                if(is_array($dvalue))
+                                                                                {
+                                                                                    if($dkey1 =='data')
+                                                                                    {
+                                                                                        foreach($dvalue as $dkey2 => $dvalue2)
+                                                                                        {
+                                                                                            if($dkey2=='property_highlight_strip')
+                                                                                            {
+                                                                                                foreach($dvalue2 as $dkey3 => $dvalue3)
+                                                                                                {
+                                                                                                     ?>
+                                                                                                    <li><?php echo $dvalue3['name']; ?></li>
+                                                                                               <?php 
+                                                                                            }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                     ?> 
+                                                                </ul>
+                                                                <div class="priceSection d-flex justify-content-between align-items-center">
+                                                                    <div>
+                                                                        <small>Starting From</small>
+                                                                        <h6 class="packagesPrice mb-0"><?php 
+                                                                            foreach($json_data2 as $pkey1 => $pvalue)
+                                                                            {
+                                                                            if(is_array($pvalue))
+                                                                                {
+                                                                            if($pkey1 =='data')
+                                                                                {
+                                                                                foreach($pvalue as $pkey2 => $pvalue2)
+                                                                                {
+                                                                                    if($pkey2=='product_price_breakdown')
+                                                                                    {
+                                                                                        foreach($pvalue2 as $pkey3 => $pvalue2)
+                                                                                        {
+                                                                                             
+                                                                                            if($pkey3=='gross_amount')
+                                                                                            {
+                                                                                                echo $getgrossamount = $pvalue2['amount_rounded'];
+                                                                                            }
+                                                                                        }  
+                                                                                    } 
+                                                                                } 
+                                                                            } 
+                                                                            } 
+                                                                            }
+                                                                            
+                                                                       ?>     
+                                                                            </h6>
+                                    
+                                                                    </div>
+                                                                    <a href="hotel-booking.php?hotelid=<?php echo $gethotelid ?>" class="hero_btn ">Book Now</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                        <?php
+                                                }
+                                               
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+}
+}
+}                      
+?>
+                
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="bookHotel book-car" >
+    <div class="shp-img1">
+        <img src="public/images/shape-1.webp" alt="">
+    </div>
+    <div class="shp-6">
+        <img src="public/images/tree-illustration-1.png" alt="">
+    </div>
+    <div class="container">
+        <div class="heading mb-lg-4 mb-3">
+            <h2>Book Cars</h2>
+            <p>Get the best car with affordable discounts!</p>
+        </div>
+        <div class="bookHotel-inner">
+            <div class="row g-2">
+                <div class="col-lg-3 col-md-6 col-sm-12 mt-3">
+                    <div class="bookHotelWrapper">
+                        <div class="bookHotelImg">
+                            <div class="swiper packageImg">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
+                                    </div>
+                                </div>
+                                <div class="swiper-pagination"></div>
+                            </div>
+                        </div>
+                        <div class="bookHotelText">
+                            <h3 class="packages_title">Maruti Suzuki Dzire-2016</h3>
+                            <ul class="d-flex list-unstyled flex-wrap hotelFeatures">
+                                <li>5 Seater</li>
+                                <li>Petrol</li>
+                                <li>Unlimited Kms</li>
+                                <li>and more</li>
+                            </ul>
+                            <div class="priceSection d-flex justify-content-between align-items-center">
+                                <div>
+                                    <small>Starting From</small>
+                                    <h6 class="packagesPrice mb-0" style="--font-h5: 16px;">2000/Day</h6>
+                                </div>
+                                <a href="car-list.php" class="hero_btn btn_sm">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 mt-3">
+                    <div class="bookHotelWrapper">
+                        <div class="bookHotelImg">
+                            <div class="swiper packageImg">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
+                                    </div>
+                                </div>
+                                <div class="swiper-pagination"></div>
+                            </div>
+                        </div>
+                        <div class="bookHotelText">
+                            <h3 class="packages_title">Mahindra Bolero</h3>
+                            <ul class="d-flex list-unstyled flex-wrap hotelFeatures">
+                                <li>5 Seater</li>
+                                <li>Petrol</li>
+                                <li>Unlimited Kms</li>
+                                <li>and more</li>
+                            </ul>
+                            <div class="priceSection d-flex justify-content-between align-items-center">
+                                <div>
+                                    <small>Starting From</small>              
+                                    <h6 class="packagesPrice mb-0" style="--font-h5: 16px;">3000/Day</h6>
+                                </div>
+                                <a href="car-list.php" class="hero_btn btn_sm">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 mt-3">
+                    <div class="bookHotelWrapper">
+                        <div class="bookHotelImg">
+                            <div class="swiper packageImg">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
+                                    </div>
+                                </div>
+                                <div class="swiper-pagination"></div>
+                            </div>
+                        </div>
+                        <div class="bookHotelText">
+                            <h3 class="packages_title">Toyota Innova</h3>
+                            <ul class="d-flex list-unstyled flex-wrap hotelFeatures">
+                                <li>5 Seater</li>
+                                <li>Petrol</li>
+                                <li>Unlimited Kms</li>
+                                <li>and more</li>
+                            </ul>
+                            <div class="priceSection d-flex justify-content-between align-items-center">
+                                <div>
+                                    <small>Starting From</small>                                    
+                                    <h6 class="packagesPrice mb-0" style="--font-h5: 16px;">3000/Day</h6>
+                                </div>
+                                <a href="car-list.php" class="hero_btn btn_sm">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 mt-3">
+                    <div class="bookHotelWrapper">
+                        <div class="bookHotelImg">
+                            <div class="swiper packageImg">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
+                                    </div>
+                                    <div class="swiper-slide">
+                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
+                                    </div>
+                                </div>
+                                <div class="swiper-pagination"></div>
+                            </div>
+                        </div>
+                        <div class="bookHotelText">
+                            <h3 class="packages_title">Tata Safari</h3>
+                            <ul class="d-flex list-unstyled flex-wrap hotelFeatures">
+                                <li>5 Seater</li>
+                                <li>Petrol</li>
+                                <li>Unlimited Kms</li>
+                                <li>and more</li>
+                            </ul>
+                            <div class="priceSection d-flex justify-content-between align-items-center">
+                                <div>
+                                    <small>Starting From</small>
+                                    <h6 class="packagesPrice mb-0" style="--font-h5: 16px;">3000/Day</h6>
+                                </div>
+                                <a href="car-list.php" class="hero_btn btn_sm">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="offer">
+    <div class="offer-bg1">
+        <img src="public/images/os1.webp" alt="">
+    </div>
+    <div class="offer-bg2">
+        <img src="public/images/os2.webp" alt="">
+    </div>
+    <div class="container">
+        <div class="offer-inner">
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="offer-txt">
+                        <div class="offer-txt-inner">
+                            <h2>Get Special Offer</h2>
+                        <p>Flat 10% Discount on First 5 Bookings.</p>
+                        <a href="car-list.php" class="hero_btn btn_sm">Book Now</a> 
+                        </div>
+                        <div class="lg-text">
+                            <h2>10
+                                <sub>%</sub>
+                                <sup>Off</sup>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="whyus">
+    <div class="shp-4"><img src="public/images/ab-plane1.webp" alt=""></div>
+    <div class="container">
+        <div class="whyus-inner">
+            <div class="row align-items-end">
+                <div class="col-md-6">
+                    <div class="whyus-inn-cont">
+                        <div class="heading mb-lg-4 mb-3">
+                            <h2>Why book with us?</h2>
+                            <p>This approach emphasizes customer value, convenience, and trust, making Fasttrack Travel a top choice for travelers.     </p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mt-4">
+                                <div class="whyus-list">
+                                    <div class="whl-img">
+                                        <img src="public/images/booking.png" alt="">
+                                    </div>
+                                    <div class="whl-txt">
+                                        <h5>Personalized Itineraries</h5>
+                                        <p>We craft tailor-made travel plans to suit your preferences, ensuring a unique and memorable experience for every traveler.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-4">
+                                <div class="whyus-list">
+                                    <div class="whl-img">
+                                        <img src="public/images/price-down.png" alt="">
+                                    </div>
+                                    <div class="whl-txt">
+                                        <h5>Best Price Guarantee</h5>
+                                        <p>Enjoy competitive pricing with no hidden fees. We guarantee value for your money, making your dream vacation affordable./p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-4">
+                                <div class="whyus-list">
+                                    <div class="whl-img">
+                                        <img src="public/images/24-hours.png" alt="">
+                                    </div>
+                                    <div class="whl-txt">
+                                        <h5>24/7 Customer Support</h5>
+                                        <p>Whether it's a last-minute change or an inquiry, our dedicated team is here to assist you anytime, anywhere.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-4">
+                                <div class="whyus-list">
+                                    <div class="whl-img">
+                                        <img src="public/images/deal.png" alt="">
+                                    </div>
+                                    <div class="whl-txt">
+                                        <h5>Exclusive Deals and Offers</h5>
+                                        <p>Get access to special discounts, promotions, and packages that are not available elsewhere.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-4">
+                                <div class="whyus-list">
+                                    <div class="whl-img">
+                                        <img src="public/images/hotel (1).png" alt="">
+                                    </div>
+                                    <div class="whl-txt">
+                                        <h5>Trusted Partners</h5>
+                                        <p>We collaborate with reliable airlines, hotels, and tour operators to ensure a seamless travel experience.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-4">
+                                <div class="whyus-list">
+                                    <div class="whl-img">
+                                        <img src="public/images/business-plan.png" alt="">
+                                    </div>
+                                    <div class="whl-txt">
+                                        <h5>Hassle-Free Bookings</h5>
+                                        <p>With an easy booking process and secure payment options, planning your next trip has never been easier.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="why-img">
+                        <img src="public/images/travel001.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- <section class="testimonial"> 
+    <div class="container">
+        <div class="testimonial-inner">
+            <div class="row align-items-center">
+                <div class="col-md-7">
+                    <div class="testimonial-left">
+                        <h3>The best time to book for summer</h3>
+                        <p>Help your wallet cool off this season with our top money-saving accommodation hacks.</p>
+                        <div class="call-now">
+                            <div class="call-img">
+                                <img src="public/images/phone-call.png" alt="">
+                            </div>
+                            <div class="call-us">
+                                <span>Call Now</span>
+                                <a href="#">+91 92372 00000</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="testimonia-sect">
+                        <div class="shp7">
+                            <img src="public/images/left.png" alt="">
+                        </div>
+                        <div class="testimonial-txt">
+                            <span>TESTIMONIAL</span>
+                            <h2>TESTIMONIAL</h2>
+                        </div>
+                        <div class="fc-testimonial owl-carousel">
+                            <div class="fc-testimonial-item">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab impedit soluta officia, nihil blanditiis est praesentium? Omnis autem praesentium vel minus nemo explicabo nobis debitis est tempore optio, consequuntur ipsa a qui expedita distinctio quisquam.</p>
+                                <div class="testi-prof">
+                                    <div class="tp-img">
+                                        <img src="public/images/profile.jpeg" alt="">
+                                    </div>
+                                    <div class="tp-txt">
+                                        <div class="star"><img src="public/images/star.png" alt=""></div>
+                                        <h6>Aradhana Nayak</h6>
+                                        <span>Client</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="fc-testimonial-item">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab impedit soluta officia, nihil blanditiis est praesentium? Omnis autem praesentium vel minus nemo explicabo nobis debitis est tempore optio, consequuntur ipsa a qui expedita distinctio quisquam.</p>
+                                <div class="testi-prof">
+                                    <div class="tp-img">
+                                        <img src="public/images/profile.jpeg" alt="">
+                                    </div>
+                                    <div class="tp-txt">
+                                        <div class="star"><img src="public/images/star.png" alt=""></div>
+                                        <h6>Aradhana Nayak</h6>
+                                        <span>Client</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="fc-testimonial-item">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab impedit soluta officia, nihil blanditiis est praesentium? Omnis autem praesentium vel minus nemo explicabo nobis debitis est tempore optio, consequuntur ipsa a qui expedita distinctio quisquam.</p>
+                                <div class="testi-prof">
+                                    <div class="tp-img">
+                                        <img src="public/images/profile.jpeg" alt="">
+                                    </div>
+                                    <div class="tp-txt">
+                                        <div class="star"><img src="public/images/star.png" alt=""></div>
+                                        <h6>Aradhana Nayak</h6>
+                                        <span>Client</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+<section class="home-blog">
+    <div class="container">
+        <div class="home-blog-inner">
+            <div class="row align-items-center">
+                <div class="col-md-7">
+                    <div class="home-blog-left">
+                        <div class="heading mb-lg-4 mb-3">
+                            <h2>From Our Blog</h2>
+                            <p>Get the updates from our blog!</p>
+                        </div>
+                        <ul>
+                            <li>
+                                <div class="blog-lef-img">
+                                    <img src="public/images/luxuryf.webp" alt="">
+                                </div>
+                                <div class="blog-lef-txt">
+                                    <h5><a href="#">Luxury Flight In India</a></h5>
+                                    <p>When it comes to luxury flights in India, several airlines offer premium services to elevate the flying experience. Here are some options that travelers can choose from</p>
+                                    <div class="blog-btn">
+                                        <div class="dt"><i class="fas fa-calendar-alt"></i> September 11, 2024</div>
+                                        <a href="#">Read More..</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="blog-lef-img">
+                                    <img src="public/images/lhotels.webp" alt="">
+                                </div>
+                                <div class="blog-lef-txt">
+                                    <h5><a href="#">Luxury Hotels in India</a></h5>
+                                    <p>India is home to some of the most luxurious hotels in the world, combining opulent architecture, world-class service, and unique cultural experiences. Here are some of the best luxury hotels in India that offer a lavish stay</p>
+                                    <div class="blog-btn">
+                                        <div class="dt"><i class="fas fa-calendar-alt"></i> September 11, 2024</div>
+                                        <a href="#">Read More..</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="home-blog-right">
+                        <div class="hom-blg-rit-ig">
+                            <img src="public/images/teavel-offer.jpg" alt="">
+                        </div>
+                        <div class="hom-blg-rit-txt">
+                            <h5>Fasttrack</h5>
+                            <h2>Sale up to 25%</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

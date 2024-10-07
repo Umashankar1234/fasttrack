@@ -1,0 +1,379 @@
+<footer>		
+<div class="container">
+        <div class="footer-inner">
+            <div class="fot-logo">
+                <div class="footerWrapper">
+                    <img src="public/images/fasttrack-small.png" style="width: 100%; height: 100%; object-fit: contain; margin-bottom: 15px;" alt="">
+                </div>
+            </div>
+            <!-- <hr class="border-light my-lg-4"> -->
+            <div class="fot-link">
+                <div class="footer_menuWrapper">
+                    <ul class="list-unstyled text-white">
+                        <li><a href="#">Home</a></li>
+                        <span>/</span>
+                        <li><a href="about.php">About Us</a></li>
+                        <span>/</span>
+                        <li><a href="flight-list">Book Flight</a></li>
+                        <span>/</span>
+                        <li><a href="hotel-list">Book Hotel</a></li>
+                        <span>/</span>
+                        <li><a href="car-details">Book Car</a></li>
+                        <span>/</span>
+                        <li><a href="blog-inner">Blog</a></li>
+                        <span>/</span>
+                        <li><a href="contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="fot-logo mt-5 d-flex justify-content-between align-items-center">
+                <ul class="d-flex gap-3 social_icn">
+                    <li>
+                        <a href="" class="footericons fi1" target="_blank">
+                            <img src="https://travon.in/public/images/social/facebook.png" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="footericons fi2" target="_blank">
+                            <img src="https://travon.in/public/images/social/instagram.png" alt="">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="footericons fi3" target="_blank">
+                            <img src="https://travon.in/public/images/social/youtube.png" alt="">
+                        </a>
+                    </li>
+                </ul>
+                <div class="privacy-pages">
+                    <ul class="d-flex gap-3">
+                        <li>
+                            <a href="terms-&-condition.php">Terms & Condition</a>
+                        </li>
+                        <li>
+                            <a href="privacy-policy.php">Privacy Policy</a>
+                        </li>
+                        <li>
+                            <a href="cancellation.php">Refund Policy</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="border-light my-lg-3">
+            <div class="col-lg-12">
+                <p class="mb-0 my-4 text-center text-light">2024 © FastTrack | Alright Reserved.</p>
+            </div>
+
+        </div>
+    </div>
+</footer>
+<a href="#" class="back-to-top" style="display: inline;"><img src="public/images/totop.png" alt=""></a>
+
+<script src="public/js/cabslider.js"></script>
+<script src="public/js/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous" ></script>
+<script src="public/js/owl.carousel.js"></script>
+<script src="public/js/view-image.min.js"></script>
+<script src="public/js/carousel.js"></script>
+<script src="public/js/menu.js"></script>
+<script src="public/js/custom.js"></script>
+<script src="public/js/swiper-bundle.min.js"></script>
+<script src="public/js/hidenshow.js"></script>
+<script src="public/js/wow.js"></script>
+<script> new WOW().init(); </script>
+
+
+<script>
+    $('.plus').click( function(){ 
+          let counter = $(this).siblings().filter('input').val(); 
+             counter++; 
+             $(this).siblings().filter('input').val(counter); 
+             return false; 
+        });
+        
+        $('.minus').click( function(){ 
+             let counter = $(this).siblings().filter('input').val();
+            if(counter > 0){
+                counter--;
+                $(this).siblings().filter('input').val(counter);
+            }
+             return false;
+        });
+</script>
+
+
+<script>
+    $("#cssmenu").menumaker({
+        title: "",
+        format: "multitoggle",
+    }); 
+</script>
+
+<script>
+    let menutoggle = document.querySelector('.brochur-btn');
+    menutoggle.onclick = function () {
+        menutoggle.classList.toggle('active');
+        $(".download-brocher").toggleClass('visible');
+        $("#broucherformclose").show();
+    }
+</script>
+
+<!-- -----Image Gallery----- -->
+
+<script>
+    window.ViewImage && ViewImage.init('.photo-inner img');
+</script>
+<!-- -----Video Gallery----- -->
+
+<script>
+    $(document).ready(function () {
+        $(".video-gallery").magnificPopup({
+            delegate: "a",
+            type: "iframe",
+            gallery: {
+            enabled: true
+            }
+        });
+    });
+</script>
+
+<script>
+    jQuery(".fc-banner").owlCarousel({
+    lazyLoad: true,
+    loop: true,
+    margin: 30,
+    responsiveClass: true,
+    animateOut: 'fadeOut',
+    animateIn: 'fadeIn',
+    autoplay: true,
+    autoplayTimeout: 10000,
+    // autoplayHoverPause: true,
+    autoHeight: true,
+    mouseDrag: true,
+    touchDrag: true,
+    smartSpeed: 2200,
+    nav: true,
+    navText: ["<i class='fa fa-arrow-left'></i>", "<i class='fa fa-arrow-right'></i>"],
+    dots: true,
+    responsive: {
+        0: {
+            items: 1
+        },
+
+        600: {
+            items: 1
+        },
+
+        1024: {
+            items: 1
+        },
+
+        1366: {
+            items: 1
+        }
+    }
+});
+
+jQuery(".fc-testimonial").owlCarousel({
+    lazyLoad: true,
+    loop: true,
+    margin: 30,
+    responsiveClass: true,
+    animateOut: 'fadeOut',
+    animateIn: 'fadeIn',
+    autoplay: true,
+    autoplayTimeout: 10000,
+    // autoplayHoverPause: true,
+    autoHeight: true,
+    mouseDrag: true,
+    touchDrag: true,
+    smartSpeed: 2200,
+    nav: true,
+    navText: ["<i class='fa fa-arrow-left'></i>", "<i class='fa fa-arrow-right'></i>"],
+    dots: true,
+    responsive: {
+        0: {
+            items: 1
+        },
+
+        600: {
+            items: 1
+        },
+
+        1024: {
+            items: 1
+        },
+
+        1366: {
+            items: 1
+        }
+    }
+});
+</script>
+    
+
+<script>
+    $(window).scroll(function () {
+        var sticky = $(".header-sticky"),
+            scroll = $(window).scrollTop();
+
+        if (scroll >= 50) sticky.addClass("fixedhead");
+        else sticky.removeClass("fixedhead");
+    });
+</script>
+
+
+
+<script>
+    var packageImg = new Swiper(".packageImg", {
+        speed: 300,
+        // effect: "fade",
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true
+        },
+        loop: true,
+    });
+</script>
+
+<!-- === Car booking form === -->
+
+          <script>
+            $(document).ready(function () {
+            $(".app").click(function (e) {
+                e.preventDefault();
+                $("#car").fadeIn(300);
+        
+        
+            });
+            });
+            $('.coss').click(function (e) {
+            $('#car').fadeOut();
+            });
+        </script>
+
+<!-- ===Car details list=== -->
+
+    <script>
+        $(document).ready(function () {
+        $(".oopn").click(function (e) {
+            e.preventDefault();
+            $("#carlist").fadeIn(300);
+    
+    
+        });
+        });
+        $('.cosss').click(function (e) {
+        $('#carlist').fadeOut();
+        });
+    </script>
+
+    <!-- ===booking filter====-->
+    <script>
+        $("#enterChild").hide();
+        $("#haveChild").click(function() {
+            if($(this).is(":checked")) {
+                $("#enterChild").fadeIn(300);
+            } else {
+                $("#enterChild").fadeOut(100);
+            }
+        })
+    </script>
+
+<script>  
+    $(document).ready(function(){  
+         $('#flyingFrom').keyup(function(){  
+              var query = $(this).val();  
+              if(query != '')  
+              {  
+                   $.ajax({  
+                        url:"app/model/get_from_city.php",  
+                        method:"POST",  
+                        data:{query:query},  
+                        success:function(data)  
+                        {  
+                             $('#fromairport').fadeIn();  
+                             $('#fromairport').html(data); 
+                            
+                        }  
+                   });  
+              }  
+         });  
+         $(document).on('click', '.fn1', function(){  
+              $('#flyingFrom').val($(this).text());  
+              $('#fromairport').fadeOut(); 
+               
+         }); 
+        
+
+    });  
+    </script>
+
+<script>  
+    $(document).ready(function(){  
+         $('#flyingTo').keyup(function(){  
+              var query2 = $(this).val();  
+              if(query2 != '')  
+              {  
+                   $.ajax({  
+                        url:"app/model/get_to_city.php",  
+                        method:"POST",  
+                        data:{query2:query2},  
+                        success:function(data)  
+                        {  
+                             $('#toairport').fadeIn();  
+                             $('#toairport').html(data); 
+                            
+                        }  
+                   });  
+              }  
+         });  
+         $(document).on('click', '.fn2', function(){  
+              $('#flyingTo').val($(this).text());  
+              $('#toairport').fadeOut();  
+         });  
+    });  
+    </script>
+<script>
+    $(document).ready(function () {
+        $(".tdl").click(function (e) {
+            e.preventDefault();
+            $("#travels-details").fadeIn(300);
+
+
+        });
+    });
+    $('.cross').click(function (e) {
+        $('#travels-details').fadeOut();
+    });
+</script>
+
+<script>  
+    $(document).ready(function(){  
+         $('#place').keyup(function(){  
+              var query3 = $(this).val();  
+              if(query3 != '')  
+              {  
+                   $.ajax({  
+                        url:"app/model/get_from_city.php",  
+                        method:"POST",  
+                        data:{query3:query3},  
+                        success:function(data)  
+                        {  
+                             $('#getcity').fadeIn();  
+                             $('#getcity').html(data); 
+                            
+                        }  
+                   });  
+              }  
+         });  
+         $(document).on('click', 'li', function(){  
+              $('#place').val($(this).text());  
+              $('#getcity').fadeOut(); 
+               
+         }); 
+        
+
+    });  
+    </script>
+</body>
+</html>

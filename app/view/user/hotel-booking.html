@@ -1,0 +1,560 @@
+<?php
+
+$gethotelid = '';
+$currentdate = '';
+$checkdate = '';
+$checkindate = ''; 
+$getautocity = '';
+$adult = 0;
+
+ 
+    $gethotelid = $_GET['hotelid'];
+    $currentdate = date('Y-m-d');
+    $checkdate = date('Y-m-d', strtotime($currentdate. ' + 10 days'));
+    $checkindate = date('Y-m-d', strtotime($currentdate. ' + 15 days')); 
+    $getautocity = 'New Delhi,India';
+    $adult = 1;
+ 
+
+$curl2 = curl_init();
+
+curl_setopt_array($curl2, [
+    CURLOPT_URL => "https://booking-com15.p.rapidapi.com/api/v1/hotels/getHotelDetails?hotel_id=$gethotelid&arrival_date=$checkdate&departure_date=$checkindate&adults=1&children_age=0%2C17&room_qty=1&units=metric&temperature_unit=c&languagecode=en-us&currency_code=INR",
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => "",
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 30,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => "GET",
+    CURLOPT_HTTPHEADER => [
+        "x-rapidapi-host: booking-com15.p.rapidapi.com",
+        "x-rapidapi-key: 88fd5b4aecmsh134935a8622c85bp1a6054jsn0ac77dc37163"
+    ],
+]);
+
+$response = curl_exec($curl2);
+$err = curl_error($curl2);
+curl_close($curl2);
+
+$json2 = $response; 
+$json_data2 = json_decode($json2, true); 
+
+foreach($json_data2 as $dkey1 => $dvalue)
+{
+if(is_array($dvalue))
+    {
+    if($dkey1 =='data')
+     {
+         $gethotelname = $dvalue['hotel_name'];
+         $getaddress = $dvalue['address'];
+         
+    }
+}
+}
+foreach($json_data2 as $pkey1 => $pvalue)
+{
+if(is_array($pvalue))
+    {
+if($pkey1 =='data')
+    {
+    foreach($pvalue as $pkey2 => $pvalue2)
+    {
+        if($pkey2=='product_price_breakdown')
+        {
+            foreach($pvalue2 as $pkey3 => $pvalue2)
+            {
+                if($pkey3=='strikethrough_amount')
+                {
+                    $getstrikeoutprice = $pvalue2['amount_rounded'];
+                }
+                if($pkey3=='gross_amount')
+                {
+                    $getgrossamount = $pvalue2['amount_rounded'];
+                }
+            }  
+        } 
+    } 
+} 
+} 
+} 
+?>
+
+<style>
+    .mySwiper {
+        padding: 10px 0 0;
+    }
+
+    .mySwiper .swiper-slide {
+        opacity: 0.4;
+        transition: .24s ease-in;
+    }
+
+    .mySwiper .swiper-slide-thumb-active {
+        opacity: 1;
+    }
+
+    .swiper-slide img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+</style>
+<script>
+    async function calculate() {
+
+        //Inputs ("parseInt" converts string to Int)
+        var night = document.getElementById("night").value;
+        var chkindate = document.getElementById("chkindate").value;
+        var chkoutdate = document.getElementById("chkoutdate").value;
+        var room = document.getElementById("room").value;
+        var guest = document.getElementById("guest").value;
+        var farevalue = document.getElementById("farevalue").value;
+        var noOfKids = '';
+        if (document.getElementById('children')) {
+            const repeat = parseInt(document.getElementById('numOfKids').value);  // Get the number of repetitions
+            const number = 17;  // The number to be repeated
+            const result = Array(repeat).fill(number).join(',');  // Fill the array with '17', repeat it 'repeat' times, then join into a string
+            noOfKids = encodeURIComponent(result);  // URL encode the result to get commas as %2C
+        }
+        var getresult = farevalue * night * room * guest + 300 + 3;
+        const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/getHotelDetails?hotel_id=191605&arrival_date=${chkindate}&departure_date=${chkoutdate}&adults=${guest}&children_age=${noOfKids}&room_qty=${room}&units=metric&temperature_unit=c&languagecode=en-us&currency_code=EUR`;
+        const options = {
+            method: 'GET',
+            headers: {
+                'x-rapidapi-key': '88fd5b4aecmsh134935a8622c85bp1a6054jsn0ac77dc37163',
+                'x-rapidapi-host': 'booking-com15.p.rapidapi.com'
+            }
+        };
+
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            const price = result.data.product_price_breakdown.gross_amount_hotel_currency.amount_rounded;
+            getresult = price
+            console.log(price);
+        } catch (error) {
+            console.error(error);
+        }
+
+        let cleanAmount = getresult.replace(/[Rs.,\s]/g, ''); 
+        var gst = cleanAmount * 18 / 100;
+        var total1 = +cleanAmount + +gst;
+        var total = 'Rs. ' + total1;
+
+        //Output
+        document.getElementById("nightv").innerHTML = night;
+        document.getElementById("roomv").innerHTML = room;
+        document.getElementById("guestv").innerHTML = guest;
+        document.getElementById("totalfare").innerHTML = getresult;
+        document.getElementById("gst").innerHTML = gst;
+        document.getElementById("total").innerHTML = total;
+        document.getElementById("gtotal").value = total;
+
+
+    };
+</script>
+<section id="bookinghead" class="mt-130">
+    <div class="container">
+        <div class="heading pb-4">
+            <h2>
+                <?php echo $gethotelname; ?>
+            </h2>
+            <p class="mb-0" style="--heading-font: 'Poppins', sans-serif;">
+                <span>
+                    <img src="public/images/icons/star.svg" width="15px" alt="">
+                </span>
+                <span>
+                    <?php echo $getaddress; ?>
+                </span>
+                <!-- <span class="place-active"> 12 Places - 3 Activities</span> -->
+            </p>
+            <!-- <p style="--heading-font: 'Poppins', sans-serif;">
+                <span>
+                    <img src="public/images/icons/location_clr.svg" width="15px" alt="">
+                </span>
+                <span>Khola, Dangmal ( Rajnagar), Bhitarkanika National Park, Odisha 754248</span>
+            </p> -->
+        </div>
+    </div>
+</section>
+<form action="app/model/pay.php" method="post" class="form1">
+    <section id="bookingDetails">
+        <div class="container">
+            <div class="bookingDetails package-details">
+                <div class="row">
+                    <div class="col-lg-7 bk-dtl">
+                        <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff"
+                            class="swiper mySwiper2">
+                            <div class="swiper-wrapper">
+                                <input type="hidden" name="hotelname" id="hotelname"
+                                    value="<?php echo $gethotelname; ?>" />
+                                <input type="hidden" name="hoteladdress" id="hoteladdress"
+                                    value="<?php echo $getaddress; ?>" />
+                                <?php
+                                                                                    foreach($json_data2 as $dkey1 => $dvalue)
+                                                                                    {
+                                                                                    if(is_array($dvalue))
+                                                                                        {
+                                                                                        if($dkey1 =='data')
+                                                                                         {
+                                                                                            foreach($dvalue as $dkey2 => $dvalue2)
+                                                                                            {
+                                                                                    if($dkey2=='rooms')
+                                                                                    {
+                                                                                        foreach($dvalue2 as $dkey3 => $dvalue3)
+                                                                                        {
+                                                                                            foreach($dvalue3 as $dkey4 => $dvalue4)
+                                                                                            {
+                                                                                                if($dkey4=='photos')
+                                                                                                {
+                                                                                                foreach($dvalue4 as $dkey5 => $dvalue5)
+                                                                                                { 
+                                                                                                    $getoriginalphoto = $dvalue5['url_original'];
+                                                                                                ?>
+                                <div class="swiper-slide">
+                                    <img src="<?php echo $getoriginalphoto; ?>" alt="hotel image"
+                                        style="height:400px; width: 800px;" />
+                                </div>
+                                <?php        } 
+                                                                                                            } 
+                                                                                                        } 
+                                                                                                    } 
+                                                                                                } 
+                                                                                            } 
+                                                                                        } 
+                                                                                    } 
+                                                                                } 
+                                                                                ?>
+
+                            </div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev"></div>
+                        </div>
+                        <div class="swiper mySwiper">
+                            <div class="swiper-wrapper">
+                                <?php
+
+                            foreach($json_data2 as $dkey1 => $dvalue)
+                            {
+                            if(is_array($dvalue))
+                                {
+                                if($dkey1 =='data')
+                                    {
+                                    foreach($dvalue as $dkey2 => $dvalue2)
+                                    {
+                            if($dkey2=='rooms')
+                            {
+                                foreach($dvalue2 as $dkey3 => $dvalue3)
+                                {
+                                    foreach($dvalue3 as $dkey4 => $dvalue4)
+                                    {
+                                        if($dkey4=='photos')
+                                        {
+                                        foreach($dvalue4 as $dkey5 => $dvalue5)
+                                        { 
+                                            $getoriginalphoto = $dvalue5['url_original'];
+                                        ?>
+                                <div class="swiper-slide">
+                                    <img src="<?php echo $getoriginalphoto; ?>">
+                                </div>
+                                <?php        } 
+                                                    } 
+                                                } 
+                                            } 
+                                        } 
+                                    } 
+                                } 
+                            } 
+                        } 
+                        ?>
+
+
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="row">
+                            <h4>Enter your Guest Information</h4>
+                            <div class="col-sm-10"
+                                style="border:solid rgb(196, 196, 196) 1px; padding: 10ox; border-radius: 10px;">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="cname" id="cname"
+                                        placeholder="Enter your name" required />
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="email" id="email"
+                                        placeholder="Enter your Email" required />
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="phone" id="phone"
+                                        placeholder="Enter your phone" required />
+                                </div>
+                                <div class="form-group">
+
+                                    <input type="text" class="form-control" name="address" id="address"
+                                        placeholder="Enter your address" required />
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5">
+                        <div class="bookingDetailsLeftWrapper pe-lg-0 pt-lg-0 ps-lg-5 ps-sm-0 pt-sm-3">
+                            <!-- Login User -->
+                            <div class="login_wrapper position-relative">
+                                <!-- <img src="public/images/aa.png" class="img-fluid rounded-3 round-1" alt=""> -->
+                                <div class="divlogin_wrapper package-log">
+                                    <div class="heading text-white w-60">
+                                        <h4 style="--font-clr-dark-rglr: #fff; --font-h4: 20px;">
+                                            <?php echo $getstrikeoutprice;  ?>
+                                        </h4>
+                                        <h3 style="--font-clr-dark-rglr: #fff;
+                                --font-h4: 24px;">
+                                            <?php echo $getgrossamount;
+                                 $delimiter =  explode("Rs.", $getgrossamount);
+                                $getone = $delimiter[1];
+                                $onexplode = explode(",", $getone);
+                                $combinevalue = $onexplode[0].$onexplode[1];
+                                $getcalculate = $combinevalue;
+                              
+
+                                ?>
+                                            <input type="hidden" value="<?php echo $getcalculate; ?>" id="farevalue">
+                                            <span style="--font-h4: 14px;">Per person*</span>
+                                        </h3>
+                                        <p style="--font-clr-dark-rglr: #fff;"> *Excluding applicable taxes</p>
+                                    </div>
+                                    <div class="package-chat-expt">
+                                        <img src="public/images/icons/support.png" alt="">
+                                        <p>Chat with<br> Expert</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Login -->
+                            <!-- Booking Form -->
+                            <div class="bookingForm bg-white py-4 px-3 rounded-3 pp-ro">
+                                <div class="heading mb-3">
+                                    <h3 style="--weight-500:600;--font-h4: 20px;--font-clr-dark-rglr:#d21e06;">Your
+                                        Reservation</h3>
+                                </div>
+                                <div class="form_wrapperBooing">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-sm-12">
+                                            <label for="">From Date</label>
+                                            <input type="date" class="form-control" name="chkindate" id="chkindate"
+                                                required onchange="calculate()">
+                                        </div>
+                                        <div class="col-lg-6 col-sm-12">
+                                            <label for="">To Date</label>
+                                            <input type="date" class="form-control" name="chkoutdate" id="chkoutdate"
+                                                onchange="calculate()">
+                                        </div>
+                                        <div class="col-lg-6 col-sm-12">
+                                            <label for="">Night</label>
+                                            <select name="night" class="form-control" id="night" onchange="calculate()">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
+                                        <!-- <div class="col-lg-6 col-sm-12">
+                                        <label for="">Night</label>
+                                        <input type="text" class="form-control" >
+                                    </div> -->
+                                        <div class="col-lg-6 col-sm-12">
+                                            <div class="form-check lef-dd">
+                                                <label class="form-check-label" for="haveChild">
+                                                    Room
+                                                </label>
+                                                <input class="form-control" type="text" value="1" name="room" id="room"
+                                                    required onchange="calculate()">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-12">
+                                            <div class="form-check lef-dd">
+                                                <label class="form-check-label" for="haveChild">
+                                                    Adults
+                                                </label>
+                                                <input class="form-control" type="text" value="1" name="guest"
+                                                    id="guest" required onchange="calculate()">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-12">
+                                            <div class="form-check lef-dd">
+                                                <label class="form-check-label" for="haveChild">
+                                                    Children
+                                                </label>
+                                                <input class="form-control" type="text" value="1" name="children"
+                                                    id="guest" required onchange="calculate()">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="package-fane mt-4 mb-3" style="font-weight: bold;">
+                                            <h3>Fare Breakup</h3>
+                                            <p><span id="nightv"></span> Night <span id="roomv"></span> Room X <span
+                                                    id="guestv">2 </span> Guest</p>
+                                            Fees Total : <span id="totalfare"></span><br>
+                                            GST@18% : <span id="gst"></span><br>
+                                            Total : <span id="total"></span><br>
+                                            <input type="hidden" id="gtotal" name="gtotal">
+                                            <input type="hidden" id="currency" name="currency" value="INR">
+
+                                        </div>
+                                        <div class="col-12 mt-3">
+                                            <button type="submit" class="hero_btn w-100">Processes to Book</button>
+                                        </div>
+                                        <div class="col-12">
+                                            <a href="">
+                                                <div class="package-hero_btn w-100 mt-4"><span> <img
+                                                            src="public/images/icons/phone-call.png" alt=""> Want Us to
+                                                        call you ?</span></div>
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+    <section id="bookingdetails2">
+        <div class="container">
+            <div class="bookingdetails2">
+                <div class="heading">
+                    <h3>Hotel Amenities</h3>
+                </div>
+                <div class="bookigdetails2-inner row">
+                    <div class="bookingdetails2-left col-lg-6">
+                        <div class="amenities">
+                            <div class="amenities-inner">
+                                <div class="amenities-item">
+                                    <?php
+                                foreach($json_data2 as $dkey1 => $dvalue)
+                                {
+                                    if(is_array($dvalue))
+                                    {
+                                        if($dkey1 =='data')
+                                        {
+                                            foreach($dvalue as $dkey2 => $dvalue2)
+                                            {
+                                                if($dkey2=='property_highlight_strip')
+                                                {
+                                                    foreach($dvalue2 as $dkey3 => $dvalue3)
+                                                    { ?>
+                                    <div class="amenities-grid pinkk">
+                                        <div class="amenities-grid-img">
+                                            <img src="public/images/icons/tv.png" alt="">
+                                        </div>
+                                        <div class="amenities-grid-txt">
+                                            <p>
+                                                <?php echo $dvalue3['name']; ?>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <?php
+
+                                                    
+                                                }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                         ?>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bookingdetails2-right col-lg-6">
+                        <div class="details2-left-inner">
+                            <div class="accordion" id="accordionExample">
+                                <?php
+                            foreach($json_data2 as $dkey1 => $dvalue)
+                                {
+                                if(is_array($dvalue))
+                                    {
+                                    if($dkey1 =='data')
+                                        {
+                                        foreach($dvalue as $dkey2 => $dvalue2)
+                                        {
+                                if($dkey2=='rooms')
+                                {
+                                    foreach($dvalue2 as $dkey3 => $dvalue3)
+                                    { ?>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne">
+                                            Room Info
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse show"
+                                        aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <strong>
+                                                <?php echo $dvalue3['description']; ?>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php
+                        
+                    }
+                }
+                    }
+                }
+            }
+        }
+?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</form>
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+    var swiper = new Swiper(".mySwiper", {
+        loop: true,
+        spaceBetween: 10,
+        slidesPerView: 6,
+        freeMode: true,
+        watchSlidesProgress: true,
+    });
+    var swiper2 = new Swiper(".mySwiper2", {
+        loop: true,
+        watchSlidesProgress: true,
+        spaceBetween: 10,
+        effect: "fade",
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        thumbs: {
+            swiper: swiper,
+        },
+    });
+</script>

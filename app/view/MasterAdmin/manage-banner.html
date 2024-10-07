@@ -1,0 +1,273 @@
+<section class="mypouter_area proecom">
+  <div class="mypinner_area">
+    <div class="topflx">
+      <div class="protitle">
+        <h3>Add banner </h3>
+      </div>
+    </div>
+    <div class="pmenuarea_outer">
+		<form method="POST" enctype="multipart/form-data">
+		  <div class="eveditx">
+			<div class="varirowx"> 
+			  <div class="uniga">
+				<ul>
+				  <li>
+					<label class="label_info">Image</label>
+					<div class="eventmph">
+					  <div class="multipleiupl">
+						<div class="addfilbx">
+						  <?php if($result_banner_edit->banner !=''){?>
+							<div class="piprpx">
+								<div class="phoxyd"><img class="imageThumb" src="../public/images/banner/<?php echo $result_banner_edit->banner;?>" title=""><a href="manage-banner?delimg=<?php echo $result_banner_edit->banner;?>&edited=<?php echo $_GET['edited'];?>"><span class="remocve">Remove image</span></a></div>
+							</div>
+							<input type="hidden" name="hidebanner" value="<?php echo $result_banner_edit->image;?>">
+						  <?php } else { ?>
+								<input class="nodis" type="file" id="files" name="banner" accept="image/*" required />
+								<label for="files" class="lbladmp">
+								  <div class="iconz"> <img src="../public/images/das_icons/gallery.png" /></div>
+								  <p>Add Photo</p>
+							  </label>
+						  <?php } ?>
+						</div>
+					  </div>
+					</div>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+			<div class="submit_box" align="center">
+				<?php if($_GET['edited'] !=''){?>
+				  <input type="submit" value="Update" class="upbtn" name="updt_banner">
+				<?php } else { ?>
+				  <input type="submit" value="Submit" class="upbtn" name="add_banner">
+				<?php } ?>
+			</div>
+		  </div>
+	  </form>
+    </div>
+  </div>
+</section>
+
+<!--RIGHT CONTENT AREA START-->
+<section class="mypouter_area proecom">
+  <div class="mypinner_area">
+
+    <div class="pmenuarea_outer gray">
+      <div class="table_area_list prolist">
+        <div class="itlisths">
+          <div class="table_area_list" id="contentdiv">
+            <table class="apptbl_area minsto">
+              <thead>
+                <tr>
+                  <td width="1%">Sl</td>
+                  <td width="5%">Date</td>
+                  <td width="10%">Banner</td>
+                  <td width="5%" align="center">Action</td>
+                </tr>
+              </thead>
+              <tbody>
+			  <?php 
+				include_once 'Pagination.class.php';
+				$baseURL = 'filterbanner.php';
+				$limit = 20;
+				$query = $conn->query("SELECT COUNT(*) as rowNum FROM $tbl_banner");
+				$result  = $query->fetch_assoc();
+				$rowCount= $result['rowNum'];
+
+				$pagConfig = array(
+					'baseURL' => $baseURL,
+					'totalRows' => $rowCount,
+					'perPage' => $limit,
+					'contentDiv' => 'contentdiv',
+					'link_func' => 'filterbanner'
+				);
+				$pagination =  new Pagination($pagConfig);
+			  $Resbanner=$conn->query("SELECT * FROM $tbl_banner ORDER BY bnrid DESC LIMIT $limit");
+			  if($Resbanner->num_rows > 0)
+			  {
+				  while($Resultbanner=$Resbanner->fetch_object())
+				  {
+				  ?>
+					  <tr>
+						<td><span><?php echo ++$i;?></span></td>
+						<td><span class="blue"><?php echo date('dS M y',strtotime($Resultbanner->created_date));?></span></td>
+						<td>
+							<p class="nmob"><span><img src="../public/images/banner/<?php echo $Resultbanner->banner;?>" style="height:60px;width:100px" alt="banner"></span></p>
+						</td>
+						<td>
+							<div class="cbhs_col act nlnx">
+								<div class="action">
+									<a class="viewic edit" title="Edit" href="manage-banner?edited=<?php echo $Resultbanner->bnrid;?>">
+									<img src="../public/images/das_icons/edit_green.png" alt="edit"> </a>
+									<a class="viewic edit" title="Delete" href="#" onclick="deletebanner('<?php echo $Resultbanner->bnrid;?>','<?php echo $Resultbanner->banner;?>')"> <img src="../public/images/das_icons/del_red.png" alt="delete"></a>
+								</div>
+							</div>
+						</td>
+					</tr>
+			  <?php } } else { ?>
+				<tr><td colspan="6" style="color:red;text-align:center;">No list found!</td></tr>
+			  <?php } ?>
+              </tbody>
+            </table>
+			<?php echo $pagination->createLinks();?> 
+          </div>
+		  <input type="hidden" id="pagenum">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--WARNING POPUP DELTVARNT-->
+<div id="dltord"></div>
+<!--WARNING POPUP DELTVARNT END--> 
+<!--RIGHT CONTENT AREA END-->
+</section>
+<section class="loader_outer" id="lodr">
+  <div class="lader_layer" id="lodr_layr">
+    <div class="loaderbox">
+      <div class="ldio-k08to6a49h">
+        <div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<!--CONTENT AREA END--> 
+<script src="<?php echo $projectPath;?>public/js/admin_js/jquery.min.js" type="text/javascript"></script>
+<script src="<?php echo $projectPath;?>public/js/admin_js/jquery-ui.js" type="text/javascript"></script>
+<script>  
+function filterbanner(page_num)
+{
+    $('#pagenum').val(page_num);
+	page_num = page_num?page_num:0;
+	$.ajax({
+		type: 'POST',
+		url: 'filterbanner.php',
+		data:'page='+page_num,
+		beforeSend: function () {
+			$('.lodr').show();
+		},
+		success: function (html) {
+			$('#contentdiv').html(html);
+			$('.lodr').fadeOut("slow");
+		}
+	});
+} 
+function deletebanner(bnrid,image)
+{
+	var msg=confirm('Are you sure ?');
+	if(msg){
+		var page_num=$('#pagenum').val();
+		$.ajax({
+			type: 'POST',
+			url: 'deletebanner.php',
+			data:'bnrid='+bnrid+'&delimage='+image,
+			beforeSend: function () {
+			},
+			success: function (html) {
+				filterbanner(page_num);
+			}
+		});
+	}
+} 
+</script>   
+<script>   
+    $(document).ready(function(){		
+	$('.ccxyszy').click (function() {	
+      $('.xyssssx').toggleClass("closebcatx");
+  	  $('body').toggleClass("vwbodx");
+    });
+  });
+</script> 
+
+<!--drop submenu--> 
+
+<script>
+$(document).ready(function()
+{
+	$('.menu_toggle_icon').click (function() {	
+      $('.hmslt_area').toggleClass("dasmenu_close");	  
+	  $('.hmso_area').toggleClass("menuoff");
+  	  $('.menu_toggle_icon').toggleClass("active");
+    });
+  
+	//drop menu sidebar
+    $("ul.hmsmenu_area li:has(ul)").addClass('hassub');	  	
+	$("ul.hmsmenu_area li:has(ul)").append( '<span class="drop_icon"></span>'); 	 	
+	$("ul.hmsmenu_area .drop_icon" ).click(function(){       
+        $(this).toggleClass("act").prev().slideToggle("fast");
+        return false;   }); 	
+			
+	//category drop menu	   
+   $(".cat_list_area ul > li:has(.sub_child_area)").append( '<span class="drop_icon"></span>');   
+    $(".cat_list_area .drop_icon" ).click(function(){       
+        $(this).toggleClass("act").prev().slideToggle("fast");
+       return false;   }); 
+		
+	//multiple file upload
+
+
+//mobile menu
+	$(".main_menu_outer").hide(); 
+	$(".menu_toggle_mob").click(function(){$(".main_menu_outer").slideToggle().toggleClass("activi");$(".menu_toggle_mob").toggleClass("active"); return false; });
+
+}); 
+</script> 
+<script>  
+  $('.multi-field-wrapper').each(function() {
+    var $wrapper = $('.multi-fields', this);
+    $(".add-field", $(this)).click(function(e) {
+        $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper);
+    });
+    $('.multi-field .remove-field', $wrapper).click(function() {
+        if ($('.multi-field', $wrapper).length > 1)
+            $(this).parent('.multi-field').remove();
+    });
+});
+</script> 
+ 
+<script>
+  $(function() {
+    $( ".accordion" ).accordion({heightStyle: "content", collapsible: true, active: false, animate: {
+        duration: 500
+    }});
+  });
+  
+</script>
+<script>  
+  $(document).ready(function() {
+  if (window.File && window.FileList && window.FileReader) {
+    $("#files").on("change", function(e) {
+      var files = e.target.files,
+        filesLength = files.length;
+      for (var i = 0; i < filesLength; i++) {
+        var f = files[i]
+        var fileReader = new FileReader();
+        fileReader.onload = (function(e) {
+          var file = e.target;
+          $("<div class=\"piprpx\"><div class=\"phoxyd\">" +
+            "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+            "<span class=\"remocve\">Remove image</span>" +
+            "</div></div>").insertAfter("#files");
+          $(".remocve").click(function(){
+            $(this).parent(".phoxyd").remove();
+          });
+          
+          // Old code here
+          /*$("<img></img>", {
+            class: "imageThumb",
+            src: e.target.result,
+            title: file.name + " | Click to remove"
+          }).insertAfter("#files").click(function(){$(this).remove();});*/
+          
+        });
+        fileReader.readAsDataURL(f);
+      }
+      console.log(files);
+    });
+  } else {
+    alert("Your browser doesn't support to File API")
+  }
+});  
+  </script> 
+</body>
+</html>

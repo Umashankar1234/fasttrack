@@ -1,0 +1,47 @@
+<section id="loginSection">
+    <div class="container">
+		<div class="col-lg-10 mx-auto">
+			<div class="loginSection">
+				<div class="row">
+					<div class="col-md-6 d-sm-block d-none">
+						<div class="loginSectionLeft dffcol">
+							<img src="public/images/travel-signin.jpg" class="img-fluid rounded-4" alt="">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="loginSectionRight signup-head">
+							<form name="form1" action="" method="post">
+							<div class="heading mb-3"><h3 style="--font-clr-dark-rglr:#d21e06;--weight-500: 600">Sign Up</h3></div>
+							<div class="form-row row signup">
+								<div class="form-group col-md-12">
+									<label for="">Full Name <span>*</span></label>
+									<input autocomplete="off" type="text" class="form-control" id="full_name" placeholder="Enter Name">
+								</div>
+								<div class="form-group col-md-6">
+									<label for="">Mobile Number <span>*</span></label>
+									<input type="tel" class="form-control" id="mobileno" placeholder="Phone Number" autocomplete="off" onkeypress="return numbersonly(event)" maxlength="10">
+									<p id="errormsg" style="color:red;"></p>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="">Email Id</label>
+									<input type="email" class="form-control" id="eml" placeholder="Email ID">
+								</div>
+								<div class="form-group col-md-6">
+									<label for="">Password <span>*</span></label>
+									<input id="password" type="password" class="form-control">
+								</div>
+								<div class="form-group col-md-6">
+									<label for="">Confirm Password <span>*</span></label>
+									<input autocomplete="off" type="password" class="form-control" id="confpasswd" placeholder="">
+								</div>
+							</div>
+							<button class="hero_btn w-100 mt-4" id="signup">Sign Up</button>
+							<p class="stg" style="text-align: right;">Already have a account !<a href="login.php" style="display: inline-block;"> <span> Login?</span></a></p>
+						</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+</section>

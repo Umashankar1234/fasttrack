@@ -1,0 +1,566 @@
+<section id="hotel_listingSection" class="car-booking">
+    <div class="container-fluid px-sm-0 px-3">
+        <div class="hotel_listingSection">
+            <div class="row g-0">
+                <div class="col-lg-2">
+                    <p id="show-filter"
+                        class="bottom-0 d-block d-md-none end-0 form-select mb-0 position-fixed px-3 start-0 min-col-red"
+                        style="z-index: 11;
+                    height: 55px;
+                    line-height: 45px;">Apply Filter</p>
+                    <div id="select-filter" class="hotel_listingSectionFilter d-none d-md-block">
+                        <div
+                            class="hotel_listingSectionFilterHeading heading py-3 d-flex align-items-center justify-content-between px-2">
+                            <h3 style="--font-h4: 20px;">Filter</h3>
+                            <a href="" class="text-danger small fw-semibold">Clear All</a>
+                        </div>
+                        <div class="d-md-none d-block position-fixed bottom-0 start-0 end-0 bg-white">
+                            <div class="px-3 py-2 border-top d-flex gap-3 applyFilter">
+                                <button class="hero_btn btn_invrs w-100">Cancel</button>
+                                <button class="hero_btn w-100">Apply</button>
+                            </div>
+                        </div>
+                        <div class="filter_ListWrapper">
+                            <div class="filterWrapper px-2">
+
+                                <h6 class="mb-3">SEGMENT</h6>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="bookHotels">
+                                    <label class="form-check-label" for="bookHotels">
+                                        Hatchback
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="bookCars" checked>
+                                    <label class="form-check-label" for="bookCars">
+                                        Sedan
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="bookGuides">
+                                    <label class="form-check-label" for="bookGuides">
+                                        SUV
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="bookPackages">
+                                    <label class="form-check-label" for="bookPackages">
+                                        MUV
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="filterWrapper px-2">
+
+                                <h6 class="mb-3">BRAND</h6>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="pri1" checked>
+                                    <label class="form-check-label" for="pri1">
+                                        <!-- Rs. 1000-2999 -->
+                                        Maruti
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="pri2">
+                                    <label class="form-check-label" for="pri2">
+                                        <!-- Rs. 3000-4999 -->
+                                        Hyundai
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="pri3">
+                                    <label class="form-check-label" for="pri3">
+                                        <!-- Rs. 5000-9999 -->
+                                        Mahindra
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="pri4">
+                                    <label class="form-check-label" for="pri4">
+                                        <!-- Rs. 10000-20000 -->
+                                        Honda
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="filterWrapper px-2">
+
+                                <h6 class="mb-3">Fule Type</h6>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="dn1" checked>
+                                    <label class="form-check-label" for="dn1">
+                                        Diesel
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="dn3">
+                                    <label class="form-check-label" for="dn3">
+                                        Petrol
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="filterWrapper px-2">
+
+                                <h6 class="mb-3">Transmission Type</h6>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="dn1" checked>
+                                    <label class="form-check-label" for="dn1">
+                                        Automatic
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="dn2">
+                                    <label class="form-check-label" for="dn2">
+                                        Manual
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="filterWrapper px-2">
+
+                                <h6 class="mb-3">Setting Capacity</h6>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="dn1" checked>
+                                    <label class="form-check-label" for="dn1">
+                                        5seats
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="dn2">
+                                    <label class="form-check-label" for="dn2">
+                                        7seats
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-10 car-back">
+                    <div class="hotel_listingRight car-pad">
+                        <div
+                            class="hotel_listingRightHeading py-2 d-flex justify-content-between align-items-center car-top-clr">
+                            <div class="heading">
+                                <h3>Find Your Cars</h3>
+                            </div>
+                            <!-- <div class="col-lg-3 col-sm-8">
+                                <div class="d-flex align-items-center">
+                                    <label for="" class="col-lg-4 col-sm-6" style="white-space: pre;">Sort by</label>
+                                    <div class="col-lg-8  col-sm-6 text-sm-center">
+                                        <p class="d-block w-100 form-control form-select my-0" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="cursor: pointer;user-select: none;">Popularity</p>
+                                        <div class="collapse position-absolute" style="z-index: 1111;" id="collapseExample">
+                                            <ul class="list-unstyled bg-white" style="min-width: 170px;">
+                                                <li class="py-2 px-2 small" style="cursor: pointer;">Related</li>
+                                                <li class="py-2 px-2 small" style="cursor: pointer;">Popularity</li>
+                                                <li class="py-2 px-2 small" style="cursor: pointer;">Price Low to High</li>
+                                                <li class="py-2 px-2 small" style="cursor: pointer;">Price High to Low</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                        <div id="tourPackages" class="carPackagesLsit">
+                            <div class="row g-3">
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="tourPackagesWrapper">
+                                        <div class="tourPackagesImg">
+                                            <div class="swiper packageImg">
+                                                <div class="swiper-wrapper">
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab1.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab2.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab3.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab2.png" class="img-fluid" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="swiper-pagination"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tourPackagesText">
+                                            <h3 class="packages_title">Maruti Swift ZXI</h3>
+                                            <div class="car-featur">
+                                                <span><img src="public/images/petrol-pump.png" alt="">Diesel</span>
+                                                <span><img src="public/images/gear-shift.png" alt="">Manual</span>
+                                                <span><img src="public/images/seat.png" alt="">5 Seater</span>
+                                            </div>
+                                            <div class="detail">
+                                                <a href="cab_details">More Details <img
+                                                        src="public/images/icons/right-arrow.png" alt=""></a>
+                                            </div>
+                                            <div
+                                                class="priceSection d-flex justify-content-between align-items-center ">
+                                                <div>
+                                                    <small>Starting From</small>
+                                                    <h6 class="packagesPrice mb-0">15000</h6>
+
+                                                </div>
+                                                <a href="" class="hero_btn app">Book Now</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="tourPackagesWrapper">
+                                        <div class="tourPackagesImg">
+                                            <div class="swiper packageImg">
+                                                <div class="swiper-wrapper">
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab2.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab1.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab3.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab2.png" class="img-fluid" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="swiper-pagination"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tourPackagesText">
+                                            <h3 class="packages_title">Maruti Swift ZXI</h3>
+                                            <div class="car-featur">
+                                                <span><img src="public/images/petrol-pump.png" alt="">Diesel</span>
+                                                <span><img src="public/images/gear-shift.png" alt="">Manual</span>
+                                                <span><img src="public/images/seat.png" alt="">5 Seater</span>
+                                            </div>
+                                            <div class="detail oopn">
+                                                <a href="">More Details <img src="public/images/icons/right-arrow.png"
+                                                        alt=""></a>
+                                            </div>
+                                            <div
+                                                class="priceSection d-flex justify-content-between align-items-center ">
+                                                <div>
+                                                    <small>Starting From</small>
+                                                    <h6 class="packagesPrice mb-0">15000</h6>
+
+                                                </div>
+                                                <a href="" class="hero_btn app">Book Now</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="tourPackagesWrapper">
+                                        <div class="tourPackagesImg">
+                                            <div class="swiper packageImg">
+                                                <div class="swiper-wrapper">
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab1.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab2.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab3.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab2.png" class="img-fluid" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="swiper-pagination"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tourPackagesText">
+                                            <h3 class="packages_title">Maruti Swift ZXI</h3>
+                                            <div class="car-featur">
+                                                <span><img src="public/images/petrol-pump.png" alt="">Diesel</span>
+                                                <span><img src="public/images/gear-shift.png" alt="">Manual</span>
+                                                <span><img src="public/images/seat.png" alt="">5 Seater</span>
+                                            </div>
+                                            <div class="detail oopn">
+                                                <a href="">More Details <img src="public/images/icons/right-arrow.png"
+                                                        alt=""></a>
+                                            </div>
+                                            <div
+                                                class="priceSection d-flex justify-content-between align-items-center ">
+                                                <div>
+                                                    <small>Starting From</small>
+                                                    <h6 class="packagesPrice mb-0">15000</h6>
+
+                                                </div>
+                                                <a href="" class="hero_btn app">Book Now</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="tourPackagesWrapper">
+                                        <div class="tourPackagesImg">
+                                            <div class="swiper packageImg">
+                                                <div class="swiper-wrapper">
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab3.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab2.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab3.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab2.png" class="img-fluid" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="swiper-pagination"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tourPackagesText">
+                                            <h3 class="packages_title">Maruti Swift ZXI</h3>
+                                            <div class="car-featur">
+                                                <span><img src="public/images/petrol-pump.png" alt="">Diesel</span>
+                                                <span><img src="public/images/gear-shift.png" alt="">Manual</span>
+                                                <span><img src="public/images/seat.png" alt="">5 Seater</span>
+                                            </div>
+                                            <div class="detail oopn">
+                                                <a href="">More Details <img src="public/images/icons/right-arrow.png"
+                                                        alt=""></a>
+                                            </div>
+                                            <div
+                                                class="priceSection d-flex justify-content-between align-items-center ">
+                                                <div>
+                                                    <small>Starting From</small>
+                                                    <h6 class="packagesPrice mb-0">15000</h6>
+
+                                                </div>
+                                                <a href="" class="hero_btn app">Book Now</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="tourPackagesWrapper">
+                                        <div class="tourPackagesImg">
+                                            <div class="swiper packageImg">
+                                                <div class="swiper-wrapper">
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab1.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab2.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab3.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab2.png" class="img-fluid" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="swiper-pagination"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tourPackagesText">
+                                            <h3 class="packages_title">Maruti Swift ZXI</h3>
+                                            <div class="car-featur">
+                                                <span><img src="public/images/petrol-pump.png" alt="">Diesel</span>
+                                                <span><img src="public/images/gear-shift.png" alt="">Manual</span>
+                                                <span><img src="public/images/seat.png" alt="">5 Seater</span>
+                                            </div>
+                                            <div class="detail oopn">
+                                                <a href="">More Details <img src="public/images/icons/right-arrow.png"
+                                                        alt=""></a>
+                                            </div>
+                                            <div
+                                                class="priceSection d-flex justify-content-between align-items-center ">
+                                                <div>
+                                                    <small>Starting From</small>
+                                                    <h6 class="packagesPrice mb-0">15000</h6>
+
+                                                </div>
+                                                <a href="" class="hero_btn app">Book Now</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="tourPackagesWrapper">
+                                        <div class="tourPackagesImg">
+                                            <div class="swiper packageImg">
+                                                <div class="swiper-wrapper">
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab2.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab1.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab3.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab2.png" class="img-fluid" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="swiper-pagination"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tourPackagesText">
+                                            <h3 class="packages_title">Maruti Swift ZXI</h3>
+                                            <div class="car-featur">
+                                                <span><img src="public/images/petrol-pump.png" alt="">Diesel</span>
+                                                <span><img src="public/images/gear-shift.png" alt="">Manual</span>
+                                                <span><img src="public/images/seat.png" alt="">5 Seater</span>
+                                            </div>
+                                            <div class="detail oopn">
+                                                <a href="">More Details <img src="public/images/icons/right-arrow.png"
+                                                        alt=""></a>
+                                            </div>
+                                            <div
+                                                class="priceSection d-flex justify-content-between align-items-center ">
+                                                <div>
+                                                    <small>Starting From</small>
+                                                    <h6 class="packagesPrice mb-0">15000</h6>
+
+                                                </div>
+                                                <a href="" class="hero_btn app">Book Now</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="tourPackagesWrapper">
+                                        <div class="tourPackagesImg">
+                                            <div class="swiper packageImg">
+                                                <div class="swiper-wrapper">
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab3.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab2.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab1.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab2.png" class="img-fluid" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="swiper-pagination"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tourPackagesText">
+                                            <h3 class="packages_title">Maruti Swift ZXI</h3>
+                                            <div class="car-featur">
+                                                <span><img src="public/images/petrol-pump.png" alt="">Diesel</span>
+                                                <span><img src="public/images/gear-shift.png" alt="">Manual</span>
+                                                <span><img src="public/images/seat.png" alt="">5 Seater</span>
+                                            </div>
+                                            <div class="detail oopn">
+                                                <a href="">More Details <img src="public/images/icons/right-arrow.png"
+                                                        alt=""></a>
+                                            </div>
+                                            <div
+                                                class="priceSection d-flex justify-content-between align-items-center ">
+                                                <div>
+                                                    <small>Starting From</small>
+                                                    <h6 class="packagesPrice mb-0">15000</h6>
+
+                                                </div>
+                                                <a href="" class="hero_btn app">Book Now</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="tourPackagesWrapper">
+                                        <div class="tourPackagesImg">
+                                            <div class="swiper packageImg">
+                                                <div class="swiper-wrapper">
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab1.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab2.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab3.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab2.png" class="img-fluid" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="swiper-pagination"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tourPackagesText">
+                                            <h3 class="packages_title">Maruti Swift ZXI</h3>
+                                            <div class="car-featur">
+                                                <span><img src="public/images/petrol-pump.png" alt="">Diesel</span>
+                                                <span><img src="public/images/gear-shift.png" alt="">Manual</span>
+                                                <span><img src="public/images/seat.png" alt="">5 Seater</span>
+                                            </div>
+                                            <div class="detail oopn">
+                                                <a href="">More Details <img src="public/images/icons/right-arrow.png"
+                                                        alt=""></a>
+                                            </div>
+                                            <div
+                                                class="priceSection d-flex justify-content-between align-items-center ">
+                                                <div>
+                                                    <small>Starting From</small>
+                                                    <h6 class="packagesPrice mb-0">15000</h6>
+
+                                                </div>
+                                                <a href="" class="hero_btn app">Book Now</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="tourPackagesWrapper">
+                                        <div class="tourPackagesImg">
+                                            <div class="swiper packageImg">
+                                                <div class="swiper-wrapper">
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab2.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab1.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab3.png" class="img-fluid" alt="">
+                                                    </div>
+                                                    <div class="swiper-slide">
+                                                        <img src="public/images/cab2.png" class="img-fluid" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="swiper-pagination"></div>
+                                            </div>
+                                        </div>
+                                        <div class="tourPackagesText">
+                                            <h3 class="packages_title">Maruti Swift ZXI</h3>
+                                            <div class="car-featur">
+                                                <span><img src="public/images/petrol-pump.png" alt="">Diesel</span>
+                                                <span><img src="public/images/gear-shift.png" alt="">Manual</span>
+                                                <span><img src="public/images/seat.png" alt="">5 Seater</span>
+                                            </div>
+                                            <div class="detail oopn">
+                                                <a href="">More Details <img src="public/images/icons/right-arrow.png"
+                                                        alt=""></a>
+                                            </div>
+                                            <div
+                                                class="priceSection d-flex justify-content-between align-items-center ">
+                                                <div>
+                                                    <small>Starting From</small>
+                                                    <h6 class="packagesPrice mb-0">15000</h6>
+
+                                                </div>
+                                                <a href="" class="hero_btn app">Book Now</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

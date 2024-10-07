@@ -1,0 +1,144 @@
+// JavaScript Document
+  $(document).ready(function () {
+    
+        $("#dt1").datepicker({
+            dateFormat: "dd-M-yy",
+			 changeMonth: true,
+      			changeYear: true,
+            minDate: 0,
+            onSelect: function (date) {
+                var date2 = $('#dt1').datepicker('getDate');
+                date2.setDate(date2.getDate() + 0);
+                $('#dt2').datepicker('setDate', date2);
+                //sets minDate to dt1 date + 1
+                $('#dt2').datepicker('option', 'minDate', date2);
+            }
+        });
+        $('#dt2').datepicker({
+            dateFormat: "dd-M-yy",
+			 changeMonth: true,
+      			changeYear: true,
+            onClose: function () {
+                var dt1 = $('#dt1').datepicker('getDate');
+                console.log(dt1);
+                var dt2 = $('#dt2').datepicker('getDate');
+                if (dt2 <= dt1) {
+                    var minDate = $('#dt2').datepicker('option', 'minDate');
+                    $('#dt2').datepicker('setDate', minDate);
+                }
+            }
+        });
+		    $('#dt3').datepicker({
+            dateFormat: "dd-M-yy",
+			 changeMonth: true,
+      			changeYear: true,
+            onClose: function () {
+                var dt1 = $('#dt1').datepicker('getDate');
+                console.log(dt1);
+                var dt3 = $('#dt3').datepicker('getDate');
+                if (dt3 <= dt1) {
+                    var minDate = $('#dt3').datepicker('option', 'minDate');
+                    $('#dt3').datepicker('setDate', minDate);
+                }
+            }
+        });
+		    $('#dt4').datepicker({
+            dateFormat: "dd-M-yy",
+			 changeMonth: true,
+      			changeYear: true,
+            onClose: function () {
+                var dt1 = $('#dt1').datepicker('getDate');
+                console.log(dt1);
+                var dt4 = $('#dt4').datepicker('getDate');
+                if (dt4 <= dt1) {
+                    var minDate = $('#dt4').datepicker('option', 'minDate');
+                    $('#dt4').datepicker('setDate', minDate);
+                }
+            }
+        });
+		    $('#dt5').datepicker({
+            dateFormat: "dd-M-yy",
+			 changeMonth: true,
+      			changeYear: true,
+            onClose: function () {
+                var dt1 = $('#dt1').datepicker('getDate');
+                console.log(dt1);
+                var dt5 = $('#dt5').datepicker('getDate');
+                if (dt5 <= dt1) {
+                    var minDate = $('#dt5').datepicker('option', 'minDate');
+                    $('#dt5').datepicker('setDate', minDate);
+                }
+            }
+        });
+		   $('#dt6').datepicker({
+            dateFormat: "dd-M-yy",
+			 changeMonth: true,
+      			changeYear: true,
+            onClose: function () {
+                var dt1 = $('#dt1').datepicker('getDate');
+                console.log(dt1);
+                var dt6 = $('#dt6').datepicker('getDate');
+                if (dt6 <= dt1) {
+                    var minDate = $('#dt6').datepicker('option', 'minDate');
+                    $('#dt6').datepicker('setDate', minDate);
+                }
+            }
+        });
+		  $('#dt7').datepicker({
+            dateFormat: "dd-M-yy",
+			 changeMonth: true,
+      			changeYear: true,
+            onClose: function () {
+                var dt1 = $('#dt1').datepicker('getDate');
+                console.log(dt1);
+                var dt7 = $('#dt7').datepicker('getDate');
+                if (dt7 <= dt1) {
+                    var minDate = $('#dt7').datepicker('option', 'minDate');
+                    $('#dt7').datepicker('setDate', minDate);
+                }
+            }
+        });
+		 $('#dt8').datepicker({
+            dateFormat: "dd-M-yy",
+			 changeMonth: true,
+      			changeYear: true,
+            onClose: function () {
+                var dt1 = $('#dt1').datepicker('getDate');
+                console.log(dt1);
+                var dt8 = $('#dt8').datepicker('getDate');
+                if (dt8 <= dt1) {
+                    var minDate = $('#dt8').datepicker('option', 'minDate');
+                    $('#dt8').datepicker('setDate', minDate);
+                }
+            }
+        });
+		 $('#dt9').datepicker({
+            dateFormat: "dd-M-yy",
+			 changeMonth: true,
+      			changeYear: true,
+            onClose: function () {
+                var dt1 = $('#dt1').datepicker('getDate');
+                console.log(dt1);
+                var dt9 = $('#dt9').datepicker('getDate');
+                if (dt9 <= dt1) {
+                    var minDate = $('#dt9').datepicker('option', 'minDate');
+                    $('#dt9').datepicker('setDate', minDate);
+                }
+            }
+        });
+		 $('#dt10').datepicker({
+            dateFormat: "dd-M-yy",
+			 changeMonth: true,
+      			changeYear: true,
+            onClose: function () {
+                var dt1 = $('#dt1').datepicker('getDate');
+                console.log(dt1);
+                var dt10 = $('#dt10').datepicker('getDate');
+                if (dt10 <= dt1) {
+                    var minDate = $('#dt10').datepicker('option', 'minDate');
+                    $('#dt10').datepicker('setDate', minDate);
+                }
+            }
+        });
+		
+    });

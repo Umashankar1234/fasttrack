@@ -1,0 +1,135 @@
+@charset "UTF-8";@media (min-width:992px) and (max-width:1199px){.main-banner-3 .banner-title{font-size:50px}
+.search_one.absolute{bottom:0; position:relative !important; top:0 !important;}
+.rout-full{width: 33% !important;} 
+.carousel-inner > .item {height: 320px;}
+.banner-caption .banner-title{font-size:60px;margin:0 0 10px}
+.banner-caption .banner-caption{margin:0 0 15px}
+.destination-thumb{min-height:auto}
+.equal-height .destination-thumb{min-height:216px}
+.col-md-3 .destination-thumb .text p{float:left;width:100%;overflow:hidden;max-height:70px}
+#Upgrade .upgrade-text .brand-list{float:left;width:100%;padding:10px 0 0}
+#Upgrade .upgrade-list .upgrade-text .upgrade-header{float:left;width:100%}
+#Upgrade .upgrade-list .upgrade-text .upgrade-header .rating_down{float:right}
+.sidebar .widget{padding-right:20px;padding-left:20px}
+.detail-tabs .nav-tabs > li > a{text-overflow:ellipsis;white-space:nowrap;overflow:hidden}
+.blog-grid-2 .blog-thumb .text{padding:20px}
+.login-register-form .input-container label span{font-size:13px}
+.widget-contact .social li a{height:30px;width:30px;font-size:14px;line-height:30px}
+}
+@media (max-width:991px){.popular-hotel .absolute .text{padding-left:25px;padding-right:25px}
+.main-banner-3 .banner-title{font-size:50px}
+.main-banner-3 .tab-nav-3 > li{margin:0 0 -5px 10px}
+.main-banner-3 .tab-nav-3 > li a{font-size:15px}
+.error-page .text{max-width:85%}
+.widget-contact .social li a{height:30px;width:30px;font-size:14px;line-height:30px}
+.detail-tabs{float:left;width:100%;margin:0 0 30px}
+.search_wraper .container{float:left;width:100%;display:block;padding:0;background:#fff}
+.search_wraper .container .container{padding:0}
+.search_one.absolute{float:left;width:100%;bottom:auto!important;left:auto;right:auto;top:auto!important;position:relative!important}
+.banner-caption .banner-title{font-size:60px}
+.has-search .banner-contant-wrapper{top:50%}
+.tab-nav-2 li a{font-size:12px}
+.news-letter .text .title{font-size:27px}
+}
+@media (max-width:767px){.blog-grid .text-overflow:first-child{margin-bottom:23px}
+.rout-full{width:100% !important;}
+.search_wraper {float: left; width: 100%; position: relative; padding: 15px 15px 15px; background:#fff;}
+.rnt-gap{height:auto;}
+.tab-content-1.long .banner-search-tab{display:block}
+.tab-content-1.long .banner-search-tab .input-field{width:50%;max-width:50%;margin-bottom:30px;padding:0 2px}
+#train .banner-search-tab .input-field,.tab-content-1.long .banner-search-tab .input-field:last-child,.tab-content-1.long .banner-search-tab .input-field:nth-child(3){width:100%;max-width:100%}
+.masonry.row{float:none;width:auto;clear:both}
+.main-banner-3 .flex-text{display:block}
+.grid-item{width:100%!important}
+.main-banner-3 .tabs-wrapper{margin:0 0 30px}
+.main-banner-3 .banner-outer-div{padding:30px 0}
+.error-page .text{max-width:95%}
+.default-accordion .accordion{font-size:20px}
+.default-accordion .accordion::before{font-size:20px;line-height:49px}
+.similar-products .title{font-size:14px}
+.detail-tag-wrap{text-align:center}
+.detail-tag-wrap .page-navigation,.detail-tag-wrap .social{width:100%}
+.detail-tag-wrap .social{margin:0 0 7px}
+.detail-tag-wrap .page-navigation a{float:none;display:inline-block}
+#items-grid2 .port-item{width:100%}
+.sub-banner .breadcrumb{padding-left:60px;padding-right:60px}
+.blog-list{padding:0}
+.blog-list figure,.blog-grid figure{width:100%;min-width:100%;max-width:100%;margin:0!important}
+.blog-list .text-overflow,.blog-grid .text-overflow{float:left;width:100%;padding:26px 0 0}
+.blog-list .text-overflow{padding:25px}
+.flex-text.blog-list,.flex-text.blog-grid{display:block}
+.detail-tabs .nav-tabs{margin-right:-1px;margin-left:-1px}
+.detail-tabs .nav-tabs li{padding-right:1px;padding-left:1px}
+.detail-tabs .nav-tabs > li > a{font-size:14px;padding-left:10px;padding-right:10px}
+.header1 .logo{padding:10px 0}
+.navigation{display:none}
+.dl-menuwrapper{float:right;display:block}
+.main-wrapper{overflow:hidden}
+.top-bar [class*="pull-"]{width:100%;text-align:center}
+.top-bar .nav-account{width:100%}
+.top-bar .nav-account li{float:none;display:inline-block}
+.top-bar .pull-left .nav-account > li{padding-bottom:0}
+.inner-header.affix{margin:0!important;position:static!important;background:#fff}
+.sub-banner p{font-size:13px}
+.banner-contant-wrapper{padding-left:15px;padding-right:15px}
+.banner-caption .banner-title{font-size:40px}
+.banner-search_tab{float: left;width: 100%;padding: 10px 10px;background: #fff;border-bottom: none;border-bottom-left-radius: 0;border-bottom-right-radius: 0;border: 1px solid #ccc; box-shadow: 3px 4px 14px 5px #3a3838;}
+.tab-nav-2 li a{overflow:hidden;padding-left:5px;padding-right:5px;white-space:nowrap;text-overflow:ellipsis}
+.destination-thumb{min-height:auto;height:auto;}
+.testimonial-slider .text p{float:left;width:100%;max-width:100%;font-size:14px}
+.testimonial-slider .slick-slide{padding:0 15px}
+.news-letter .flex-text{display:block;max-width:481px;text-align:center}
+.news-letter .text{margin:0 0 30px}
+.news-letter .text .title{font-size:24px}
+.footer1{padding:78px 0 28px}
+.copy-right [class*="pull-"]{width:100%;text-align:center}
+.copy-right [class*="pull-"]:first-child{margin-bottom:10px}
+.copy-right .social li{float:none;display:inline-block;margin-bottom:-5px}
+.upgrade-list li figure{width:100%}
+.upgrade-list li .upgrade-text{float:left;width:100%;padding:0}
+.upgrade-list .upgrade-text .upgrade-header .rating_down{float:right}
+.upgrade-list .upgrade-text .upgrade-header{float:left;width:100%}
+.upgrade-text .brand-list{float:left;width:100%;padding:6px 0 0}
+}
+@media (max-width:480px){.tab-nav-3 > li{margin-left:7px}
+.destination-thumb-3 p{max-height:50px;overflow:hidden}
+.main-banner-3 .banner-caption .banner-title{font-size:31px}
+.popular-hotel .absolute .text{padding-left:20px;padding-right:20px}
+.popular-hotel .title{font-size:15px}
+.error-page h1{font-size:140px}
+.error-page h6{font-size:30px}
+.login-register-form .input-field{text-align:left}
+.login-register-form .input-container{float:left;width:100%;margin:0 0 5px}
+.sidebar .widget{padding-left:25px;padding-right:25px}
+.detail-tag-wrap .social li{margin:0 4px}
+.similar-products figure{margin:0 15px 0 0}
+.detail-tabs .nav-tabs li{width:50%;margin:0 0 2px}
+.top-bar .social li{margin:0 3px}
+.home-slider .banner-caption{display:none}
+.tab-nav-2 li{width:50%}
+.tab-nav-2 li:nth-child(5){width:50%}
+.section-heading .title{font-size:20px}
+.choose-us span[class*="iq-"]{float:none;display:block;margin:0 auto 30px}
+.choose-us{padding:30px;text-align:center}
+.center.thumb .text p{display:none}
+.holiday-thumb .absolute .text{max-width:85%}
+.upgrade-list > li{padding:5px}
+.upgrade-footer p.price{font-size:14px;margin-right:0;margin-bottom:0;margin-top:5px}
+.upgrade-footer a.detail{padding-right:25px;padding-left:25px}
+.indiv-brd{height:auto}
+.bk-enc{position:relative;left:0;width:100%;top:0}
+.bk-enc .showtourist{font-size:14px;position:absolute;top:84px;left:60%;right:0;font-weight:500;color:#333!important;background:#adff2f;border-top-right-radius:10px;width:140px;text-align:center;border-top-left-radius:10px}
+.mc-feature .m-res{width:100%;top:0;right:0;position:relative;left:0}
+.sid-banr{left:0;right:0;margin-bottom: 30px;}
+.bk-enc .tab-nav-2 li{width:50%}
+}
+
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1199px)  {
+.rout-full{width: 33% !important;} 
+.routes{margin:0 2px;width:100%!important;font-size:14px;height:auto;padding:6px;}
+.testi1{margin-top:0;}
+.head-cont{position:relative; top:20px;}
+.showtourist {position: absolute;top: 70px!important;right: 0;}
+}

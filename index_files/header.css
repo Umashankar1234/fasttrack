@@ -1,0 +1,41 @@
+.dropdown-menu{opacity:1!important;z-index:4!important;left:0!important}
+.sid-btn{position:fixed;left:-100px;right:0;top:270px;padding:0;z-index:3;text-transform:uppercase;-moz-transform:rotate(90deg);-ms-transform:rotate(90deg);-o-transform:rotate(90deg);-webkit-transform:rotate(90deg);transform-origin:bottom right;width:100px}
+.sid-btn1{position:fixed;left:-100px;right:0;top:410px;padding:0;z-index:3;text-transform:uppercase;-moz-transform:rotate(90deg);-ms-transform:rotate(90deg);-o-transform:rotate(90deg);-webkit-transform:rotate(90deg);transform-origin:bottom right;width:100px}
+.enqui-btn{color:#fff;background:linear-gradient(#fe8c00,#f83600);padding:7px 10px;font-size:15px;margin-top:0;margin-bottom:0;border:none;text-decoration:none;transition:.5s;width:130px;border-top-left-radius:10px;border-top-right-radius:10px;text-transform:uppercase}
+.fed-btn{color:#fff;background:#0c7dac;padding:7px 10px;font-size:15px;margin-top:0;margin-bottom:0;border:none;text-decoration:none;transition:.5s;width:130px;border-top-left-radius:10px;border-top-right-radius:10px;text-transform:uppercase}
+.nav ul{width:14em}
+.nav li ul{left:0}
+.dropdown-menu > li > a:focus,.dropdown-menu > li > a:hover{color:#fff;text-decoration:none;background-color:#152b57!important}
+.nav .open > a,.nav .open > a:focus,.nav .open > a:hover{background-color:inherit;border-color:#152b57}
+.cs-spt-sec{text-align:left}
+.dropdown-menu{top:90%}
+.btn-quickpay{background:#286090;color:#fff;font-size:12px;padding:6px 12px 5px;position:absolute;top:25px;right:30px;border-radius:4px}
+.btn-quickpay:hover{background:#ff6c26;color:#fff!important}
+.navigation-outer{float:left;width:100%;position:relative;transition:padding .3s ease;z-index:111}
+.nav a:hover{background:#000;color:#fff;font-weight:400;border-color:#fff}
+.nav a{padding:13px 10px;font-weight:400}
+#enqui-modal .modal-content{border:5px solid #ff6c26!important}
+#enqui-modal .modal-header{border-bottom:1px solid #e5e5e5;background:#ff6c26;padding:5px 20px}
+#enqui-modal .modal-dialog .close{text-shadow:none;opacity:1;color:#fff}
+#enqui-modal .sidenquaryfrm .modal-title{font-size:22px}
+#enqui-modal .packagefrm .modal-title{margin:0;line-height:27px;color:#fff}
+#enqui-modal .packagefrm .modal-title span{display:block;position:relative;font-size:19px;color:#fff;padding-top:5px}
+#enqui-modal .packagefrm .modal-title span .fa-phone{border-radius:50%;padding-right:5px;font-size:17px;color:#fff}
+#enqui-modal .packagefrm .modal-title span .fa-whatsapp{position:absolute;top:-4px;font-size:15px}
+#enqui-modal .sidenquaryfrm .modal-body{padding:21px 31px}
+#enqui-modal div.wpcf7{margin:0;padding:0}
+#enqui-modal div.wpcf7 .screen-reader-response{position:absolute;overflow:hidden;clip:rect(1px,1px,1px,1px);height:1px;width:1px;margin:0;padding:0;border:0}
+#enqui-modal .wpcf7-form-control-wrap{position:relative}
+#enqui-modal .sidenquaryfrm input[type="text"],.sidenquaryfrm input[type="email"],.sidenquaryfrm input[type="number"],.sidenquaryfrm textarea{padding-left:10px!important;margin-bottom:8px}
+#enqui-modal .sidenquaryfrm textarea{width:100%}
+#enqui-modal div.wpcf7-response-output{margin:2em .5em 1em;padding:.2em 1em;border:2px solid red}
+#enqui-modal .sidenquaryfrm .col-sm-6,.sidenquaryfrm .col-sm-12{padding-left:5px;padding-right:5px}
+#enqui-modal .sidenquaryfrm h6{float:left;margin:10px 0;text-transform:capitalize;font-size:14px;color:#000}
+#enqui-modal .sidenquaryfrm .fa-asterisk{color:#ff6c26;font-size:11px}
+#enqui-modal .packagefrm form p{position:relative;float:left;width:48%;margin:0 2% 1% 0;padding:0;line-height:normal;font-size:13px;color:#444;text-transform:none}
+#enqui-modal .modal-body input[type="submit"]{background:#286090}
+#enqui-modal .wpcf7-submit{background:#ff6c26;border:0;margin:8px 0 0;padding:10px 19px 8px;float:right;font-size:13px;text-transform:uppercase;color:#fff;border-radius:3px}
+#enqui-modal .sidenquaryfrm .modal-title{font-size:22px}
+#enqui-modal .packagefrm .modal-title{margin:0;line-height:27px;font-size:25px;color:#fff}
+#enqui-modal .packagefrm .modal-title small{font-size:13px;margin-left:5px;color:#fff}
+#enqui-modal .modal-body input[type="submit"]:hover{background:#ff6c26}

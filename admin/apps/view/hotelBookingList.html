@@ -17,6 +17,7 @@ if (!$res_data) {
                 <th>Guest</th>
                 <th>Amount</th>
                 <th>Status</th>
+                <th>Invoice</th>
                 <th>View</th>
             </tr>
         </thead>
@@ -59,6 +60,10 @@ if (!$res_data) {
                         class="badge badge-opacity-<?php echo ($row['status'] == 'success') ? 'success' : 'warning'; ?>">
                         <?php echo ucfirst($row['status']); ?>
                     </div>
+                </td>
+                <td>
+                    <a href="download_invoice_hotel.php?id=<?php echo $row['hbooking_id']; ?>"
+                        class="btn btn-info btn-sm">Invoice</a>
                 </td>
                 <td>
                     <a href="view_booking.php?id=<?php echo $row['hbooking_id']; ?>"

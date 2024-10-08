@@ -137,7 +137,7 @@ if($pkey1 =='data')
             console.error(error);
         }
 
-        let cleanAmount = getresult.replace(/[Rs.,\s]/g, ''); 
+        let cleanAmount = getresult.replace(/[Rs.,\s]/g, '');
         var gst = cleanAmount * 18 / 100;
         var total1 = +cleanAmount + +gst;
         var total = 'Rs. ' + total1;
@@ -401,7 +401,7 @@ if($pkey1 =='data')
                                             Fees Total : <span id="totalfare"></span><br>
                                             GST@18% : <span id="gst"></span><br>
                                             Total : <span id="total"></span><br>
-                                            <input type="hidden" id="gtotal" name="gtotal">
+                                            <input type="hidden" id="gtotal" name="gtotal" value="15000">
                                             <input type="hidden" id="currency" name="currency" value="INR">
 
                                         </div>

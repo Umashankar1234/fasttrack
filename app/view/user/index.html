@@ -64,15 +64,17 @@ $json_data4 = json_decode($json4, true);
                     <form action="flight-list.php" method="post" class="flightBook">
                         <div class="form-group tripType">
                             <label for="oneWay">
-                                <input type="radio" id="oneWay" value="oneWay" name="flight-type" checked onclick="show2();">
+                                <input type="radio" id="oneWay" value="oneWay" name="flight-type" checked
+                                    onclick="show2();">
                                 <span></span>One way
                             </label>
 
                             <label for="roundTrip">
-                                <input type="radio" id="roundTrip" value="roundTrip" name="flight-type" onclick="show1();">
+                                <input type="radio" id="roundTrip" value="roundTrip" name="flight-type"
+                                    onclick="show1();">
                                 <span></span>Roundtrip
                             </label>
-                           
+
                             <!-- <label for="multiCity">
                                 <input type="radio" id="multiCity" name="flight-type">
                                 <span></span>Multi-City
@@ -83,21 +85,24 @@ $json_data4 = json_decode($json4, true);
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label" for="flyingFrom">From</label>
-                                        <input class="form-control input-lg" name="flyingFrom" id="flyingFrom" type="text" autocomplete="off" placeholder="City or airport" />
+                                        <input class="form-control input-lg" name="flyingFrom" id="flyingFrom"
+                                            type="text" autocomplete="off" placeholder="City or airport" />
                                         <div id="fromairport"></div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label" for="flyingTo">To</label>
-                                        <input class="form-control" id="flyingTo" name="flyingTo" type="text" autocomplete="off" placeholder="City or airport">
+                                        <input class="form-control" id="flyingTo" name="flyingTo" type="text"
+                                            autocomplete="off" placeholder="City or airport">
                                         <div id="toairport"></div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group shown">
                                         <label class="form-label" for="departing">Departing date</label>
-                                        <input class="form-control " id="departing" name="departing" type="date" required>
+                                        <input class="form-control " id="departing" name="departing" type="date"
+                                            required>
                                         <i class="fas fa-calendar-alt"></i>
                                     </div>
                                 </div>
@@ -109,8 +114,8 @@ $json_data4 = json_decode($json4, true);
                                     </div>
                                 </div>
                             </div>
-                                                 
-                        </div> 
+
+                        </div>
                         <div class="book-fotm-header">
                             <h5>Passenger</h5>
                         </div>
@@ -131,7 +136,8 @@ $json_data4 = json_decode($json4, true);
                                         <label class="stepper-label" for="numOfKids">Children (0-17)</label>
                                         <div class="stepper">
                                             <button class="minus" id="minus"><i class="fas fa-minus"></i></button>
-                                            <input class="stepper-control" id="numOfKids" type="number" value="0" max="10">
+                                            <input class="stepper-control" id="numOfKids" type="number" value="0"
+                                                max="10">
                                             <button class="plus"><i class="fas fa-plus"></i></button>
                                         </div>
                                     </div>
@@ -280,7 +286,7 @@ $json_data4 = json_decode($json4, true);
 <section class="bookHotel">
     <div class="shp-img2">
         <img src="public/images/shape-3.webp" alt="">
-    </div>  
+    </div>
     <div class="shp-5">
         <img src="public/images/ws2.webp" alt="">
     </div>
@@ -389,13 +395,13 @@ $json_data4 = json_decode($json4, true);
                                                                                                                
                                                    
                                                     ?>
-                                                    <div class="col-lg-4  col-md-6 col-sm-12">
-                                                        <div class="bookHotelWrapper">
-                                                            <div class="bookHotelImg">
-                                                                <div class="swiper packageImg">
-                                                                    <div class="swiper-wrapper">
-                                                                        
-                                                                            <?php
+                <div class="col-lg-4  col-md-6 col-sm-12">
+                    <div class="bookHotelWrapper">
+                        <div class="bookHotelImg">
+                            <div class="swiper packageImg">
+                                <div class="swiper-wrapper">
+
+                                    <?php
                                                                             foreach($json_data2 as $dkey1 => $dvalue)
                                                                             {
                                                                             if(is_array($dvalue))
@@ -416,10 +422,11 @@ $json_data4 = json_decode($json4, true);
                                                                                         { 
                                                                                             $getoriginalphoto = $dvalue5['url_original'];
                                                                                         ?>
-                                                                                        <div class="swiper-slide">
-                                                                                            <img src="<?php echo $getoriginalphoto; ?>" alt="hotel image" style="height:250px; width: 500px;" />
-                                                                                        </div>
-                                                                           <?php        } 
+                                    <div class="swiper-slide">
+                                        <img src="<?php echo $getoriginalphoto; ?>" alt="hotel image"
+                                            style="height:250px; width: 500px;" />
+                                    </div>
+                                    <?php        } 
                                                                                                     } 
                                                                                                 } 
                                                                                             } 
@@ -429,16 +436,16 @@ $json_data4 = json_decode($json4, true);
                                                                             } 
                                                                         } 
                                                                         ?>
-                                                                           
-                                                                        
-                                                                        
-                                                                    </div>
-                                                                    <div class="swiper-pagination"></div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="bookHotelText">
-                                                                <h3 class="packages_title">
-                                                                    <?php
+
+
+
+                                </div>
+                                <div class="swiper-pagination"></div>
+                            </div>
+                        </div>
+                        <div class="bookHotelText">
+                            <h3 class="packages_title">
+                                <?php
                                                                     foreach($json_data2 as $dkey1 => $dvalue)
                                                                             {
                                                                             if(is_array($dvalue))
@@ -450,9 +457,9 @@ $json_data4 = json_decode($json4, true);
                                                                             }
                                                                         }
                                                                     ?>
-                                                                    </h3>
-                                                                <ul class="d-flex list-unstyled flex-wrap hotelFeatures">
-                                                                    <?php
+                            </h3>
+                            <ul class="d-flex list-unstyled flex-wrap hotelFeatures">
+                                <?php
                                                                             foreach($json_data2 as $dkey1 => $dvalue)
                                                                             {
                                                                                 if(is_array($dvalue))
@@ -466,20 +473,23 @@ $json_data4 = json_decode($json4, true);
                                                                                                 foreach($dvalue2 as $dkey3 => $dvalue3)
                                                                                                 {
                                                                                                      ?>
-                                                                                                    <li><?php echo $dvalue3['name']; ?></li>
-                                                                                               <?php 
+                                <li>
+                                    <?php echo $dvalue3['name']; ?>
+                                </li>
+                                <?php 
                                                                                             }
                                                                                             }
                                                                                         }
                                                                                     }
                                                                                 }
                                                                             }
-                                                                     ?> 
-                                                                </ul>
-                                                                <div class="priceSection d-flex justify-content-between align-items-center">
-                                                                    <div>
-                                                                        <small>Starting From</small>
-                                                                        <h6 class="packagesPrice mb-0"><?php 
+                                                                     ?>
+                            </ul>
+                            <div class="priceSection d-flex justify-content-between align-items-center">
+                                <div>
+                                    <small>Starting From</small>
+                                    <h6 class="packagesPrice mb-0">
+                                        <?php 
                                                                             foreach($json_data2 as $pkey1 => $pvalue)
                                                                             {
                                                                             if(is_array($pvalue))
@@ -504,16 +514,17 @@ $json_data4 = json_decode($json4, true);
                                                                             } 
                                                                             }
                                                                             
-                                                                       ?>     
-                                                                            </h6>
-                                    
-                                                                    </div>
-                                                                    <a href="hotel-booking.php?hotelid=<?php echo $gethotelid ?>" class="hero_btn ">Book Now</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                        <?php
+                                                                       ?>
+                                    </h6>
+
+                                </div>
+                                <a href="hotel-booking.php?hotelid=<?php echo $gethotelid ?>" class="hero_btn ">Book
+                                    Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php
                                                 }
                                                
                                             }
@@ -533,15 +544,15 @@ $json_data4 = json_decode($json4, true);
 }
 }                      
 ?>
-                
-                
+
+
             </div>
         </div>
     </div>
 </section>
 
 
-<section class="bookHotel book-car" >
+<section class="bookHotel book-car">
     <div class="shp-img1">
         <img src="public/images/shape-1.webp" alt="">
     </div>
@@ -555,6 +566,16 @@ $json_data4 = json_decode($json4, true);
         </div>
         <div class="bookHotel-inner">
             <div class="row g-2">
+                <?php
+                $i = 0;
+                // Updated SQL query with INNER JOIN
+                $sql = "SELECT vp.*, b.brand_name 
+                        FROM tb_vehicle vp
+                        INNER JOIN tb_brand b ON vp.brand_id = b.brand_id
+                        ORDER BY vp.vehicle_id DESC";
+                $res_data = mysqli_query($con, $sql);
+                while ($row = mysqli_fetch_array($res_data)) {
+                ?>
                 <div class="col-lg-3 col-md-6 col-sm-12 mt-3">
                     <div class="bookHotelWrapper">
                         <div class="bookHotelImg">
@@ -594,123 +615,9 @@ $json_data4 = json_decode($json4, true);
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 mt-3">
-                    <div class="bookHotelWrapper">
-                        <div class="bookHotelImg">
-                            <div class="swiper packageImg">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide">
-                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
-                                    </div>
-                                </div>
-                                <div class="swiper-pagination"></div>
-                            </div>
-                        </div>
-                        <div class="bookHotelText">
-                            <h3 class="packages_title">Mahindra Bolero</h3>
-                            <ul class="d-flex list-unstyled flex-wrap hotelFeatures">
-                                <li>5 Seater</li>
-                                <li>Petrol</li>
-                                <li>Unlimited Kms</li>
-                                <li>and more</li>
-                            </ul>
-                            <div class="priceSection d-flex justify-content-between align-items-center">
-                                <div>
-                                    <small>Starting From</small>              
-                                    <h6 class="packagesPrice mb-0" style="--font-h5: 16px;">3000/Day</h6>
-                                </div>
-                                <a href="car-list.php" class="hero_btn btn_sm">Book Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 mt-3">
-                    <div class="bookHotelWrapper">
-                        <div class="bookHotelImg">
-                            <div class="swiper packageImg">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide">
-                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
-                                    </div>
-                                </div>
-                                <div class="swiper-pagination"></div>
-                            </div>
-                        </div>
-                        <div class="bookHotelText">
-                            <h3 class="packages_title">Toyota Innova</h3>
-                            <ul class="d-flex list-unstyled flex-wrap hotelFeatures">
-                                <li>5 Seater</li>
-                                <li>Petrol</li>
-                                <li>Unlimited Kms</li>
-                                <li>and more</li>
-                            </ul>
-                            <div class="priceSection d-flex justify-content-between align-items-center">
-                                <div>
-                                    <small>Starting From</small>                                    
-                                    <h6 class="packagesPrice mb-0" style="--font-h5: 16px;">3000/Day</h6>
-                                </div>
-                                <a href="car-list.php" class="hero_btn btn_sm">Book Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 mt-3">
-                    <div class="bookHotelWrapper">
-                        <div class="bookHotelImg">
-                            <div class="swiper packageImg">
-                                <div class="swiper-wrapper">
-                                    <div class="swiper-slide">
-                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
-                                    </div>
-                                    <div class="swiper-slide">
-                                        <img src="https://picsum.photos/450/300" class="img-fluid" alt="">
-                                    </div>
-                                </div>
-                                <div class="swiper-pagination"></div>
-                            </div>
-                        </div>
-                        <div class="bookHotelText">
-                            <h3 class="packages_title">Tata Safari</h3>
-                            <ul class="d-flex list-unstyled flex-wrap hotelFeatures">
-                                <li>5 Seater</li>
-                                <li>Petrol</li>
-                                <li>Unlimited Kms</li>
-                                <li>and more</li>
-                            </ul>
-                            <div class="priceSection d-flex justify-content-between align-items-center">
-                                <div>
-                                    <small>Starting From</small>
-                                    <h6 class="packagesPrice mb-0" style="--font-h5: 16px;">3000/Day</h6>
-                                </div>
-                                <a href="car-list.php" class="hero_btn btn_sm">Book Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php
+            }
+            ?>
             </div>
         </div>
     </div>
@@ -730,8 +637,8 @@ $json_data4 = json_decode($json4, true);
                     <div class="offer-txt">
                         <div class="offer-txt-inner">
                             <h2>Get Special Offer</h2>
-                        <p>Flat 10% Discount on First 5 Bookings.</p>
-                        <a href="car-list.php" class="hero_btn btn_sm">Book Now</a> 
+                            <p>Flat 10% Discount on First 5 Bookings.</p>
+                            <a href="car-list.php" class="hero_btn btn_sm">Book Now</a>
                         </div>
                         <div class="lg-text">
                             <h2>10
@@ -756,7 +663,8 @@ $json_data4 = json_decode($json4, true);
                     <div class="whyus-inn-cont">
                         <div class="heading mb-lg-4 mb-3">
                             <h2>Why book with us?</h2>
-                            <p>This approach emphasizes customer value, convenience, and trust, making Fasttrack Travel a top choice for travelers.     </p>
+                            <p>This approach emphasizes customer value, convenience, and trust, making Fasttrack Travel
+                                a top choice for travelers. </p>
                         </div>
                         <div class="row">
                             <div class="col-md-6 mt-4">
@@ -766,7 +674,8 @@ $json_data4 = json_decode($json4, true);
                                     </div>
                                     <div class="whl-txt">
                                         <h5>Personalized Itineraries</h5>
-                                        <p>We craft tailor-made travel plans to suit your preferences, ensuring a unique and memorable experience for every traveler.</p>
+                                        <p>We craft tailor-made travel plans to suit your preferences, ensuring a unique
+                                            and memorable experience for every traveler.</p>
                                     </div>
                                 </div>
                             </div>
@@ -777,7 +686,8 @@ $json_data4 = json_decode($json4, true);
                                     </div>
                                     <div class="whl-txt">
                                         <h5>Best Price Guarantee</h5>
-                                        <p>Enjoy competitive pricing with no hidden fees. We guarantee value for your money, making your dream vacation affordable./p>
+                                        <p>Enjoy competitive pricing with no hidden fees. We guarantee value for your
+                                            money, making your dream vacation affordable./p>
                                     </div>
                                 </div>
                             </div>
@@ -788,7 +698,8 @@ $json_data4 = json_decode($json4, true);
                                     </div>
                                     <div class="whl-txt">
                                         <h5>24/7 Customer Support</h5>
-                                        <p>Whether it's a last-minute change or an inquiry, our dedicated team is here to assist you anytime, anywhere.</p>
+                                        <p>Whether it's a last-minute change or an inquiry, our dedicated team is here
+                                            to assist you anytime, anywhere.</p>
                                     </div>
                                 </div>
                             </div>
@@ -799,7 +710,8 @@ $json_data4 = json_decode($json4, true);
                                     </div>
                                     <div class="whl-txt">
                                         <h5>Exclusive Deals and Offers</h5>
-                                        <p>Get access to special discounts, promotions, and packages that are not available elsewhere.</p>
+                                        <p>Get access to special discounts, promotions, and packages that are not
+                                            available elsewhere.</p>
                                     </div>
                                 </div>
                             </div>
@@ -810,7 +722,8 @@ $json_data4 = json_decode($json4, true);
                                     </div>
                                     <div class="whl-txt">
                                         <h5>Trusted Partners</h5>
-                                        <p>We collaborate with reliable airlines, hotels, and tour operators to ensure a seamless travel experience.</p>
+                                        <p>We collaborate with reliable airlines, hotels, and tour operators to ensure a
+                                            seamless travel experience.</p>
                                     </div>
                                 </div>
                             </div>
@@ -821,7 +734,8 @@ $json_data4 = json_decode($json4, true);
                                     </div>
                                     <div class="whl-txt">
                                         <h5>Hassle-Free Bookings</h5>
-                                        <p>With an easy booking process and secure payment options, planning your next trip has never been easier.</p>
+                                        <p>With an easy booking process and secure payment options, planning your next
+                                            trip has never been easier.</p>
                                     </div>
                                 </div>
                             </div>
@@ -931,7 +845,9 @@ $json_data4 = json_decode($json4, true);
                                 </div>
                                 <div class="blog-lef-txt">
                                     <h5><a href="#">Luxury Flight In India</a></h5>
-                                    <p>When it comes to luxury flights in India, several airlines offer premium services to elevate the flying experience. Here are some options that travelers can choose from</p>
+                                    <p>When it comes to luxury flights in India, several airlines offer premium services
+                                        to elevate the flying experience. Here are some options that travelers can
+                                        choose from</p>
                                     <div class="blog-btn">
                                         <div class="dt"><i class="fas fa-calendar-alt"></i> September 11, 2024</div>
                                         <a href="#">Read More..</a>
@@ -944,7 +860,9 @@ $json_data4 = json_decode($json4, true);
                                 </div>
                                 <div class="blog-lef-txt">
                                     <h5><a href="#">Luxury Hotels in India</a></h5>
-                                    <p>India is home to some of the most luxurious hotels in the world, combining opulent architecture, world-class service, and unique cultural experiences. Here are some of the best luxury hotels in India that offer a lavish stay</p>
+                                    <p>India is home to some of the most luxurious hotels in the world, combining
+                                        opulent architecture, world-class service, and unique cultural experiences. Here
+                                        are some of the best luxury hotels in India that offer a lavish stay</p>
                                     <div class="blog-btn">
                                         <div class="dt"><i class="fas fa-calendar-alt"></i> September 11, 2024</div>
                                         <a href="#">Read More..</a>

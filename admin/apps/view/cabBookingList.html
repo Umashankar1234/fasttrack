@@ -1,0 +1,93 @@
+<?php 
+// Fetch hotel bookings from the database
+$sql = "SELECT * FROM `tb_cab_bookings` WHERE 1";
+$res_data = mysqli_query($con, $sql);
+
+
+if (!$res_data) {
+    echo "Error: " . mysqli_error($con);  // In case of an error
+    exit;
+}
+?>
+
+<div class="table-responsive  mt-1">
+    <table class="table select-table">
+        <thead>
+            <tr>
+                <th>Customer name</th>
+                <th>Booking</th>
+                <th>Pickup</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Invoice</th>
+                <th>View</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            // Loop through each booking and render it dynamically
+            while ($row = mysqli_fetch_assoc($res_data)) {?>
+                
+            <tr>
+                <td>
+                    <div class="d-flex">
+                        <div>
+                            <h6>
+                                <?php echo $row['firstName'] .' '. $row['lastName']; ?>
+                            </h6>
+                            <p>
+                                <?php echo $row['hotel_address']; ?>
+                            </p>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <h6>
+                        Pickup :
+                        <?php echo $row['bookingPlace']; ?>
+                    </h6>
+                    <p>
+                        Destination :
+                        <?php echo $row['destination']; ?>
+                    </p>
+                </td>
+                <td>
+                    <div class="d-flex">
+                        <div>
+                            <h6>
+                                Date : <?php echo $row['pickupDate']; ?>
+                            </h6>
+                            <p>
+                                Time : <?php echo $row['pickupTime']; ?>
+                            </p>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center mb-1 max-width-progress-wrap">
+                            <p class="text-success">Total: ₹
+                                <?php echo number_format($row['amount']); ?>
+                            </p>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div
+                        class="badge badge-opacity-<?php echo ($row['status'] == 'success') ? 'success' : 'warning'; ?>">
+                        <?php echo ucfirst($row['paymentStatus']); ?>
+                    </div>
+                </td>
+                <td>
+                    <a href="download_invoice.php?id=<?php echo $row['id']; ?>"
+                        class="btn btn-info btn-sm">Invoice</a>
+                </td>
+                <td>
+                    <a href="view_booking.php?id=<?php echo $row['id']; ?>"
+                        class="btn btn-info btn-sm">View</a>
+                </td>
+            </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+</div>

@@ -46,6 +46,7 @@ $_SESSION['email'] = $email;
  $contactno = $_POST['phone'];
  $_SESSION['phone'] =  $contactno;
  $price = str_replace(['Rs', '.', ',', ' '], '', $price);
+
 $orderData = [
     'receipt'         => $receipt,
     'amount'          => $price * 100, // 2000 rupees in paise

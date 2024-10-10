@@ -215,7 +215,64 @@
                                                 </div>
                                                 <a href="" data-bs-toggle="modal"
                                                     data-carId="<?php echo $row['vehicle_id']; ?>"
-                                                    data-bs-target="#exampleModal" class="hero_btn">Book Now</a>
+                                                    data-bs-target="#exampleModal-<?php echo $row['vehicle_id']; ?>" class="hero_btn">Book Now</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="exampleModal-<?php echo $row['vehicle_id']; ?>" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Enter Details</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form method="post" action="book_cab">
+                                                    <input type="hidden" id="carIdInput" name="carId" value=<?php echo $row['vehicle_id']; ?>>
+                                                    <div class="row">
+                                                        <div class="col-lg-6 col-sm-12 mt-2">
+                                                            <label for="">Booking place</label>
+                                                            <input name="bookingPlace" type="text" class="form-control"
+                                                                required>
+                                                        </div>
+                                                        <div class="col-lg-6 col-sm-12 mt-2">
+                                                            <label for="">Destiny</label>
+                                                            <input name="destiny" type="text" class="form-control"
+                                                                required>
+                                                        </div>
+                                                        <div class="col-lg-6 col-sm-12 mt-2">
+                                                            <label for="">Pick up Date</label>
+                                                            <input name="pickupDate" type="date" class="form-control"
+                                                                required>
+                                                        </div>
+                                                        <div class="col-lg-6 col-sm-12 mt-2">
+                                                            <label for="">Pick up Time</label>
+                                                            <input name="pickupTime" type="time" class="form-control"
+                                                                required>
+                                                        </div>
+                                                        <div class="col-12 col-sm-12 mt-3">
+                                                            <label for="">Select package</label>
+                                                            <select class="form-select" name="tourType" id="tourType" required>
+                                                                <option value="<?php echo $row['cost1'];  ?>">5hr/100km at <?php echo $row['cost1'];  ?></option>
+                                                                <option value="<?php echo $row['cost2'];  ?>">7hr/150km at <?php echo $row['cost2'];  ?></option>
+                                                                <option value="<?php echo $row['cost3'];  ?>">12Hr/180km at <?php echo $row['cost3'];  ?></option>
+                                                                <option value="<?php echo $row['cost4'];  ?>">Outstation at <?php echo $row['cost1'];  ?>/KM</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-12 col-sm-12 mt-3">
+                                                            <label for="">Details Of Tour</label>
+                                                            <textarea type="text" name="tourDetails" id="message"
+                                                                class="form-control full-length" cols="10"
+                                                                rows="3"></textarea>
+                                                        </div>
+                                                        <div class="col-12 mt-4">
+                                                            <button class="hero_btn w-100">Processes to Book</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -232,57 +289,18 @@
         </div>
     </div>
 </section>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Enter Details</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="post" action="book_cab">
-                    <input type="hidden" id="carIdInput" name="carId" value="">
-                    <div class="row">
-                        <div class="col-lg-6 col-sm-12 mt-2">
-                            <label for="">Booking place</label>
-                            <input name="bookingPlace" type="text" class="form-control" required>
-                        </div>
-                        <div class="col-lg-6 col-sm-12 mt-2">
-                            <label for="">Destiny</label>
-                            <input name="destiny" type="text" class="form-control" required>
-                        </div>
-                        <div class="col-lg-6 col-sm-12 mt-2">
-                            <label for="">Pick up Date</label>
-                            <input name="pickupDate" type="date" class="form-control" required>
-                        </div>
-                        <div class="col-lg-6 col-sm-12 mt-2">
-                            <label for="">Pick up Time</label>
-                            <input name="pickupTime" type="time" class="form-control" required>
-                        </div>
-                        <div class="col-12 col-sm-12 mt-3">
-                            <label for="">Details Of Tour</label>
-                            <textarea type="text" name="tourDetails" id="message" class="form-control full-length" cols="10"
-                                rows="3"></textarea>
-                        </div>
-                        <div class="col-12 mt-4">
-                            <button class="hero_btn w-100">Processes to Book</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<script>
+
+<!-- <script>
     // Event listener for when the modal is shown
     document.getElementById('exampleModal').addEventListener('show.bs.modal', function (event) {
-      // Button that triggered the modal
-      var button = event.relatedTarget;
-      // Extract info from data-carid attribute
-      var carId = button.getAttribute('data-carid');
-      
-      // Update the hidden input value in the modal
-      var carIdInput = document.getElementById('carIdInput');
-      carIdInput.value = carId;
+        // Button that triggered the modal
+        var button = event.relatedTarget;
+        // Extract info from data-carid attribute
+        var carId = button.getAttribute('data-carid');
+        alert(carId);
+
+        // Update the hidden input value in the modal
+        var carIdInput = document.getElementById('carIdInput');
+        carIdInput.value = carId;
     });
-  </script>
+</script> -->

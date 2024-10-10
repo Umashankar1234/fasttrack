@@ -15,7 +15,8 @@ use Razorpay\Api\Api;
 $api = new Api($keyId, $keySecret);
 
 // Static amount for now
-$staticAmount = 15000;
+$carId = $_POST['carId'];
+$staticAmount = $_POST['total'];
 
 // Get booking details from POST
 $carId = $_POST['carId'];

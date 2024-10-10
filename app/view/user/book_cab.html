@@ -1263,14 +1263,22 @@
 </style>
 </head><!-- For Database insert section end here -->
 <?php 
-if($_POST){
-$carId = $_POST['carId'];
-$bookingPlace = $_POST['bookingPlace'];
-$destiny = $_POST['destiny'];
-$pickupDate = $_POST['pickupDate'];
-$pickupTime = $_POST['pickupTime'];
-$tourDetails = $_POST['tourDetails'];
-}
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+   if($_POST){
+      $carId = $_POST['carId'];
+      $bookingPlace = $_POST['bookingPlace'];
+      $destiny = $_POST['destiny'];
+      $pickupDate = $_POST['pickupDate'];
+      $pickupTime = $_POST['pickupTime'];
+      $tourDetails = $_POST['tourDetails'];
+      $tourType = $_POST['tourType'];
+      $total = $tourType + 12/100*$tourType;
+      $sql = "SELECT * FROM `tb_vehicle` WHERE vehicle_id =".$carId;
+      $res_data = mysqli_query($con, $sql);
+      $row = $res_data->fetch_assoc();
+
+   }
 ?>
 
 
@@ -3264,7 +3272,8 @@ $tourDetails = $_POST['tourDetails'];
                                     <section class="room-list-page" style="padding: 30px 0px 30px;">
                                        <form action="app/model/payCab.php" method="post">
                                           <input type="hidden" name="carId" value="<?php echo $carId ; ?>">
-                                          <input type="hidden" name="bookingPlace" value="<?php echo $bookingPlace ; ?>">
+                                          <input type="hidden" name="bookingPlace"
+                                             value="<?php echo $bookingPlace ; ?>">
                                           <input type="hidden" name="destiny" value="<?php echo $destiny ; ?>">
                                           <input type="hidden" name="pickupDate" value="<?php echo $pickupDate ; ?>">
                                           <input type="hidden" name="pickupTime" value="<?php echo $pickupTime ; ?>">
@@ -3324,27 +3333,26 @@ $tourDetails = $_POST['tourDetails'];
                                                                            </span>
                                                                         </td>
                                                                         <td class="table">
-                                                                           <div class="priceintooltip"
-                                                                              style="margin-top: -4px;"><span><i
-                                                                                    class="fa fa-rupee fa-1x"></i></span>
-                                                                           </div>
-                                                                           ₹
+
+                                                                           ₹<span id="rentalCost">
+                                                                              <?php echo $tourType; ?>
+                                                                           </span> <span id="rentalType" style="font-size: 10px;">per 5Hr/100Km</span> 
                                                                         </td>
                                                                      </tr>
                                                                      <tr>
                                                                         <td class="table">GST (12%):</td>
-                                                                        <td class="table"><i
-                                                                              class="fa fa-rupee fa-1x"></i>0 </td>
+                                                                        <td class="table">₹ <?php echo 12/100*$tourType; ?> </td>
                                                                      </tr>
                                                                      <tr>
-                                                                        <td class="table" style="font-size: 14px;">
+                                                                        <td class="table" style="font-size: 1px;">
                                                                            <strong style="color: #ff5a00;"> Total
                                                                               Price</strong>
                                                                         </td>
                                                                         <td class="table"
-                                                                           style="font-size: 14px;text-decoration: line-through;">
-                                                                           <strong style="color: #ff5a00;"> ₹0 </strong>
+                                                                           style="font-size: 12px;">
+                                                                           <strong style="color: #ff5a00;"> ₹ <?php echo $total; ?> </strong>
                                                                         </td>
+                                                                        <input type="hidden" name="total" value="<?php echo $total; ?>">
                                                                      </tr>
                                                                      <tr>
                                                                         <td class="table"
@@ -3353,8 +3361,8 @@ $tourDetails = $_POST['tourDetails'];
                                                                               Price</strong>
                                                                         </td>
                                                                         <td class="table"
-                                                                           style="font-size: 14px;padding-top: 0;">
-                                                                           <strong style="color: #2b8a23;"> ₹0 </strong>
+                                                                           style="font-size: 12px;padding-top: 0;">
+                                                                           <strong style="color: #2b8a23;"> ₹ <?php echo 12/100*$row['cost1'] +$row['cost1']; ?> </strong>
                                                                         </td>
                                                                      </tr>
                                                                   </tbody>
@@ -5607,7 +5615,7 @@ $tourDetails = $_POST['tourDetails'];
                                                                                  class="fa fa-rupee fa-1x"></i></span>
                                                                         </div>
                                                                         <div style="color:#428500; float:right;"><b>
-                                                                              <i class="fa fa-rupee fa-1x"></i></b>
+                                                                              <i class="fa fa-rupee fa-1x"></i><?php echo $total;?></b>
                                                                         </div>
                                                                      </td>
                                                                   </tr>
@@ -5618,7 +5626,7 @@ $tourDetails = $_POST['tourDetails'];
                                                                      <td class="table-right tb-new"> <span
                                                                            style="font-weight: bold;"><span
                                                                               id="discount_amnt"><i
-                                                                                 class="fa fa-rupee fa-1x"></i></span></span>
+                                                                                 class="fa fa-rupee fa-1x"></i></span><?php echo $total;?></span>
                                                                      </td>
                                                                   </tr>
                                                                   <tr style="font-weight:bold; display: none"
@@ -5628,13 +5636,13 @@ $tourDetails = $_POST['tourDetails'];
                                                                      <td class="table-right"
                                                                         style="font-size:14px; font-weight:600;"><i
                                                                            class="fa fa-rupee fa-1x"></i><span
-                                                                           id="discountamount"></span></td>
+                                                                           id="discountamount"><?php echo $total;?></span></td>
                                                                   </tr>
                                                                   <tr>
                                                                      <td class="table">GST (12%) :</td>
                                                                      <td class="table-right"><i
                                                                            class="fa fa-rupee fa-1x"></i><span
-                                                                           id="taxess">0</span></td>
+                                                                           id="taxess"><?php echo 12/100 * $tourType;?></span></td>
                                                                   </tr>
                                                                   <tr>
                                                                      <td class="table tb-prc" style="font-size:14px;">
@@ -5643,7 +5651,7 @@ $tourDetails = $_POST['tourDetails'];
                                                                      <td class="table-right tb-money"
                                                                         style="font-size:14px;"><i
                                                                            class="fa fa-rupee fa-1x"></i><span
-                                                                           id="totalamount">0</span></td>
+                                                                           id="totalamount"><?php echo $total; ?></span></td>
                                                                   </tr>
                                                                   <tr style="color:#ff6c26;" id="fulladvance">
                                                                      <td class="table tb-new"> Discount For 100% Advance
@@ -5669,7 +5677,7 @@ $tourDetails = $_POST['tourDetails'];
                                                                      </td>
                                                                      <td class="table-right tb-final">
                                                                         <i class="fa fa-rupee fa-1x"></i><span
-                                                                           id="final_estimate">0</span>
+                                                                           id="final_estimate"><?php echo $total;?></span>
                                                                      </td>
                                                                   </tr>
                                                                   <tr style="color:#ff6c26;display: none;"
@@ -5774,11 +5782,10 @@ $tourDetails = $_POST['tourDetails'];
                                                                     <span id="totalpay">
                                                                                                </span> -->
                                                             <div class="input-group">
-                                                               <span class="input-group-addon"><i
-                                                                     class="fa fa-rupee"></i></span>
+                                                               <span class="input-group-addon">₹</span>
                                                                <input name="totalpay" id="totalpay" class="form-control"
-                                                                  placeholder="Amount" type="text" value="0"
-                                                                  onchange="validate();"
+                                                                  placeholder="Amount" type="text" value="<?php echo $total?>"
+                                                                  onchange="validate();" disabled
                                                                   onkeypress="return isNumberKey(event)">
                                                             </div>
                                                          </div>
@@ -5889,7 +5896,7 @@ $tourDetails = $_POST['tourDetails'];
                                                                <div class="col-md-6 col-sm-6 col-xs-4">
                                                                   <div class="totAmnt"><span><i
                                                                            class="fa fa-inr"></i></span>&nbsp;<span
-                                                                        id="tort_amnt">0</span></div>
+                                                                        id="tort_amnt"><?php echo $total; ?></span></div>
                                                                </div>
                                                             </div>
                                                             <div class="col-md-12 col-sm-12 col-xs-12 gaps"
@@ -5903,7 +5910,7 @@ $tourDetails = $_POST['tourDetails'];
                                                                <div class="col-md-6 col-sm-6 col-xs-4">
                                                                   <div class="totAmnt"><span><i
                                                                            class="fa fa-inr"></i></span>
-                                                                     <span id="adv_amnt">0</span>
+                                                                     <span id="adv_amnt"><?php echo $total; ?></span>
                                                                   </div>
                                                                </div>
                                                             </div>

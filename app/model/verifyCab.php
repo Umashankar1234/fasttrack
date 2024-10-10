@@ -47,8 +47,8 @@ if ($success) {
     if (mysqli_query($con, $sql)) {
         // Booking and payment update successful
         echo "<script type='text/javascript'> 
-                alert('Thank you for your booking. Payment Successful!');
-              </script>";
+                alert('Thank you for your booking. Payment Successful!');                
+                window.location.href = '../../car-details'; </script>";
     } else {
         // Log the error for debugging
         error_log("SQL Error: " . mysqli_error($con)); // Log the error

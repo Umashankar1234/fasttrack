@@ -82,6 +82,16 @@ if ($_POST) {
                                     <?php if (isset($_POST['category']) && in_array('shuttle', $_POST['category'])) echo 'checked'; ?>>
                                 <label class="form-check-label" for="categoryShuttle">Shuttle</label>
                             </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="Sedan" name="category[]" id="categorySedan" 
+                                    <?php if (isset($_POST['category']) && in_array('Sedan', $_POST['category'])) echo 'checked'; ?>>
+                                <label class="form-check-label" for="categorySedan">Sedan</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="Compact" name="category[]" id="categoryCompact" 
+                                    <?php if (isset($_POST['category']) && in_array('Compact', $_POST['category'])) echo 'checked'; ?>>
+                                <label class="form-check-label" for="categoryCompact">Compact</label>
+                            </div>
                         </div>
                 
                         <div class="filterWrapper px-2">

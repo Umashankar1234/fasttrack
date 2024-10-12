@@ -1287,7 +1287,7 @@ if ($_POST) {
    $res_data = mysqli_query($con, $sql);
    $row = $res_data->fetch_assoc();
 
-   $baseUrl = 'http://localhost/fasttrack/public/images/vehicles/';
+   $baseUrl = 'https://fasttracktravel.in/public/images/vehicles/';
 
    // Get the first image
    $firstPhoto = $row['car_photo'] ? $baseUrl . $row['car_photo'] : 'public/images/default-car-image.png'; // Fallback image

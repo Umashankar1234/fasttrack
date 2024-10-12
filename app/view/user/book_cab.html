@@ -1265,20 +1265,35 @@
 <?php 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-   if($_POST){
-      $carId = $_POST['carId'];
-      $bookingPlace = $_POST['bookingPlace'];
-      $destiny = $_POST['destiny'];
-      $pickupDate = $_POST['pickupDate'];
-      $pickupTime = $_POST['pickupTime'];
-      $tourDetails = $_POST['tourDetails'];
-      $tourType = $_POST['tourType'];
-      $total = $tourType + 12/100*$tourType;
-      $sql = "SELECT * FROM `tb_vehicle` WHERE vehicle_id =".$carId;
-      $res_data = mysqli_query($con, $sql);
-      $row = $res_data->fetch_assoc();
+if ($_POST) {
+   $carId = $_POST['carId'];
+   $bookingPlace = $_POST['bookingPlace'];
+   $destiny = $_POST['destiny'];
+   $pickupDate = $_POST['pickupDate'];
+   $pickupTime = $_POST['pickupTime'];
+   $tourDetails = $_POST['tourDetails'];
+   $tourType = $_POST['tourType'];
 
-   }
+   // Calculate the total cost (12% tax added to tour type price)
+   $total = $tourType + (12 / 100 * $tourType);
+
+   // Fetch vehicle details along with the first image
+   $sql = "SELECT vp.*, vp_photo.car_photo 
+           FROM tb_vehicle vp
+           LEFT JOIN tb_vehiclephoto vp_photo ON vp.vehicle_id = vp_photo.car_id
+           WHERE vp.vehicle_id = $carId
+           ORDER BY vp_photo.car_photo ASC"; // Use ORDER BY to get the first photo
+
+   $res_data = mysqli_query($con, $sql);
+   $row = $res_data->fetch_assoc();
+
+   $baseUrl = 'http://localhost/fasttrack/public/images/vehicles/';
+
+   // Get the first image
+   $firstPhoto = $row['car_photo'] ? $baseUrl . $row['car_photo'] : 'public/images/default-car-image.png'; // Fallback image
+
+
+}
 ?>
 
 
@@ -1289,10 +1304,10 @@ ini_set('display_errors', 1);
    <div class="container">
       <div class="breadcum-inner">
          <div class="breadcumb-content">
-            <h1 class="breadcumb-title">AC Maruti Suzuki Dezire</h1>
+            <h1 class="breadcumb-title"><?php echo $row['title']; ?></h1>
             <ul class="breadcumb-menu">
                <li><a href="index.php" title="Home">Home</a></li>
-               <li class="active" title="About Us">AC Maruti Suzuki Dezire</li>
+               <li class="active" title="About Us"><?php echo $row['title']; ?></li>
             </ul>
          </div>
       </div>
@@ -3313,7 +3328,7 @@ ini_set('display_errors', 1);
                                                       </h6>
                                                       <div class="col-md-3 col-sm-3 col-xs-6">
                                                          <div class=" car-main-sc" style="padding: 15px 0px;">
-                                                            <img src="public/images/cab1.png" alt="Car-image"
+                                                            <img src="<?php echo $firstPhoto; ?>" alt="Car-image"
                                                                class="img-responsive">
                                                          </div>
                                                          <div class="clearfix"></div>

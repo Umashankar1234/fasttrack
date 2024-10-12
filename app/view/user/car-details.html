@@ -1,3 +1,43 @@
+<?php
+$categories = [];
+$fuel_types = [];
+$transmissions = [];
+$seating_capacities = [];
+if ($_POST) {
+    // Retrieving filter values from the POST request
+    $categories = isset($_POST['category']) ? $_POST['category'] : []; // For categories
+    $fuel_types = isset($_POST['fuel_type']) ? $_POST['fuel_type'] : []; // For fuel types
+    $transmissions = isset($_POST['transmission']) ? $_POST['transmission'] : []; // For transmission types
+    $seating_capacities = isset($_POST['seating_capacity']) ? $_POST['seating_capacity'] : []; // For seating capacities
+    
+    // Now you can use these variables in your SQL queries
+    // For example, to create a WHERE IN clause:
+    
+    if (!empty($categories)) {
+        $category_in = implode("','", $categories);
+        // Example SQL: "SELECT * FROM your_table WHERE category IN ('$category_in')"
+    }
+
+    if (!empty($fuel_types)) {
+        $fuel_in = implode("','", $fuel_types);
+        // Example SQL: "SELECT * FROM your_table WHERE fuel_type IN ('$fuel_in')"
+    }
+
+    if (!empty($transmissions)) {
+        $transmission_in = implode("','", $transmissions);
+        // Example SQL: "SELECT * FROM your_table WHERE transmission IN ('$transmission_in')"
+    }
+
+    if (!empty($seating_capacities)) {
+        $seating_in = implode(",", $seating_capacities);
+        // Example SQL: "SELECT * FROM your_table WHERE seating_capacity IN ($seating_in)"
+    }
+
+    // Now you can proceed with your database queries using these variables
+}
+?>
+
+
 <section id="hotel_listingSection" class="car-booking">
     <div class="container-fluid px-sm-0 px-3">
         <div class="hotel_listingSection">
@@ -8,131 +48,92 @@
                         style="z-index: 11;
                     height: 55px;
                     line-height: 45px;">Apply Filter</p>
-                    <div id="select-filter" class="hotel_listingSectionFilter d-none d-md-block">
-                        <div
-                            class="hotel_listingSectionFilterHeading heading py-3 d-flex align-items-center justify-content-between px-2">
-                            <h3 style="--font-h4: 20px;">Filter</h3>
-                            <a href="" class="text-danger small fw-semibold">Clear All</a>
+                  <form action="" method="POST" id="select-filter" class="hotel_listingSectionFilter d-none d-md-block">
+                    <div class="hotel_listingSectionFilterHeading heading py-3 d-flex align-items-center justify-content-between px-2">
+                        <h3 style="--font-h4: 20px;">Filter</h3>
+                    </div>
+                    <button class="hero_btn btn_invrs w-100">Filter</button>
+                    <div class="d-md-none d-block position-fixed bottom-0 start-0 end-0 bg-white">
+                        <div class="px-3 py-2 border-top d-flex gap-3 applyFilter">
+                            <button class="hero_btn btn_invrs w-100">Cancel</button>
+                            <button class="hero_btn w-100">Apply</button>
                         </div>
-                        <div class="d-md-none d-block position-fixed bottom-0 start-0 end-0 bg-white">
-                            <div class="px-3 py-2 border-top d-flex gap-3 applyFilter">
-                                <button class="hero_btn btn_invrs w-100">Cancel</button>
-                                <button class="hero_btn w-100">Apply</button>
+                    </div>
+                    <div class="filter_ListWrapper">
+                        <div class="filterWrapper px-2">
+                            <h6 class="mb-3">CATEGORY</h6>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="sedan" name="category[]" id="categorySedan" 
+                                    <?php if (isset($_POST['category']) && in_array('sedan', $_POST['category'])) echo 'checked'; ?>>
+                                <label class="form-check-label" for="categorySedan">Sedan</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="suv" name="category[]" id="categorySuv" 
+                                    <?php if (isset($_POST['category']) && in_array('suv', $_POST['category'])) echo 'checked'; ?>>
+                                <label class="form-check-label" for="categorySuv">SUV</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="prime_suv" name="category[]" id="categoryPrimeSuv" 
+                                    <?php if (isset($_POST['category']) && in_array('prime_suv', $_POST['category'])) echo 'checked'; ?>>
+                                <label class="form-check-label" for="categoryPrimeSuv">Prime SUV</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="shuttle" name="category[]" id="categoryShuttle" 
+                                    <?php if (isset($_POST['category']) && in_array('shuttle', $_POST['category'])) echo 'checked'; ?>>
+                                <label class="form-check-label" for="categoryShuttle">Shuttle</label>
                             </div>
                         </div>
-                        <div class="filter_ListWrapper">
-                            <div class="filterWrapper px-2">
-
-                                <h6 class="mb-3">SEGMENT</h6>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="bookHotels">
-                                    <label class="form-check-label" for="bookHotels">
-                                        Hatchback
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="bookCars" checked>
-                                    <label class="form-check-label" for="bookCars">
-                                        Sedan
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="bookGuides">
-                                    <label class="form-check-label" for="bookGuides">
-                                        SUV
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="bookPackages">
-                                    <label class="form-check-label" for="bookPackages">
-                                        MUV
-                                    </label>
-                                </div>
+                
+                        <div class="filterWrapper px-2">
+                            <h6 class="mb-3">FUEL TYPE</h6>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="petrol" name="fuel_type[]" id="fuelPetrol" 
+                                    <?php if (isset($_POST['fuel_type']) && in_array('petrol', $_POST['fuel_type'])) echo 'checked'; ?>>
+                                <label class="form-check-label" for="fuelPetrol">Petrol</label>
                             </div>
-                            <div class="filterWrapper px-2">
-
-                                <h6 class="mb-3">BRAND</h6>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="pri1" checked>
-                                    <label class="form-check-label" for="pri1">
-                                        <!-- Rs. 1000-2999 -->
-                                        Maruti
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="pri2">
-                                    <label class="form-check-label" for="pri2">
-                                        <!-- Rs. 3000-4999 -->
-                                        Hyundai
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="pri3">
-                                    <label class="form-check-label" for="pri3">
-                                        <!-- Rs. 5000-9999 -->
-                                        Mahindra
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="pri4">
-                                    <label class="form-check-label" for="pri4">
-                                        <!-- Rs. 10000-20000 -->
-                                        Honda
-                                    </label>
-                                </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="diesel" name="fuel_type[]" id="fuelDiesel" 
+                                    <?php if (isset($_POST['fuel_type']) && in_array('diesel', $_POST['fuel_type'])) echo 'checked'; ?>>
+                                <label class="form-check-label" for="fuelDiesel">Diesel</label>
                             </div>
-                            <div class="filterWrapper px-2">
-
-                                <h6 class="mb-3">Fule Type</h6>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="dn1" checked>
-                                    <label class="form-check-label" for="dn1">
-                                        Diesel
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="dn3">
-                                    <label class="form-check-label" for="dn3">
-                                        Petrol
-                                    </label>
-                                </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="ev" name="fuel_type[]" id="fuelEV" 
+                                    <?php if (isset($_POST['fuel_type']) && in_array('ev', $_POST['fuel_type'])) echo 'checked'; ?>>
+                                <label class="form-check-label" for="fuelEV">EV</label>
                             </div>
-
-                            <div class="filterWrapper px-2">
-
-                                <h6 class="mb-3">Transmission Type</h6>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="dn1" checked>
-                                    <label class="form-check-label" for="dn1">
-                                        Automatic
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="dn2">
-                                    <label class="form-check-label" for="dn2">
-                                        Manual
-                                    </label>
-                                </div>
+                        </div>
+                
+                        <div class="filterWrapper px-2">
+                            <h6 class="mb-3">TRANSMISSION TYPE</h6>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="automatic" name="transmission[]" id="transmissionAutomatic" 
+                                    <?php if (isset($_POST['transmission']) && in_array('automatic', $_POST['transmission'])) echo 'checked'; ?>>
+                                <label class="form-check-label" for="transmissionAutomatic">Automatic</label>
                             </div>
-
-                            <div class="filterWrapper px-2">
-
-                                <h6 class="mb-3">Setting Capacity</h6>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="dn1" checked>
-                                    <label class="form-check-label" for="dn1">
-                                        5seats
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="dn2">
-                                    <label class="form-check-label" for="dn2">
-                                        7seats
-                                    </label>
-                                </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="manual" name="transmission[]" id="transmissionManual" 
+                                    <?php if (isset($_POST['transmission']) && in_array('manual', $_POST['transmission'])) echo 'checked'; ?>>
+                                <label class="form-check-label" for="transmissionManual">Manual</label>
+                            </div>
+                        </div>
+                
+                        <div class="filterWrapper px-2">
+                            <h6 class="mb-3">SEATING CAPACITY</h6>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="5" name="seating_capacity[]" id="seating5" 
+                                    <?php if (isset($_POST['seating_capacity']) && in_array('5', $_POST['seating_capacity'])) echo 'checked'; ?>>
+                                <label class="form-check-label" for="seating5">5 Seats</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="7" name="seating_capacity[]" id="seating7" 
+                                    <?php if (isset($_POST['seating_capacity']) && in_array('7', $_POST['seating_capacity'])) echo 'checked'; ?>>
+                                <label class="form-check-label" for="seating7">7 Seats</label>
                             </div>
                         </div>
                     </div>
+                </form>
+                
+
                 </div>
                 <div class="col-lg-10 car-back">
                     <div class="hotel_listingRight car-pad">
@@ -158,69 +159,120 @@
                                 </div>
                             </div> -->
                         </div>
-                        <div id="tourPackages" class="carPackagesLsit">
+                        <div id="tourPackages" class="carPackagesList">
                             <div class="row g-3">
                                 <?php
-                                $i = 0;
-                                // Updated SQL query with INNER JOIN
-                                $sql = "SELECT vp.*, b.brand_name 
-                                        FROM tb_vehicle vp
-                                        INNER JOIN tb_brand b ON vp.brand_id = b.brand_id
-                                        ORDER BY vp.vehicle_id DESC";
-                                $res_data = mysqli_query($con, $sql);
-                                while ($row = mysqli_fetch_array($res_data)) {
+                                // Updated SQL query with INNER JOIN to fetch vehicle photos
+                                $sql = "SELECT vp.*, b.brand_name, vp_photo.car_photo 
+                                FROM tb_vehicle vp
+                                INNER JOIN tb_brand b ON vp.brand_id = b.brand_id
+                                LEFT JOIN tb_vehiclephoto vp_photo ON vp.vehicle_id = vp_photo.car_id";
+                        
+                        // Initialize an array to hold the conditions
+                        $conditions = [];
+                    
+                        // Add WHERE conditions based on the selected filters
+                        if (!empty($fuel_types)) {
+                            $fuel_in = implode("','", $fuel_types);
+                            $conditions[] = "vp.fuel_type IN ('$fuel_in')";
+                        }
+                    
+                        if (!empty($transmissions)) {
+                            $transmission_in = implode("','", $transmissions);
+                            $conditions[] = "vp.transmission_type IN ('$transmission_in')";
+                        }
+                    
+                        if (!empty($seating_capacities)) {
+                            $seating_in = implode(",", $seating_capacities);
+                            $conditions[] = "vp.seating_capacity IN ($seating_in)";
+                        }
+                    
+                        // If there are conditions, append them to the SQL query
+                        if (!empty($categories)) {
+                            $category_in = implode("','", $categories);
+                            $conditions[] = "vp.category IN ('$category_in')";
+                        }
+                        if (!empty($conditions)) {
+                            $sql .= " WHERE " . implode(" AND ", $conditions);
+                        }
+                    
+                        // Add the ORDER BY clause
+                        $sql .= " ORDER BY vp.vehicle_id DESC";
+                    
+                        // Execute the query
+                        $res_data = mysqli_query($con, $sql);
+                        $vehicles = [];
+                    
+                        // Fetch the results
+                        while ($row = mysqli_fetch_array($res_data)) {
+                            $vehicles[$row['vehicle_id']]['title'] = $row['title'];
+                            $vehicles[$row['vehicle_id']]['cost1'] = $row['cost1'];
+                            $vehicles[$row['vehicle_id']]['fuel_type'] = $row['fuel_type'];
+                            $vehicles[$row['vehicle_id']]['transmission_type'] = $row['transmission_type'];
+                            $vehicles[$row['vehicle_id']]['seating_capacity'] = $row['seating_capacity'];
+                            $vehicles[$row['vehicle_id']]['photos'][] = $row['car_photo'];
+                        }
+                    
+
+                        
+                                foreach ($vehicles as $vehicle_id => $vehicle) {
                                 ?>
                                 <div class="col-lg-4 col-md-6 col-sm-12">
                                     <div class="tourPackagesWrapper">
                                         <div class="tourPackagesImg">
                                             <div class="swiper packageImg">
                                                 <div class="swiper-wrapper">
+                                                    <?php
+                                                    // Loop through each vehicle's photos to display them
+                                                    foreach ($vehicle['photos'] as $photo) {
+                                                    ?>
                                                     <div class="swiper-slide">
-                                                        <img src="public/images/cab1.png" class="img-fluid" alt="">
+                                                        <img src="<?php echo $baseUrl.$photo; ?>" class="img-fluid"
+                                                            alt="">
                                                     </div>
-                                                    <div class="swiper-slide">
-                                                        <img src="public/images/cab2.png" class="img-fluid" alt="">
-                                                    </div>
-                                                    <div class="swiper-slide">
-                                                        <img src="public/images/cab3.png" class="img-fluid" alt="">
-                                                    </div>
-                                                    <div class="swiper-slide">
-                                                        <img src="public/images/cab2.png" class="img-fluid" alt="">
-                                                    </div>
+                                                    <?php
+                                                    }
+                                                    ?>
                                                 </div>
                                                 <div class="swiper-pagination"></div>
                                             </div>
                                         </div>
                                         <div class="tourPackagesText">
                                             <h3 class="packages_title">
-                                                <?php echo $row['title']; ?>
+                                                <?php echo $vehicle['title']; ?>
                                             </h3>
                                             <div class="car-featur">
-                                                <span><img src="public/images/petrol-pump.png" alt="">Diesel</span>
-                                                <span><img src="public/images/gear-shift.png" alt="">Manual</span>
-                                                <span><img src="public/images/seat.png" alt="">5 Seater</span>
+                                                <span><img src="public/images/petrol-pump.png" alt="">
+                                                    <?php echo $vehicle['fuel_type']; ?>
+                                                </span>
+                                                <span><img src="public/images/gear-shift.png" alt="">
+                                                    <?php echo $vehicle['transmission_type']; ?>
+                                                </span>
+                                                <span><img src="public/images/seat.png" alt="">
+                                                    <?php echo $vehicle['seating_capacity']; ?> seater
+                                                </span>
                                             </div>
                                             <div class="detail">
-                                                <a href="cab_details?carId=<?php echo $row['vehicle_id']; ?>">More
-                                                    Details <img src="public/images/icons/right-arrow.png" alt=""></a>
+                                                <a href="cab_details?carId=<?php echo $vehicle_id; ?>">More Details <img
+                                                        src="public/images/icons/right-arrow.png" alt=""></a>
                                             </div>
                                             <div
                                                 class="priceSection d-flex justify-content-between align-items-center ">
                                                 <div>
                                                     <small>Starting From</small>
                                                     <h6 class="packagesPrice mb-0">
-                                                        <?php echo $row['cost1']; ?>
+                                                        <?php echo $vehicle['cost1']; ?>
                                                     </h6>
-
                                                 </div>
                                                 <a href="" data-bs-toggle="modal"
-                                                    data-carId="<?php echo $row['vehicle_id']; ?>"
-                                                    data-bs-target="#exampleModal-<?php echo $row['vehicle_id']; ?>" class="hero_btn">Book Now</a>
+                                                    data-carId="<?php echo $vehicle_id; ?>"
+                                                    data-bs-target="#exampleModal-<?php echo $vehicle_id; ?>"
+                                                    class="hero_btn">Book Now</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="modal fade" id="exampleModal-<?php echo $row['vehicle_id']; ?>" tabindex="-1"
+                                <div class="modal fade" id="exampleModal-<?php echo $vehicle_id; ?>" tabindex="-1"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -231,7 +283,8 @@
                                             </div>
                                             <div class="modal-body">
                                                 <form method="post" action="book_cab">
-                                                    <input type="hidden" id="carIdInput" name="carId" value=<?php echo $row['vehicle_id']; ?>>
+                                                    <input type="hidden" id="carIdInput" name="carId"
+                                                        value="<?php echo $vehicle_id; ?>">
                                                     <div class="row">
                                                         <div class="col-lg-6 col-sm-12 mt-2">
                                                             <label for="">Booking place</label>
@@ -255,11 +308,24 @@
                                                         </div>
                                                         <div class="col-12 col-sm-12 mt-3">
                                                             <label for="">Select package</label>
-                                                            <select class="form-select" name="tourType" id="tourType" required>
-                                                                <option value="<?php echo $row['cost1'];  ?>">5hr/100km at <?php echo $row['cost1'];  ?></option>
-                                                                <option value="<?php echo $row['cost2'];  ?>">7hr/150km at <?php echo $row['cost2'];  ?></option>
-                                                                <option value="<?php echo $row['cost3'];  ?>">12Hr/180km at <?php echo $row['cost3'];  ?></option>
-                                                                <option value="<?php echo $row['cost4'];  ?>">Outstation at <?php echo $row['cost1'];  ?>/KM</option>
+                                                            <select class="form-select" name="tourType" id="tourType"
+                                                                required>
+                                                                <option value="<?php echo $vehicle['cost1']; ?>">
+                                                                    5hr/100km at
+                                                                    <?php echo $vehicle['cost1']; ?>
+                                                                </option>
+                                                                <option value="<?php echo $row['cost2']; ?>">7hr/150km
+                                                                    at
+                                                                    <?php echo $row['cost2']; ?>
+                                                                </option>
+                                                                <option value="<?php echo $row['cost3']; ?>">12Hr/180km
+                                                                    at
+                                                                    <?php echo $row['cost3']; ?>
+                                                                </option>
+                                                                <option value="<?php echo $row['cost4']; ?>">Outstation
+                                                                    at
+                                                                    <?php echo $vehicle['cost1']; ?>/KM
+                                                                </option>
                                                             </select>
                                                         </div>
                                                         <div class="col-12 col-sm-12 mt-3">
@@ -278,11 +344,12 @@
                                     </div>
                                 </div>
                                 <?php
-                                            }
-                                            ?>
-
+                                }
+                                ?>
                             </div>
                         </div>
+
+
                     </div>
                 </div>
             </div>

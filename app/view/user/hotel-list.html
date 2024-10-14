@@ -3,7 +3,8 @@ $currentdate = '';
 $checkdate = '';
 $checkindate = ''; 
 $getautocity = '';
-$adult = 0;
+$adult = 1;
+$noOfKids = 0;
 
 if($_POST)
 {
@@ -15,7 +16,7 @@ if($_POST)
         $repeat = intval($_POST['numOfKids']);  // Get the number of repetitions from the form input
         $number = 17;  // The number to be repeated
         $result = implode(',', array_fill(0, $repeat, $number));  // Fill the array with $number, repeat it $repeat times, then implode into a string
-        $noOfKids =  urlencode($result);     
+        $noOfKidsEncoded =  urlencode($result);     
     }
 }
 else{
@@ -25,7 +26,7 @@ else{
     $checkindate = date('Y-m-d', strtotime($currentdate. ' + 15 days')); 
     $getautocity = 'Mumbai,Maharashtra,India';
     $adult = 1;
-    $numOfKids;
+    $numOfKids = 0;
 }
 
 
@@ -109,7 +110,7 @@ $json_data4 = json_decode($json4, true);
                                             <div class="stepper">
                                                 <a class="minus"><i class="fas fa-minus"></i></a>
                                                 <input class="stepper-control" id="numOfAdults" name="numOfAdults"
-                                                    type="number" value="1">
+                                                    type="number" value="<?php echo $adult;?>">
                                                 <a class="plus"><i class="fas fa-plus"></i></a>
                                             </div>
                                         </div>
@@ -120,7 +121,7 @@ $json_data4 = json_decode($json4, true);
                                             <div class="stepper">
                                                 <a class="minus" id="minus"><i class="fas fa-minus"></i></a>
                                                 <input class="stepper-control" id="numOfKids" type="number"
-                                                    name="numOfKids" value="0" max="10">
+                                                    name="numOfKids" value="<?php echo $noOfKids; ?>" max="10">
                                                 <a class="plus"><i class="fas fa-plus"></i></a>
                                             </div>
                                         </div>
@@ -408,7 +409,7 @@ $json_data4 = json_decode($json4, true);
                                             $curl = curl_init();
 
                                             curl_setopt_array($curl, [
-                                            CURLOPT_URL => "https://booking-com15.p.rapidapi.com/api/v1/hotels/searchHotels?dest_id=$getdest_id&search_type=CITY&arrival_date=$checkdate&departure_date=$checkindate&adults=$adult&children_age=$noOfKids&room_qty=1&page_number=1&units=metric&temperature_unit=c&languagecode=en-us&currency_code=INR",
+                                            CURLOPT_URL => "https://booking-com15.p.rapidapi.com/api/v1/hotels/searchHotels?dest_id=$getdest_id&search_type=CITY&arrival_date=$checkdate&departure_date=$checkindate&adults=$adult&children_age=$noOfKidsEncoded&room_qty=1&page_number=1&units=metric&temperature_unit=c&languagecode=en-us&currency_code=INR",
                                             CURLOPT_RETURNTRANSFER => true,
                                             CURLOPT_ENCODING => "",
                                             CURLOPT_MAXREDIRS => 10,

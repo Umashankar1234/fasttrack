@@ -100,60 +100,7 @@ if($pkey1 =='data')
         object-fit: cover;
     }
 </style>
-<script>
-    async function calculate() {
 
-        //Inputs ("parseInt" converts string to Int)
-        var night = document.getElementById("night").value;
-        var chkindate = document.getElementById("chkindate").value;
-        var chkoutdate = document.getElementById("chkoutdate").value;
-        var room = document.getElementById("room").value;
-        var guest = document.getElementById("guest").value;
-        var farevalue = document.getElementById("farevalue").value;
-        var noOfKids = '';
-        if (document.getElementById('children')) {
-            const repeat = parseInt(document.getElementById('numOfKids').value);  // Get the number of repetitions
-            const number = 17;  // The number to be repeated
-            const result = Array(repeat).fill(number).join(',');  // Fill the array with '17', repeat it 'repeat' times, then join into a string
-            noOfKids = encodeURIComponent(result);  // URL encode the result to get commas as %2C
-        }
-        var getresult = farevalue * night * room * guest + 300 + 3;
-        const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/getHotelDetails?hotel_id=191605&arrival_date=${chkindate}&departure_date=${chkoutdate}&adults=${guest}&children_age=${noOfKids}&room_qty=${room}&units=metric&temperature_unit=c&languagecode=en-us&currency_code=EUR`;
-        const options = {
-            method: 'GET',
-            headers: {
-                'x-rapidapi-key': '88fd5b4aecmsh134935a8622c85bp1a6054jsn0ac77dc37163',
-                'x-rapidapi-host': 'booking-com15.p.rapidapi.com'
-            }
-        };
-
-        try {
-            const response = await fetch(url, options);
-            const result = await response.json();
-            const price = result.data.product_price_breakdown.gross_amount_hotel_currency.amount_rounded;
-            getresult = price
-            console.log(price);
-        } catch (error) {
-            console.error(error);
-        }
-
-        let cleanAmount = getresult.replace(/[Rs.,\s]/g, '');
-        var gst = cleanAmount * 18 / 100;
-        var total1 = +cleanAmount + +gst;
-        var total = 'Rs. ' + total1;
-
-        //Output
-        document.getElementById("nightv").innerHTML = night;
-        document.getElementById("roomv").innerHTML = room;
-        document.getElementById("guestv").innerHTML = guest;
-        document.getElementById("totalfare").innerHTML = getresult;
-        document.getElementById("gst").innerHTML = gst;
-        document.getElementById("total").innerHTML = total;
-        document.getElementById("gtotal").value = total;
-
-
-    };
-</script>
 <section id="bookinghead" class="mt-130">
     <div class="container">
         <div class="heading pb-4">
@@ -348,18 +295,14 @@ if($pkey1 =='data')
                                         </div>
                                         <div class="col-lg-6 col-sm-12">
                                             <label for="">To Date</label>
-                                            <input type="date" class="form-control" name="chkoutdate" id="chkoutdate"
+                                            <input type="date" class="form-control" name="chkoutdate" id="chkoutdate" required
                                                 onchange="calculate()">
                                         </div>
                                         <div class="col-lg-6 col-sm-12">
                                             <label for="">Night</label>
-                                            <select name="night" class="form-control" id="night" onchange="calculate()">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                            </select>
+                                            <input name="night" class="form-control" id="night" onchange="calculate()"
+                                                disabled />
+
                                         </div>
                                         <!-- <div class="col-lg-6 col-sm-12">
                                         <label for="">Night</label>
@@ -389,15 +332,16 @@ if($pkey1 =='data')
                                                     Children
                                                 </label>
                                                 <input class="form-control" type="text" value="1" name="children"
-                                                    id="guest" required onchange="calculate()">
+                                                    id="numOfKids" required onchange="calculate()">
                                             </div>
                                         </div>
 
 
                                         <div class="package-fane mt-4 mb-3" style="font-weight: bold;">
                                             <h3>Fare Breakup</h3>
-                                            <p><span id="nightv"></span> Night <span id="roomv"></span> Room X <span
-                                                    id="guestv">2 </span> Guest</p>
+                                            <p><span id="nightv">1</span> Night X<span id="roomv">1</span> Room X <span
+                                                    id="guestv">1</span> Adult X <span id="childrenv">1 </span> Children
+                                            </p>
                                             Fees Total : <span id="totalfare"></span><br>
                                             GST@18% : <span id="gst"></span><br>
                                             Total : <span id="total"></span><br>
@@ -531,6 +475,75 @@ if($pkey1 =='data')
     </section>
 
 </form>
+<script>
+    async function calculate() {
+
+        //Inputs ("parseInt" converts string to Int)
+        var night = document.getElementById("night").value;
+        var chkindate = document.getElementById("chkindate").value;
+        var chkoutdate = document.getElementById("chkoutdate").value;
+        var room = document.getElementById("room").value;
+        var guest = document.getElementById("guest").value;
+        var farevalue = document.getElementById("farevalue").value;
+        var noOfKids = '';
+        if (chkindate && chkoutdate) {
+            // Convert the input values into Date objects
+            var checkInDate = new Date(chkindate);
+            var checkOutDate = new Date(chkoutdate);
+
+            // Calculate the difference in milliseconds
+            var timeDifference = checkOutDate - checkInDate;
+
+            // Convert the time difference into days (milliseconds in one day = 1000 * 60 * 60 * 24)
+            var dayDifference = timeDifference / (1000 * 60 * 60 * 24);
+            document.getElementById("night").value = dayDifference;
+            // Output the result (you can display it as you need)
+            // alert("Difference in days: " + dayDifference);
+        }
+    if (document.getElementById('numOfKids')) {
+        const repeat = parseInt(document.getElementById('numOfKids').value);  // Get the number of repetitions
+        const number = 17;  // The number to be repeated
+        const result = Array(repeat).fill(number).join(',');  // Fill the array with '17', repeat it 'repeat' times, then join into a string
+        noOfKids = encodeURIComponent(result);  // URL encode the result to get commas as %2C
+    }
+    var getresult = farevalue * night * room * guest + 300 + 3;
+    const url = `https://booking-com15.p.rapidapi.com/api/v1/hotels/getHotelDetails?hotel_id=<?php echo $gethotelid; ?>&arrival_date=${chkindate}&departure_date=${chkoutdate}&adults=${guest}&children_age=${noOfKids}&room_qty=${room}&units=metric&temperature_unit=c&languagecode=en-us&currency_code=INR`;
+    const options = {
+        method: 'GET',
+        headers: {
+            'x-rapidapi-key': '88fd5b4aecmsh134935a8622c85bp1a6054jsn0ac77dc37163',
+            'x-rapidapi-host': 'booking-com15.p.rapidapi.com'
+        }
+    };
+
+    try {
+        const response = await fetch(url, options);
+        const result = await response.json();
+        const price = result.data.product_price_breakdown.gross_amount_hotel_currency.amount_rounded;
+        getresult = price
+        console.log(price);
+    } catch (error) {
+        console.error(error);
+    }
+
+    let cleanAmount = getresult.replace(/[Rs.,\s]/g, '');
+    var gst = cleanAmount * 18 / 100;
+    var total1 = +cleanAmount + +gst;
+    var total = 'Rs. ' + total1;
+
+    //Output
+    document.getElementById("nightv").innerHTML = night;
+    document.getElementById("roomv").innerHTML = room;
+    document.getElementById("guestv").innerHTML = guest;
+    document.getElementById("childrenv").innerHTML = parseInt(document.getElementById('numOfKids').value);
+    document.getElementById("totalfare").innerHTML = getresult;
+    document.getElementById("gst").innerHTML = gst;
+    document.getElementById("total").innerHTML = total;
+    document.getElementById("gtotal").value = Math.ceil(total1);
+
+
+    };
+</script>
 
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>

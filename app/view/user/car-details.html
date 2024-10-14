@@ -217,6 +217,9 @@ if ($_POST) {
                         while ($row = mysqli_fetch_array($res_data)) {
                             $vehicles[$row['vehicle_id']]['title'] = $row['title'];
                             $vehicles[$row['vehicle_id']]['cost1'] = $row['cost1'];
+                            $vehicles[$row['vehicle_id']]['cost2'] = $row['cost2'];
+                            $vehicles[$row['vehicle_id']]['cost3'] = $row['cost3'];
+                            $vehicles[$row['vehicle_id']]['outstation'] = $row['outstation'];
                             $vehicles[$row['vehicle_id']]['fuel_type'] = $row['fuel_type'];
                             $vehicles[$row['vehicle_id']]['transmission_type'] = $row['transmission_type'];
                             $vehicles[$row['vehicle_id']]['seating_capacity'] = $row['seating_capacity'];
@@ -324,17 +327,17 @@ if ($_POST) {
                                                                     5hr/100km at
                                                                     <?php echo $vehicle['cost1']; ?>
                                                                 </option>
-                                                                <option value="<?php echo $row['cost2']; ?>">7hr/150km
+                                                                <option value="<?php echo $vehicle['cost2']; ?>">7hr/150km
                                                                     at
-                                                                    <?php echo $row['cost2']; ?>
+                                                                    <?php echo $vehicle['cost2']; ?>
                                                                 </option>
-                                                                <option value="<?php echo $row['cost3']; ?>">12Hr/180km
+                                                                <option value="<?php echo $vehicle['cost3']; ?>">12Hr/180km
                                                                     at
-                                                                    <?php echo $row['cost3']; ?>
+                                                                    <?php echo $vehicle['cost3']; ?>
                                                                 </option>
-                                                                <option value="<?php echo $row['cost4']; ?>">Outstation
+                                                                <option value="<?php echo $vehicle['outstation']; ?>">Outstation
                                                                     at
-                                                                    <?php echo $vehicle['cost1']; ?>/KM
+                                                                    <?php echo $vehicle['outstation']; ?>/KM
                                                                 </option>
                                                             </select>
                                                         </div>

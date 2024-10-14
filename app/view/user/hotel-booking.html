@@ -291,7 +291,7 @@ if($pkey1 =='data')
                                         <div class="col-lg-6 col-sm-12">
                                             <label for="">From Date</label>
                                             <input type="date" class="form-control" name="chkindate" id="chkindate"
-                                                required onchange="calculate()">
+                                                required onchange="calculate()" min="<?= date('Y-m-d', strtotime('+1 day')); ?>">
                                         </div>
                                         <div class="col-lg-6 col-sm-12">
                                             <label for="">To Date</label>
@@ -480,6 +480,8 @@ if($pkey1 =='data')
 
         //Inputs ("parseInt" converts string to Int)
         var night = document.getElementById("night").value;
+        console.log(night);
+        
         var chkindate = document.getElementById("chkindate").value;
         var chkoutdate = document.getElementById("chkoutdate").value;
         var room = document.getElementById("room").value;
@@ -497,6 +499,7 @@ if($pkey1 =='data')
             // Convert the time difference into days (milliseconds in one day = 1000 * 60 * 60 * 24)
             var dayDifference = timeDifference / (1000 * 60 * 60 * 24);
             document.getElementById("night").value = dayDifference;
+            document.getElementById("nightv").value = dayDifference;
             // Output the result (you can display it as you need)
             // alert("Difference in days: " + dayDifference);
         }
@@ -532,7 +535,7 @@ if($pkey1 =='data')
     var total = 'Rs. ' + total1;
 
     //Output
-    document.getElementById("nightv").innerHTML = night;
+    // document.getElementById("nightv").innerHTML = night;
     document.getElementById("roomv").innerHTML = room;
     document.getElementById("guestv").innerHTML = guest;
     document.getElementById("childrenv").innerHTML = parseInt(document.getElementById('numOfKids').value);
